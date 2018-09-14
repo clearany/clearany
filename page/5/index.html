@@ -42,7 +42,7 @@
             <li><a href="/tags"><i class="fa fa-tags fa-fw"></i>tags</a></li>
             <li><a href="/search"><i class="fa fa-search fa-fw"></i>search</a></li>
             <li><a href="/about"><i class="fa fa-user fa-fw"></i>about</a></li>
-            <li><a href="/atom.xml"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+            <li><a href="#"><i class="fa fa-rss fa-fw"></i>rss</a></li>
           </ul>
         </nav>
         <div id="search-form-wrap">
@@ -62,15 +62,21 @@
 			Author：CLEAR
 		</span>
 
-		<span class="meta-elements author">
-			Views：123
-		</span>
+
+		
+       	<span id="" class="leancloud_visitors" data-flag-title="Elasticsearch集群部署配置">
+	        <span class="post-meta-divider"></span>
+	        <span class="post-meta-item-text"> Hits:  </span>
+	        <span class="leancloud-visitors-count"></span>
+       	</span>
+   		
 
 		<div class="commentscount">
 			
 				<a href="/2016/07/02/Elasticsearch集群部署配置/#comments" class="article-comment-link">Comments</a>
 			
 		</div>
+
 	</footer>
 
 	
@@ -126,15 +132,21 @@
 			Author：CLEAR
 		</span>
 
-		<span class="meta-elements author">
-			Views：123
-		</span>
+
+		
+       	<span id="" class="leancloud_visitors" data-flag-title="Elasticsearch之基本操作">
+	        <span class="post-meta-divider"></span>
+	        <span class="post-meta-item-text"> Hits:  </span>
+	        <span class="leancloud-visitors-count"></span>
+       	</span>
+   		
 
 		<div class="commentscount">
 			
 				<a href="/2016/07/02/Elasticsearch之基本操作/#comments" class="article-comment-link">Comments</a>
 			
 		</div>
+
 	</footer>
 
 	
@@ -197,15 +209,21 @@ elasticsearch是一个是开源的（Apache2协议），分布式的，RESTful�
 			Author：CLEAR
 		</span>
 
-		<span class="meta-elements author">
-			Views：123
-		</span>
+
+		
+       	<span id="" class="leancloud_visitors" data-flag-title="Elasticsearch实践指南">
+	        <span class="post-meta-divider"></span>
+	        <span class="post-meta-item-text"> Hits:  </span>
+	        <span class="leancloud-visitors-count"></span>
+       	</span>
+   		
 
 		<div class="commentscount">
 			
 				<a href="/2016/07/02/Elasticsearch实践指南/#comments" class="article-comment-link">Comments</a>
 			
 		</div>
+
 	</footer>
 
 	
@@ -267,15 +285,21 @@ elasticsearch是一个是开源的（Apache2协议），分布式的，RESTful�
 			Author：CLEAR
 		</span>
 
-		<span class="meta-elements author">
-			Views：123
-		</span>
+
+		
+       	<span id="" class="leancloud_visitors" data-flag-title="系统任务调度-Rundeck">
+	        <span class="post-meta-divider"></span>
+	        <span class="post-meta-item-text"> Hits:  </span>
+	        <span class="leancloud-visitors-count"></span>
+       	</span>
+   		
 
 		<div class="commentscount">
 			
 				<a href="/2016/05/19/系统任务调度-Rundeck/#comments" class="article-comment-link">Comments</a>
 			
 		</div>
+
 	</footer>
 
 	
@@ -335,15 +359,21 @@ elasticsearch是一个是开源的（Apache2协议），分布式的，RESTful�
 			Author：CLEAR
 		</span>
 
-		<span class="meta-elements author">
-			Views：123
-		</span>
+
+		
+       	<span id="" class="leancloud_visitors" data-flag-title="Redis主从配置故障切换">
+	        <span class="post-meta-divider"></span>
+	        <span class="post-meta-item-text"> Hits:  </span>
+	        <span class="leancloud-visitors-count"></span>
+       	</span>
+   		
 
 		<div class="commentscount">
 			
 				<a href="/2016/05/16/Redis主从配置故障切换/#comments" class="article-comment-link">Comments</a>
 			
 		</div>
+
 	</footer>
 
 	
@@ -465,5 +495,122 @@ elasticsearch是一个是开源的（Apache2协议），分布式的，RESTful�
 
 <script src="/js/script.js"></script>
 <script src="/js/bundle.js"></script>
+
+
+  <script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>
+    AV.initialize("cysOkTzhnKRRxwWzfI2rfHnV-9Nh9j0Va", "YH1G2lsSOCWs22GX6gHPLylP");
+    function showHitCount(Counter) {
+      // 这是给一个页面中有多篇文章时所调用的，例如博客主界面或者存档界面。
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      // 获取页面中所有文章的id（page.url）
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      // 批量查询
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var hits = item.get('hits');// 获取点击次数
+            var element = document.getElementById(url);
+
+            // 显示点击次数
+            $(element).find(COUNT_CONTAINER_REF).text(hits);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      // 页面（博客文章）中的信息：leancloud_visitors
+      // id为page.url， data-flag-title为page.title
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      // 只根据文章的url查询LeanCloud服务器中的数据
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {//说明LeanCloud中已经记录了这篇文章
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("hits");// 将点击次数加1
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('hits'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            // 执行这里，说明LeanCloud中还没有记录此文章
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);// 把文章标题
+            newcounter.set("url", url); // 文章url
+            newcounter.set("hits", 1); // 初始点击次数：1次
+            newcounter.save(null, { // 上传到LeanCloud服务器中
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('hits'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        // in post.html, so add 1 to hit counts
+        addCount(Counter);
+      } else if ($('.post-link').length > 1){
+        // in index.html, there are many 'leancloud_visitors' and 'post-link', so just show hit counts.
+        showHitCount(Counter);
+      }
+    });
+  </script>
+
 	</body>
 </html>
