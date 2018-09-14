@@ -14,6 +14,7 @@
     
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
     <script>
       var _hmt = _hmt || [];
@@ -63,18 +64,34 @@
 
 
 		
-       	<span id="" class="leancloud_visitors" data-flag-title="Ansible实现批量化管理">
+       	<span id="/2015/08/11/Ansible实现批量化管理/" class="leancloud_visitors meta-elements" data-flag-title="Ansible实现批量化管理">
 	        <span class="post-meta-divider"></span>
 	        <span class="post-meta-item-text"> Hits:  </span>
 	        <span class="leancloud-visitors-count"></span>
+	        <span class="post-title-link"></span>
        	</span>
    		
 
-		<div class="commentscount">
+		<span class="meta-elements">
 			
 				<a href="/2015/08/11/Ansible实现批量化管理/#comments" class="article-comment-link">Comments</a>
 			
-		</div>
+		</span>
+
+		<span class="meta-elements category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/linux/">linux</a>
+  </div>
+
+		</span>
+
+		<span class="meta-elements tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ansible/">Ansible</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化/">自动化</a></li></ul>
+
+		</span>
 
 	</footer>
 
@@ -97,24 +114,6 @@
 <h4 id="常用模块命令"><a href="#常用模块命令" class="headerlink" title="常用模块命令"></a>常用模块命令</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#command模块实践：（默认模块）</span></span><br><span class="line"></span><br><span class="line">ansible george -m <span class="built_in">command</span> -a <span class="string">"ifconfig"</span></span><br><span class="line"><span class="comment">#批量显示远程主机的网卡信息</span></span><br><span class="line">ansible george -m commadn -a <span class="string">"chair=/tmp touch kai.txt"</span></span><br><span class="line"><span class="comment">#批量切换到远程主机的/tmp目录下，创建kai.txt这个文件</span></span><br><span class="line">ansible george -m <span class="built_in">command</span> -a <span class="string">"creates=/tmp/kai touch /tmp/kai"</span></span><br><span class="line"><span class="comment">#批量判断远程主机/tmp下有没有kai这个文件，如果有就skip，没有就执行后面的命令</span></span><br><span class="line">ansible george -m <span class="built_in">command</span> -a <span class="string">"removes=/tmp/kai.txt touch /tmp/123.txt"</span></span><br><span class="line"><span class="comment">#批量判断远程主机/tmp下有没有kai这个文件，如果有就执行后面的命令， 没有就skip</span></span><br><span class="line">ansible george -m <span class="built_in">command</span> -a <span class="string">"ls -l"</span></span><br><span class="line"><span class="comment">#free_from（默认参数）可以输入任何系统命令信息，但是不包含一些特殊环境变量和特殊符号信息,如：&lt;&gt;,|;&amp;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#ping模块实践：</span></span><br><span class="line">ansible george -m ping</span><br><span class="line"><span class="comment">#返回pong，说明可以登录SSH连接，这里ping但不是测试网络连通性的,用于验证能否登录SSH连接，在查  看是否满足python的支持, 属于system模块</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#copy模块实践</span></span><br><span class="line"><span class="comment">#1）copy参数src</span></span><br><span class="line"></span><br><span class="line">ansible george -m copy -a <span class="string">"src=/etc/hosts dest=/tmp/"</span></span><br><span class="line"><span class="comment">#将本机/etc/hosts文件复制到远程主机的/tmp目录下（如果/tmp下已有同名hosts，那么会被覆盖）</span></span><br><span class="line">ansible george -m copy -a <span class="string">"src=/etc/hosts dest=/tmp/dir/"</span></span><br><span class="line"><span class="comment">#如果远程主机没有dir目录，那么会创建dir目录</span></span><br><span class="line">ansible george -m copy -a <span class="string">"src=/etc/hosts dest=/tmp/1/2/3/4/"</span></span><br><span class="line"><span class="comment">#但传输文件时，如果上级目录不存在，则不会创  建，传输就无法成功</span></span><br><span class="line">ansible george -m copy -a <span class="string">"src=/tmp dest=/tmp/1/2/3/4"</span></span><br><span class="line"><span class="comment">#传输目录时，如果远程主机目录不存在，传输时可以创建多层目录，</span></span><br><span class="line"><span class="comment">#如果传输的是目录本身及下面内容，后面不要加/</span></span><br><span class="line">ansible george -m copy -a <span class="string">"src=/tmp dest=/tmp/1/2/3/4"</span></span><br><span class="line"><span class="comment">#如果传输的是目录下面的内容，后面必须加/</span></span><br><span class="line">ansible george -m copy -a <span class="string">"remote_src=true src=/etc/hosts dest=/tmp/1/2/"</span></span><br><span class="line"><span class="comment">#批量操作远程主机，对他们本机上的文件进行本地操作</span></span><br><span class="line"><span class="comment">#设置为true时（默认为flase），不支持递归复制</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#2）copy参数backup=yes  </span></span><br><span class="line"> ansible george -m copy -a <span class="string">"src=/etc/hosts dest=/etc/ backup=yes"</span></span><br><span class="line"><span class="comment"># 分发文件时，如果与远程主机下hosts文件内容不一致，那么会备份源文件为"hosts.5714...以时间戳命名   "，   在修改hosts源文件的内容</span></span><br><span class="line"><span class="comment">#不输入默认backup=no，就是不备份，会覆盖源文件</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">#3）copy参数mode、owner、group</span></span><br><span class="line">ansible george -m copy -a <span class="string">"src=/etc/hosts dest=/tmp/ mode=0600 owner=george group=george"</span></span><br><span class="line"><span class="comment">#改变文件的权限为0600，所有者和属组为george</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#4） copy参数force</span></span><br><span class="line">ansible george -m copy -a <span class="string">"src=/etc/hosts dest=/tmp/ force=yes"</span></span><br><span class="line"><span class="comment">#默认为forec=yes，如果和远程主机信息不一致，会覆盖</span></span><br><span class="line"><span class="comment">#如果force=no，那么远程主机同名文件不会做改变</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">#5）copy参数content  </span></span><br><span class="line">ansible george -m copy -a <span class="string">"content=123123 dest=/tmp/hosts"</span></span><br><span class="line"><span class="comment">#写入信息到/tmp/ hosts中会把源内容覆盖掉，谨慎操作，只能添加少量的信息</span></span><br><span class="line"><span class="comment">#添加多量的，可以用template模块</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#shell模块实践  </span></span><br><span class="line">ansible george -m shell -a <span class="string">"hostname;hostname -i"</span></span><br><span class="line"><span class="comment"># 支持特殊符号，-a里面可接多个名，用分号分割</span></span><br><span class="line"><span class="comment">#测试:用shell执行一个脚本很麻烦的，用script执行</span></span><br><span class="line"><span class="comment">#1）推送脚本过去，并授权</span></span><br><span class="line">ansible george -m copy -a <span class="string">"src=/tmp/test.sh dest=/tmp mode=+x"</span></span><br><span class="line"><span class="comment">#2）运行脚本</span></span><br><span class="line">ansible george -m shell -a <span class="string">"/tmp/test.sh"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#script模块实践  </span></span><br><span class="line">ansible george -m script -a <span class="string">"/server/scritps/keepalived.sh"</span></span><br><span class="line"><span class="comment">#将本地脚本中的信息，在远程主机上执行</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#setup模块实践  </span></span><br><span class="line">ansible george -m setup</span><br><span class="line"><span class="comment">#显示远程主机的所有信息（后面加-v显示详细信息）</span></span><br><span class="line"><span class="comment">#提取IP、或架构信息等，X86来判断主机架构，安装合适软件</span></span><br><span class="line">ansible georhe -m setup -v   </span><br><span class="line"><span class="comment">#主要用于解决一些错误：如远程主机hang住了，ansible会输出少量信息（最多-vvvv）</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#yum模块实践</span></span><br><span class="line">ansible george -m yum -a <span class="string">"name=iotop state=installed"</span></span><br><span class="line"><span class="comment">#批量使用yum安装软件iotop</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#service模块实践</span></span><br><span class="line">ansible george -m service -a <span class="string">"name=crond state=stopped enable=no"</span> <span class="comment">#stopped是2个p</span></span><br><span class="line"><span class="comment">#临时停止crond服务，取消开机自启动（相反：state=started enable=yes）</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#file模块实践</span></span><br><span class="line"><span class="comment">#修改文件或目录属性信息，用于创建文件或目录，也可以用mode、owner、group定义文件或目录的权限信息</span></span><br><span class="line"><span class="comment">#1)path参数</span></span><br><span class="line">ansible george -m file <span class="string">"path=/tmp/ state=directory mode=0644"</span></span><br><span class="line"><span class="comment">#指定路径,是dest,name的别名，作用一样</span></span><br><span class="line"><span class="comment">#2）state参数</span></span><br><span class="line">ansible george -m file -a <span class="string">"dest=/opt/dir_01/ state=directory"</span></span><br><span class="line"><span class="comment">#创建目录为dir_01</span></span><br><span class="line">ansible george -m file -a <span class="string">"dest=/opt/file_01 state=touch"</span></span><br><span class="line"><span class="comment">#创建文件为file_01</span></span><br><span class="line">ansible george -m file -a <span class="string">"dest=/opt/file_01 state=absent"</span></span><br><span class="line"><span class="comment">#删除文件file_01</span></span><br><span class="line">ansible george -m file -a <span class="string">"src=/opt/hosts dest=/opt/hosts_link state=link"</span></span><br><span class="line"><span class="comment">#创建符号链接，基于本机有源文件</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#定时任务cron模块</span></span><br><span class="line">* * * * *  /bin/sh /server/scripts/test.sh &amp;&gt;/dev/null</span><br><span class="line">minute                 <span class="comment"># Minute when the job should run ( 0-59, *, */2, etc )</span></span><br><span class="line">hour                   <span class="comment"># Hour when the job should run ( 0-23, *, */2, etc )</span></span><br><span class="line">day                    <span class="comment"># Day of the month the job should run ( 1-31, *, */2, etc )</span></span><br><span class="line">month                  <span class="comment"># Month of the year the job should run ( 1-12, *, */2, etc )</span></span><br><span class="line">weekday                <span class="comment"># Day of the week that the job should run ( 0-6 for Sunday-Saturday, *, etc )</span></span><br><span class="line">job                    <span class="comment"># 定义定时任务与要做什么事</span></span><br><span class="line">name       <span class="comment"># 给定时任务加一个备注，避免创建出多个重复的定时任务(根据定时任务备份判断是否生成一个新的定时任务)</span></span><br><span class="line"><span class="built_in">stat</span>       <span class="comment">#若设置为present，表示创建定时任务，若设置为absent，表示删除指定定时任务</span></span><br><span class="line"><span class="comment">#只能管理自己创建的定时任务，本来有的管理不了</span></span><br><span class="line">disabled      <span class="comment">#disable=yes注释掉定时任务（不生效），disable=no解除注释定时任务（生效）</span></span><br><span class="line">ansible george -m cron -a <span class="string">"name='backup servcie' minute=*/5 job='/usr/sbin/ntpdate  time.nist.gov &gt;/dev/null 2&gt;&amp;1'"</span></span><br><span class="line"><span class="comment">#创建定时任务</span></span><br><span class="line">ansible george -m cron -a <span class="string">"name=`backup service` state=absent"</span></span><br><span class="line"><span class="comment">#删除定时任务</span></span><br><span class="line">ansible george -m cron -a <span class="string">"name=dancy01 minute=*/5 job='/usr/sbin/ntpdate time.nist.gov &gt;/dev/null 2&gt;&amp;1' disabled=yes"</span>              </span><br><span class="line"><span class="comment">#注释掉定时任务，反之取消注释</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#mount模块实践</span></span><br><span class="line">ansible george -m mount -a <span class="string">"state=mounted src=172.16.1.31:/data path=/data fstype=nfs"</span></span><br><span class="line"><span class="comment">#src   要被挂载的目录或文件</span></span><br><span class="line"><span class="comment">#path  指定挂载点的路径</span></span><br><span class="line"><span class="comment">#fstype  指定挂载时的文件系统类型</span></span><br><span class="line"><span class="comment">#opts  在挂载时，指定挂载参数信息</span></span><br><span class="line"><span class="comment">#state  state=mounted，在fstab文件中的备份将被激活挂载或适当配置，如果指定mounted的挂载挂载点不存在，会创建    #state=unmounted，设备将被卸载不会改变fstab文件中的信息</span></span><br><span class="line"><span class="comment">#state=absent和state=present，只处理fatab，但不影响目录的挂载</span></span><br></pre></td></tr></table></figure>
     	
 	</div>
-
-	<footer class="entry-footer">
-		<div class="entry-meta-footer">
-			<span class="category">
-				
-  <div class="article-category">
-  	<span>categories:</span>
-    <a class="article-category-link" href="/categories/linux/">linux</a>
-  </div>
-
-			</span>
-			<span class="tags">
-				
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ansible/">Ansible</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化/">自动化</a></li></ul>
-
-			</span>
-		</div>
-	</footer>
 
 	
 		
@@ -142,21 +141,20 @@
 </nav>
 
   	
-
 </article>
+<div id="comments"></div>
 
 
 
 
 
-<div id="comments">
+
 
 </div>
-  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-  <script src="/js/Valine.min.js"></script>
-  
-  <script type="text/javascript">
+			
+				<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<script type="text/javascript">
     var GUEST = ['nick','mail','link'];
     var guest = 'nick,mail,link';
     guest = guest.split(',').filter(item=>{
@@ -164,17 +162,16 @@
     });
     new Valine({
         av: AV, 
+        
         el: '#comments' ,
+        
+        placeholder: 'Just go to say', 
         appId: 'cysOkTzhnKRRxwWzfI2rfHnV-9Nh9j0Va',
         appKey: 'YH1G2lsSOCWs22GX6gHPLylP',
-        placeholder: 'Just go to say',
+        visitor: true,
     });
-  </script>
-
-
-
-
-</div>
+</script>
+			
 			<footer id="footer">
 				<h1 class="footer-blog-title">
 					<a href="/">Clear Sky</a>
@@ -187,132 +184,10 @@
 			</footer>
   		</div>
   		
-
-<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
-
-
 <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
 <script src="/fancybox/jquery.fancybox.pack.js"></script>
 
-
 <script src="/js/script.js"></script>
 <script src="/js/bundle.js"></script>
-
-
-  <script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
-  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
-  <script>
-    AV.initialize("cysOkTzhnKRRxwWzfI2rfHnV-9Nh9j0Va", "YH1G2lsSOCWs22GX6gHPLylP");
-    function showHitCount(Counter) {
-      // 这是给一个页面中有多篇文章时所调用的，例如博客主界面或者存档界面。
-      var query = new AV.Query(Counter);
-      var entries = [];
-      var $visitors = $(".leancloud_visitors");
-
-      // 获取页面中所有文章的id（page.url）
-      $visitors.each(function () {
-        entries.push( $(this).attr("id").trim() );
-      });
-
-      // 批量查询
-      query.containedIn('url', entries);
-      query.find()
-        .done(function (results) {
-          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
-
-          if (results.length === 0) {
-            $visitors.find(COUNT_CONTAINER_REF).text(0);
-            return;
-          }
-
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.get('url');
-            var hits = item.get('hits');// 获取点击次数
-            var element = document.getElementById(url);
-
-            // 显示点击次数
-            $(element).find(COUNT_CONTAINER_REF).text(hits);
-          }
-          for(var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = document.getElementById(url);
-            var countSpan = $(element).find(COUNT_CONTAINER_REF);
-            if( countSpan.text() == '') {
-              countSpan.text(0);
-            }
-          }
-        })
-        .fail(function (object, error) {
-          console.log("Error: " + error.code + " " + error.message);
-        });
-    }
-
-    function addCount(Counter) {
-      // 页面（博客文章）中的信息：leancloud_visitors
-      // id为page.url， data-flag-title为page.title
-      var $visitors = $(".leancloud_visitors");
-      var url = $visitors.attr('id').trim();
-      var title = $visitors.attr('data-flag-title').trim();
-      var query = new AV.Query(Counter);
-
-      // 只根据文章的url查询LeanCloud服务器中的数据
-      query.equalTo("url", url);
-      query.find({
-        success: function(results) {
-          if (results.length > 0) {//说明LeanCloud中已经记录了这篇文章
-            var counter = results[0];
-            counter.fetchWhenSave(true);
-            counter.increment("hits");// 将点击次数加1
-            counter.save(null, {
-              success: function(counter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(counter.get('hits'));
-              },
-              error: function(counter, error) {
-                console.log('Failed to save Visitor num, with error message: ' + error.message);
-              }
-            });
-          } else {
-            // 执行这里，说明LeanCloud中还没有记录此文章
-            var newcounter = new Counter();
-            /* Set ACL */
-            var acl = new AV.ACL();
-            acl.setPublicReadAccess(true);
-            acl.setPublicWriteAccess(true);
-            newcounter.setACL(acl);
-            /* End Set ACL */
-            newcounter.set("title", title);// 把文章标题
-            newcounter.set("url", url); // 文章url
-            newcounter.set("hits", 1); // 初始点击次数：1次
-            newcounter.save(null, { // 上传到LeanCloud服务器中
-              success: function(newcounter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(newcounter.get('hits'));
-              },
-              error: function(newcounter, error) {
-                console.log('Failed to create');
-              }
-            });
-          }
-        },
-        error: function(error) {
-          console.log('Error:' + error.code + " " + error.message);
-        }
-      });
-    }
-
-    $(function() {
-      var Counter = AV.Object.extend("Counter");
-      if ($('.leancloud_visitors').length == 1) {
-        // in post.html, so add 1 to hit counts
-        addCount(Counter);
-      } else if ($('.post-link').length > 1){
-        // in index.html, there are many 'leancloud_visitors' and 'post-link', so just show hit counts.
-        showHitCount(Counter);
-      }
-    });
-  </script>
-
 	</body>
 </html>

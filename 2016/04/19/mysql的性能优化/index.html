@@ -14,6 +14,7 @@
     
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
     <script>
       var _hmt = _hmt || [];
@@ -63,18 +64,34 @@
 
 
 		
-       	<span id="" class="leancloud_visitors" data-flag-title="mysql的性能优化">
+       	<span id="/2016/04/19/mysql的性能优化/" class="leancloud_visitors meta-elements" data-flag-title="mysql的性能优化">
 	        <span class="post-meta-divider"></span>
 	        <span class="post-meta-item-text"> Hits:  </span>
 	        <span class="leancloud-visitors-count"></span>
+	        <span class="post-title-link"></span>
        	</span>
    		
 
-		<div class="commentscount">
+		<span class="meta-elements">
 			
 				<a href="/2016/04/19/mysql的性能优化/#comments" class="article-comment-link">Comments</a>
 			
-		</div>
+		</span>
+
+		<span class="meta-elements category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/数据库/">数据库</a>
+  </div>
+
+		</span>
+
+		<span class="meta-elements tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql优化/">mysql优化</a></li></ul>
+
+		</span>
 
 	</footer>
 
@@ -91,24 +108,6 @@
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">[mysql]</span></span><br><span class="line"><span class="string">no_auto_rehash</span></span><br><span class="line"><span class="string">prompt</span> <span class="string">=</span> <span class="string">(\u@\h)[\d]&gt;</span></span><br><span class="line"><span class="string">loose-default_character_set</span> <span class="string">=</span> <span class="string">utf8mb4</span></span><br><span class="line"><span class="string">[client]</span></span><br><span class="line"><span class="string">port</span> <span class="string">=</span> <span class="number">3306</span></span><br><span class="line"><span class="string">socket</span> <span class="string">=</span> <span class="string">/data/program/mysql/mysql.sock</span></span><br><span class="line"><span class="string">loose-default_character_set</span> <span class="string">=</span> <span class="string">utf8mb4</span></span><br><span class="line"><span class="string">[mysqld]</span></span><br><span class="line"><span class="comment"># GENERAL #</span></span><br><span class="line"><span class="string">sql_mode</span> <span class="string">=</span> <span class="string">STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION</span>  <span class="comment"># 原配置</span></span><br><span class="line"><span class="comment"># init-connect = 'SET NAMES utf8mb4'  # 原配置</span></span><br><span class="line"><span class="string">default_time_zone</span> <span class="string">=</span> <span class="string">'+8:00'</span></span><br><span class="line"><span class="string">local_infile</span> <span class="string">=</span> <span class="string">OFF</span></span><br><span class="line"><span class="string">server_id</span> <span class="string">=</span> <span class="number">23306</span></span><br><span class="line"><span class="string">port</span> <span class="string">=</span> <span class="number">3306</span></span><br><span class="line"><span class="string">user</span> <span class="string">=</span> <span class="string">mysql</span></span><br><span class="line"><span class="string">default_storage_engine</span> <span class="string">=</span> <span class="string">InnoDB</span></span><br><span class="line"><span class="string">basedir</span> <span class="string">=</span> <span class="string">/data/program/mysql</span></span><br><span class="line"><span class="string">socket</span> <span class="string">=</span> <span class="string">/data/program/mysql/mysql.sock</span></span><br><span class="line"><span class="string">pid-file</span> <span class="string">=</span> <span class="string">/data/mysql3306/log3306/run/mysqld.pid</span></span><br><span class="line"><span class="string">datadir</span> <span class="string">=</span> <span class="string">/data/mysql3306/data3306/</span></span><br><span class="line"><span class="string">transaction_isolation</span> <span class="string">=</span> <span class="string">READ-COMMITTED</span></span><br><span class="line"><span class="string">explicit_defaults_for_timestamp</span> <span class="string">=</span> <span class="number">1</span></span><br><span class="line"><span class="string">character_set_server</span> <span class="string">=</span> <span class="string">utf8mb4</span></span><br><span class="line"><span class="string">collation_server</span> <span class="string">=</span> <span class="string">utf8mb4_general_ci</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># SAFETY #</span></span><br><span class="line"><span class="string">max_allowed_packet</span> <span class="string">=</span> <span class="number">64</span><span class="string">M</span></span><br><span class="line"><span class="string">skip_name_resolve</span> <span class="string">=</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># BINARY LOGGING #</span></span><br><span class="line"><span class="string">max_binlog_size</span> <span class="string">=</span> <span class="number">500</span><span class="string">M</span></span><br><span class="line"><span class="string">log_bin</span> <span class="string">=</span> <span class="string">/data/mysql3306/log3306/binlog/log_bin</span></span><br><span class="line"><span class="string">expire_logs_days</span> <span class="string">=</span> <span class="number">14</span></span><br><span class="line"><span class="string">sync_binlog</span> <span class="string">=</span> <span class="number">100</span></span><br><span class="line"><span class="string">binlog_format</span> <span class="string">=</span> <span class="string">ROW</span></span><br><span class="line"><span class="string">binlog_cache_size</span> <span class="string">=</span> <span class="number">2</span><span class="string">M</span></span><br><span class="line"><span class="string">log_bin_trust_function_creators</span> <span class="string">=</span> <span class="number">1</span></span><br><span class="line"><span class="string">binlog_rows_query_log_events</span> <span class="string">=</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># REPLICATION #</span></span><br><span class="line"><span class="string">auto_increment_increment</span> <span class="string">=</span> <span class="number">2</span></span><br><span class="line"><span class="string">auto_increment_offset</span> <span class="string">=</span> <span class="number">2</span></span><br><span class="line"><span class="string">skip_slave_start</span> <span class="string">=</span> <span class="number">1</span></span><br><span class="line"><span class="string">log_slave_updates</span> <span class="string">=</span> <span class="number">1</span></span><br><span class="line"><span class="string">relay_log</span> <span class="string">=</span> <span class="string">/data/mysql3306/log3306/relaylog/relay_bin</span></span><br><span class="line"><span class="string">relay_log_recovery</span> <span class="string">=</span> <span class="number">1</span></span><br><span class="line"><span class="string">slave_net_timeout</span> <span class="string">=</span> <span class="number">60</span></span><br><span class="line"><span class="string">master_info_repository</span> <span class="string">=</span> <span class="string">TABLE</span></span><br><span class="line"><span class="string">relay_log_info_repository</span> <span class="string">=</span> <span class="string">TABLE</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># CACHES AND LIMITS #</span></span><br><span class="line"><span class="string">tmp_table_size</span> <span class="string">=</span> <span class="number">16</span><span class="string">M</span></span><br><span class="line"><span class="string">max_heap_table_size</span> <span class="string">=</span> <span class="number">16</span><span class="string">M</span></span><br><span class="line"><span class="string">read_buffer_size</span> <span class="string">=</span> <span class="number">2</span><span class="string">M</span></span><br><span class="line"><span class="string">read_rnd_buffer_size</span> <span class="string">=</span> <span class="number">4</span><span class="string">M</span></span><br><span class="line"><span class="string">sort_buffer_size</span> <span class="string">=</span> <span class="number">2</span><span class="string">M</span></span><br><span class="line"><span class="string">join_buffer_size</span> <span class="string">=</span> <span class="number">2</span><span class="string">M</span></span><br><span class="line"><span class="string">tmpdir</span> <span class="string">=</span> <span class="string">/data/mysql3306/tmp3306</span></span><br><span class="line"><span class="string">query_cache_type</span> <span class="string">=</span> <span class="number">0</span></span><br><span class="line"><span class="string">query_cache_size</span> <span class="string">=</span> <span class="number">0</span></span><br><span class="line"><span class="string">max_connections</span> <span class="string">=</span> <span class="number">1000</span></span><br><span class="line"><span class="string">max_connect_errors</span> <span class="string">=</span> <span class="number">1000</span></span><br><span class="line"><span class="string">thread_cache_size</span> <span class="string">=</span> <span class="number">64</span></span><br><span class="line"><span class="string">open_files_limit</span> <span class="string">=</span> <span class="number">65000</span></span><br><span class="line"><span class="string">table_definition_cache</span> <span class="string">=</span> <span class="number">2048</span></span><br><span class="line"><span class="string">table_open_cache</span> <span class="string">=</span> <span class="number">2048</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># INNODB #</span></span><br><span class="line"><span class="string">innodb_flush_method</span> <span class="string">=</span> <span class="string">O_DIRECT</span></span><br><span class="line"><span class="string">innodb_file_per_table</span>  <span class="string">=</span> <span class="number">1</span></span><br><span class="line"><span class="string">innodb_data_file_path</span> <span class="string">=</span> <span class="attr">ibdata1:128M:autoextend</span></span><br><span class="line"><span class="string">innodb_buffer_pool_size</span> <span class="string">=</span> <span class="number">4</span><span class="string">G</span></span><br><span class="line"><span class="string">innodb_buffer_pool_instances</span> <span class="string">=</span> <span class="number">8</span></span><br><span class="line"><span class="string">metadata_locks_hash_instances</span> <span class="string">=</span> <span class="number">8</span></span><br><span class="line"><span class="string">innodb_buffer_pool_load_at_startup</span> <span class="string">=</span> <span class="number">1</span></span><br><span class="line"><span class="string">innodb_buffer_pool_dump_at_shutdown</span> <span class="string">=</span> <span class="number">1</span></span><br><span class="line"><span class="string">innodb_lru_scan_depth</span> <span class="string">=</span> <span class="number">2048</span></span><br><span class="line"><span class="string">innodb_lock_wait_timeout</span> <span class="string">=</span> <span class="number">10</span></span><br><span class="line"><span class="string">innodb_io_capacity</span> <span class="string">=</span> <span class="number">1000</span></span><br><span class="line"><span class="string">innodb_io_capacity_max</span> <span class="string">=</span> <span class="number">2000</span></span><br><span class="line"><span class="string">innodb_write_io_threads</span> <span class="string">=</span> <span class="number">8</span></span><br><span class="line"><span class="string">innodb_read_io_threads</span> <span class="string">=</span> <span class="number">8</span></span><br><span class="line"><span class="string">innodb_max_dirty_pages_pct</span> <span class="string">=</span> <span class="number">75</span></span><br><span class="line"><span class="string">innodb_undo_logs</span> <span class="string">=</span> <span class="number">128</span></span><br><span class="line"><span class="string">innodb_undo_tablespaces</span> <span class="string">=</span> <span class="number">3</span></span><br><span class="line"><span class="string">innodb_autoinc_lock_mode</span> <span class="string">=</span> <span class="number">2</span></span><br><span class="line"><span class="string">innodb_stats_persistent_sample_pages</span> <span class="string">=</span> <span class="number">64</span></span><br><span class="line"><span class="string">innodb_flush_neighbors</span> <span class="string">=</span> <span class="number">1</span></span><br><span class="line"><span class="string">innodb_log_files_in_group</span> <span class="string">=</span> <span class="number">3</span></span><br><span class="line"><span class="string">innodb_log_file_size</span> <span class="string">=</span> <span class="number">256</span><span class="string">M</span></span><br><span class="line"><span class="string">innodb_log_buffer_size</span> <span class="string">=</span> <span class="number">8</span><span class="string">M</span></span><br><span class="line"><span class="string">innodb_sort_buffer_size</span> <span class="string">=</span> <span class="number">64</span><span class="string">M</span></span><br><span class="line"><span class="string">innodb_open_files</span> <span class="string">=</span> <span class="number">2048</span></span><br><span class="line"><span class="string">innodb_purge_threads</span> <span class="string">=</span> <span class="number">4</span></span><br><span class="line"><span class="string">innodb_large_prefix</span> <span class="string">=</span> <span class="number">1</span></span><br><span class="line"><span class="string">innodb_print_all_deadlocks</span> <span class="string">=</span> <span class="number">1</span></span><br><span class="line"><span class="string">innodb_strict_mode</span> <span class="string">=</span> <span class="number">1</span></span><br><span class="line"><span class="string">innodb_flush_log_at_trx_commit</span> <span class="string">=</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># MyISAM #</span></span><br><span class="line"><span class="string">key_buffer_size</span> <span class="string">=</span> <span class="number">16</span><span class="string">M</span></span><br><span class="line"><span class="string">myisam_recover_options</span> <span class="string">=</span> <span class="string">default</span></span><br><span class="line"><span class="string">bulk_insert_buffer_size</span> <span class="string">=</span> <span class="number">32</span><span class="string">M</span></span><br><span class="line"><span class="string">myisam_sort_buffer_size</span> <span class="string">=</span> <span class="number">4</span><span class="string">M</span></span><br><span class="line"><span class="string">myisam_repair_threads</span> <span class="string">=</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># LOGGING #</span></span><br><span class="line"><span class="string">log_error</span> <span class="string">=</span> <span class="string">/data/mysql3306/log3306/run/mysqld.err</span></span><br><span class="line"><span class="string">slow_query_log_file</span> <span class="string">=</span> <span class="string">/data/mysql3306/log3306/run/slow.log</span></span><br><span class="line"><span class="string">slow_query_log</span> <span class="string">=</span> <span class="number">1</span></span><br><span class="line"><span class="string">log_slow_admin_statements</span> <span class="string">=</span> <span class="number">1</span></span><br><span class="line"><span class="string">log_slow_slave_statements</span> <span class="string">=</span> <span class="number">1</span></span><br><span class="line"><span class="string">long_query_time</span> <span class="string">=</span> <span class="number">0.5</span></span><br><span class="line"></span><br><span class="line"><span class="string">[mysqldump]</span></span><br><span class="line"><span class="string">quick</span></span><br><span class="line"><span class="string">max_allowed_packet</span> <span class="string">=</span> <span class="number">64</span><span class="string">M</span></span><br><span class="line"><span class="string">socket</span> <span class="string">=</span> <span class="string">/data/program/mysql/mysql.sock</span></span><br><span class="line"><span class="string">default_character_set</span> <span class="string">=</span> <span class="string">utf8mb4</span></span><br><span class="line"><span class="comment">#user = bk_user</span></span><br><span class="line"><span class="comment">#password =</span></span><br><span class="line"></span><br><span class="line"><span class="string">[xtrabackup]</span></span><br><span class="line"><span class="comment">#user = bk_user</span></span><br><span class="line"><span class="comment">#password =</span></span><br><span class="line"></span><br><span class="line"><span class="string">[myisamchk]</span></span><br><span class="line"><span class="string">key_buffer_size</span> <span class="string">=</span> <span class="number">16</span><span class="string">M</span></span><br><span class="line"><span class="string">sort_buffer_size</span> <span class="string">=</span> <span class="number">16</span><span class="string">M</span></span><br><span class="line"></span><br><span class="line"><span class="string">[mysqlhotcopy]</span></span><br><span class="line"><span class="string">interactive_timeout</span></span><br><span class="line"></span><br><span class="line"><span class="string">[mysqld_safe]</span></span><br><span class="line"><span class="string">user</span> <span class="string">=</span> <span class="string">mysql</span></span><br><span class="line"><span class="string">basedir</span> <span class="string">=</span> <span class="string">/data/program/mysql</span></span><br><span class="line"><span class="string">pid-file</span> <span class="string">=</span> <span class="string">/data/mysql3306/log3306/run/mysqld.pid</span></span><br></pre></td></tr></table></figure>
     	
 	</div>
-
-	<footer class="entry-footer">
-		<div class="entry-meta-footer">
-			<span class="category">
-				
-  <div class="article-category">
-  	<span>categories:</span>
-    <a class="article-category-link" href="/categories/数据库/">数据库</a>
-  </div>
-
-			</span>
-			<span class="tags">
-				
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql优化/">mysql优化</a></li></ul>
-
-			</span>
-		</div>
-	</footer>
 
 	
 		
@@ -136,21 +135,20 @@
 </nav>
 
   	
-
 </article>
+<div id="comments"></div>
 
 
 
 
 
-<div id="comments">
+
 
 </div>
-  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-  <script src="/js/Valine.min.js"></script>
-  
-  <script type="text/javascript">
+			
+				<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<script type="text/javascript">
     var GUEST = ['nick','mail','link'];
     var guest = 'nick,mail,link';
     guest = guest.split(',').filter(item=>{
@@ -158,17 +156,16 @@
     });
     new Valine({
         av: AV, 
+        
         el: '#comments' ,
+        
+        placeholder: 'Just go to say', 
         appId: 'cysOkTzhnKRRxwWzfI2rfHnV-9Nh9j0Va',
         appKey: 'YH1G2lsSOCWs22GX6gHPLylP',
-        placeholder: 'Just go to say',
+        visitor: true,
     });
-  </script>
-
-
-
-
-</div>
+</script>
+			
 			<footer id="footer">
 				<h1 class="footer-blog-title">
 					<a href="/">Clear Sky</a>
@@ -181,132 +178,10 @@
 			</footer>
   		</div>
   		
-
-<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
-
-
 <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
 <script src="/fancybox/jquery.fancybox.pack.js"></script>
 
-
 <script src="/js/script.js"></script>
 <script src="/js/bundle.js"></script>
-
-
-  <script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
-  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
-  <script>
-    AV.initialize("cysOkTzhnKRRxwWzfI2rfHnV-9Nh9j0Va", "YH1G2lsSOCWs22GX6gHPLylP");
-    function showHitCount(Counter) {
-      // 这是给一个页面中有多篇文章时所调用的，例如博客主界面或者存档界面。
-      var query = new AV.Query(Counter);
-      var entries = [];
-      var $visitors = $(".leancloud_visitors");
-
-      // 获取页面中所有文章的id（page.url）
-      $visitors.each(function () {
-        entries.push( $(this).attr("id").trim() );
-      });
-
-      // 批量查询
-      query.containedIn('url', entries);
-      query.find()
-        .done(function (results) {
-          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
-
-          if (results.length === 0) {
-            $visitors.find(COUNT_CONTAINER_REF).text(0);
-            return;
-          }
-
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.get('url');
-            var hits = item.get('hits');// 获取点击次数
-            var element = document.getElementById(url);
-
-            // 显示点击次数
-            $(element).find(COUNT_CONTAINER_REF).text(hits);
-          }
-          for(var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = document.getElementById(url);
-            var countSpan = $(element).find(COUNT_CONTAINER_REF);
-            if( countSpan.text() == '') {
-              countSpan.text(0);
-            }
-          }
-        })
-        .fail(function (object, error) {
-          console.log("Error: " + error.code + " " + error.message);
-        });
-    }
-
-    function addCount(Counter) {
-      // 页面（博客文章）中的信息：leancloud_visitors
-      // id为page.url， data-flag-title为page.title
-      var $visitors = $(".leancloud_visitors");
-      var url = $visitors.attr('id').trim();
-      var title = $visitors.attr('data-flag-title').trim();
-      var query = new AV.Query(Counter);
-
-      // 只根据文章的url查询LeanCloud服务器中的数据
-      query.equalTo("url", url);
-      query.find({
-        success: function(results) {
-          if (results.length > 0) {//说明LeanCloud中已经记录了这篇文章
-            var counter = results[0];
-            counter.fetchWhenSave(true);
-            counter.increment("hits");// 将点击次数加1
-            counter.save(null, {
-              success: function(counter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(counter.get('hits'));
-              },
-              error: function(counter, error) {
-                console.log('Failed to save Visitor num, with error message: ' + error.message);
-              }
-            });
-          } else {
-            // 执行这里，说明LeanCloud中还没有记录此文章
-            var newcounter = new Counter();
-            /* Set ACL */
-            var acl = new AV.ACL();
-            acl.setPublicReadAccess(true);
-            acl.setPublicWriteAccess(true);
-            newcounter.setACL(acl);
-            /* End Set ACL */
-            newcounter.set("title", title);// 把文章标题
-            newcounter.set("url", url); // 文章url
-            newcounter.set("hits", 1); // 初始点击次数：1次
-            newcounter.save(null, { // 上传到LeanCloud服务器中
-              success: function(newcounter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(newcounter.get('hits'));
-              },
-              error: function(newcounter, error) {
-                console.log('Failed to create');
-              }
-            });
-          }
-        },
-        error: function(error) {
-          console.log('Error:' + error.code + " " + error.message);
-        }
-      });
-    }
-
-    $(function() {
-      var Counter = AV.Object.extend("Counter");
-      if ($('.leancloud_visitors').length == 1) {
-        // in post.html, so add 1 to hit counts
-        addCount(Counter);
-      } else if ($('.post-link').length > 1){
-        // in index.html, there are many 'leancloud_visitors' and 'post-link', so just show hit counts.
-        showHitCount(Counter);
-      }
-    });
-  </script>
-
 	</body>
 </html>

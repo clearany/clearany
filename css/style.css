@@ -1724,3 +1724,10 @@ pre .deletion {
     padding-left: 0;
   }
 }
+.entry-meta-header a {
+  color: #33a6b8;
+}
+.v .txt-right {
+  text-align: right;
+  display: none;
+}
