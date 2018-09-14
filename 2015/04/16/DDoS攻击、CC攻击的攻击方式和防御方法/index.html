@@ -67,6 +67,8 @@
 
 		<div class="commentscount">
 			
+				<a href="/2015/04/16/DDoS攻击、CC攻击的攻击方式和防御方法/#comments" class="article-comment-link">Comments</a>
+			
 		</div>
 	</footer>
 
@@ -178,6 +180,30 @@ Win2000和Win2003作为服务器操作系统，本身就具备一定的抵抗DDO
 </article>
 
 
+
+
+
+<div id="comments">
+
+</div>
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="/js/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        av: AV, 
+        el: '#comments' ,
+        appId: 'cysOkTzhnKRRxwWzfI2rfHnV-9Nh9j0Va',
+        appKey: 'YH1G2lsSOCWs22GX6gHPLylP',
+        placeholder: '留下你想说的',
+    });
+  </script>
 
 
 

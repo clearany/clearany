@@ -67,6 +67,8 @@
 
 		<div class="commentscount">
 			
+				<a href="/2016/05/11/RabbitMQ源码安装/#comments" class="article-comment-link">Comments</a>
+			
 		</div>
 	</footer>
 
@@ -146,6 +148,30 @@ management plugin默认就在RabbitMQ的发布版本中，只需要enable就可�
 </article>
 
 
+
+
+
+<div id="comments">
+
+</div>
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="/js/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        av: AV, 
+        el: '#comments' ,
+        appId: 'cysOkTzhnKRRxwWzfI2rfHnV-9Nh9j0Va',
+        appKey: 'YH1G2lsSOCWs22GX6gHPLylP',
+        placeholder: '留下你想说的',
+    });
+  </script>
 
 
 
