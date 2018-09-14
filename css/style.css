@@ -1439,6 +1439,57 @@ pre .deletion {
 .item-post .post-title:hover {
   color: $link-hover-color;
 }
+.content.content-about .about-list {
+  margin-left: -2px;
+}
+.content.content-about .about-list .about-item {
+  position: relative;
+  padding: 10px 0;
+}
+.content.content-about .about-list .about-item .text {
+  padding-left: 20px;
+}
+.content.content-about a.text-value-url {
+  color: #fff;
+}
+.content.content-about a.text-value-url:hover {
+  color: #e6e6e6;
+}
+.content.content-about .dot {
+  position: absolute;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  margin-top: -5px;
+  margin-left: -5px;
+  content: ' ';
+  border-radius: 50%;
+}
+.content.content-about .dot.icon {
+  font-size: 12px;
+  line-height: 10px;
+  width: 10px;
+  height: 10px;
+  margin-top: -5px;
+  margin-left: -5px;
+  padding-left: 2px;
+  color: rgba(255,255,255,0.6);
+}
+.content.content-about .dot.dot-0 {
+  background: #1abc9c;
+}
+.content.content-about .dot.dot-1 {
+  background: #3498db;
+}
+.content.content-about .dot.dot-2 {
+  background: #9b59b6;
+}
+.content.content-about .dot.dot-3 {
+  background: #e67e22;
+}
+.content.content-about .dot.dot-4 {
+  background: #e74c3c;
+}
 @media screen and (min-width: 400px) and (max-width: 500px) {
   .item-post .post-title {
     max-width: 330px;
