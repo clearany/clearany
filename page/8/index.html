@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>Clear Sky</title>
+    <meta name="viewport" content="width=device-width">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Clear Sky" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4e55f04a49a285900817965cb4619021";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div class="mobile-nav-panel">
+        <i class="icon-reorder icon-large"></i>
+      </div>
+      <header id="header">
+        <h1 class="blog-title">
+          <a href="/">Clear Sky</a>
+        </h1>
+        <nav class="nav">
+          <ul>
+            <li><a href="/"><i class="fa fa-home fa-fw"></i>home</a></li>
+            <li><a href="/archives"><i class="fa fa-archive fa-fw"></i>archives</a></li>
+            <li><a href="/categories"><i class="fa fa-list fa-fw"></i>categories</a></li>
+            <li><a href="/tags"><i class="fa fa-tags fa-fw"></i>tags</a></li>
+            <li><a href="/search"><i class="fa fa-search fa-fw"></i>search</a></li>
+            <li><a href="/about"><i class="fa fa-user fa-fw"></i>about</a></li>
+            <li><a href="/atom.xml"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+          </ul>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.clearany.com"></form>
+        </div>
+      </header>
+<div id="main">
+	
+	
+	    <article id="post-RabbitMQ集群-单机多节点部署" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2016-05-11T09:24:12.000Z" itemprop="datePublished">2016-05-11</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2016/05/11/RabbitMQ集群-单机多节点部署/">RabbitMQ集群-单机多节点部署</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+    		<h4 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h4><pre><code>在启动RabbitMQ节点之后，服务器默认的节点名称是Rabbit和监听端口5672，如果想在同一台机器上启动多个节点，那么其他的节点就会因为节点名称和端口与默认的冲突而导致启动失败，可以通过设置环境变量来实现，具体方法如下：
+</code></pre><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#首先在机器上设置两个节点rabbit和rabbit_01</span></span><br><span class="line">rabbitmqctl stop //先停止运行节点，再进行集群部署</span><br><span class="line">RABBITMQ_NODE_PORT=5672 RABBITMQ_NODENAME=rabbit //设置环境变量指定端口和节点名称</span><br><span class="line">rabbitmq-server -detached //后台启动节点</span><br><span class="line">RABBITMQ_NODE_PORT=5673 RABBITMQ_NODENAME=rabbit_01 //设置环境变量指定端口和节点名称</span><br><span class="line">rabbitmq-server -detached //后台启动节点</span><br><span class="line"></span><br><span class="line"><span class="comment">#或者通过添加/etc/rabbitmq/rabbitmq-env.conf文件来进行设置：</span></span><br><span class="line">NODE_PORT=5672</span><br><span class="line">NODENAME=rabbit</span><br><span class="line">NODE_PORT=5673</span><br><span class="line">NODENAME=rabbit_01</span><br><span class="line"></span><br><span class="line"><span class="comment">#将rabbit_01节点添加到第一个集群节点rabbit中</span></span><br><span class="line">rabbitmqctl -n rabbit_01@localhost stop_app //停止rabbit_01节点的应用</span><br><span class="line">rabbitmqctl -n rabbit_01@localhost join_cluster rabbit@localhost //将rabbit_01添加到集群节点rabbit中去</span><br><span class="line">rabbitmqctl cluster_status //查看集群节点的状态</span><br><span class="line">rabbitmqctl -n rabbit_01@localhost start_app //启动rabbit_01节点的应用</span><br><span class="line"></span><br><span class="line"><span class="comment">#可以看到如下信息，说明节点添加成功，表明都是磁盘类型的节点</span></span><br><span class="line">Cluster status of node rabbit@localhost ...</span><br><span class="line">[&#123;nodes,[&#123;disc,[rabbit@localhost,rabbit_01@localhost]&#125;]&#125;,</span><br><span class="line"> &#123;running_nodes,[rabbit@localhost]&#125;,</span><br><span class="line"> &#123;cluster_name,&lt;&lt;<span class="string">"rabbit@localhost"</span>&gt;&gt;&#125;,</span><br><span class="line"> &#123;partitions,[]&#125;,</span><br><span class="line"> &#123;alarms,[&#123;rabbit@localhost,[]&#125;]&#125;]</span><br></pre></td></tr></table></figure>
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/数据库/">数据库</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RabbitMQ/">RabbitMQ</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RabbitMQ集群/">RabbitMQ集群</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+
+</article>
+
+
+	<hr class="article-devider">
+
+
+
+	
+	    <article id="post-RabbitMQ基础概念" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2016-05-11T09:12:32.000Z" itemprop="datePublished">2016-05-11</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2016/05/11/RabbitMQ基础概念/">RabbitMQ 基础概念</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+			<h4 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h4><pre><code>MQ全称为Message Queue, 是一种分布式应用程序的的通信方法，它是消费-生产者模型的一个典型的代表，producer往消息队列中不断写入消息，而另一端consumer则可以读取或者订阅队列中的消息。RabbitMQ是MQ产品的典型代表，是一款基于AMQP协议可复用的企业消息系统。业务上，可以实现服务提供者和消费者之间的数据解耦，提供高可用性的消息传输机制，在实际生产中应用相当广泛。本文意在介绍Rabbitmq的基本原理，包括rabbitmq基本框架，概念，通信过程等
+</code></pre><h4 id="系统架构"><a href="#系统架构" class="headerlink" title="系统架构"></a>系统架构</h4><pre><code>Rabbitmq系统最核心的组件是Exchange和Queue，下图是系统简单的示意图。Exchange和Queue是在rabbitmq server（又叫做broker）端，producer和consumer在应用端
+</code></pre><p><img src="http://192.168.3.99:8080/server/../Public/Uploads/2018-04-16/5ad41cd773deb.png" alt=""><br>
+			
+				<p class="article-more-link">
+					<a href="/2016/05/11/RabbitMQ基础概念/#more"><i>more >> </i></a>
+				</p>
+      		
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/数据库/">数据库</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RabbitMQ/">RabbitMQ</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/消息中间件/">消息中间件</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+
+</article>
+
+
+	<hr class="article-devider">
+
+
+
+	
+	    <article id="post-RabbitMQ源码安装" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2016-05-11T08:19:27.000Z" itemprop="datePublished">2016-05-11</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2016/05/11/RabbitMQ源码安装/">RabbitMQ源码安装</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+			<h4 id="安装语言环境"><a href="#安装语言环境" class="headerlink" title="安装语言环境"></a>安装语言环境</h4><pre><code>RabbitMQ是基于Erlang的，所以首先必须配置Erlang环境.
+</code></pre><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">yum -y install make gcc gcc-c++ kernel-devel m4 ncurses ncurses-devel openssl-devel perl</span><br><span class="line"><span class="built_in">cd</span> /data/src</span><br><span class="line"><span class="comment">#下载解压</span></span><br><span class="line">tar -zxvf otp_src_18.2.1.tar.gz</span><br><span class="line"><span class="built_in">cd</span> otp_src_17.4;</span><br><span class="line">./configure --prefix=/data/program/erlang;</span><br><span class="line">make &amp;&amp; make install</span><br><span class="line"></span><br><span class="line"><span class="comment">#修改/etc/profile文件，增加下面的环境变量：</span></span><br><span class="line"><span class="comment">#set erlang environment</span></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:/usr/<span class="built_in">local</span>/erlang/bin</span><br><span class="line"></span><br><span class="line"><span class="built_in">source</span> /etc/profile</span><br></pre></td></tr></table></figure>
+			
+				<p class="article-more-link">
+					<a href="/2016/05/11/RabbitMQ源码安装/#more"><i>more >> </i></a>
+				</p>
+      		
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/数据库/">数据库</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RabbitMQ/">RabbitMQ</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/消息中间件/">消息中间件</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+
+</article>
+
+
+	<hr class="article-devider">
+
+
+
+	
+	    <article id="post-NG流控和f2b防止CC" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2016-04-24T02:12:41.000Z" itemprop="datePublished">2016-04-24</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2016/04/24/NG流控和f2b防止CC/">NG流控和f2b防止CC</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+			<h4 id="CC-攻击"><a href="#CC-攻击" class="headerlink" title="CC 攻击"></a>CC 攻击</h4><p>攻击者通过创建大量请求导致服务器资源耗尽，主要针对特定服务接口，属于实现 DoS 攻击的一种方式（DoS 攻击更多是针对网络端口，而不是具体服务接口）。</p>
+<h4 id="NGINX-流控"><a href="#NGINX-流控" class="headerlink" title="NGINX 流控"></a>NGINX 流控</h4><p>limit_req_zone：通过“漏桶”算法限制每个 IP 发起的请求频率。<br>limit_conn_zone：限制每个 IP 发起的连接数。</p>
+<h4 id="fail2ban"><a href="#fail2ban" class="headerlink" title="fail2ban"></a>fail2ban</h4><p>通过匹配服务器日志操作 iptables 来限制客户端网络连接。<br>
+			
+				<p class="article-more-link">
+					<a href="/2016/04/24/NG流控和f2b防止CC/#more"><i>more >> </i></a>
+				</p>
+      		
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/网络安全/">网络安全</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cc/">cc</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/fail2ban/">fail2ban</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/限流/">限流</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+
+</article>
+
+
+	<hr class="article-devider">
+
+
+
+	
+	    <article id="post-mysql的性能优化" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2016-04-19T14:26:45.000Z" itemprop="datePublished">2016-04-19</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2016/04/19/mysql的性能优化/">mysql的性能优化</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+			<h4 id="以下是mysql-优化使用过的配置文件仅供参考"><a href="#以下是mysql-优化使用过的配置文件仅供参考" class="headerlink" title="以下是mysql 优化使用过的配置文件仅供参考"></a>以下是mysql 优化使用过的配置文件仅供参考</h4>
+			
+				<p class="article-more-link">
+					<a href="/2016/04/19/mysql的性能优化/#more"><i>more >> </i></a>
+				</p>
+      		
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/数据库/">数据库</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql优化/">mysql优化</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+
+</article>
+
+
+	<hr class="article-devider">
+
+
+
+	
+
+	
+	  <nav id="page-nav">
+	    <a class="extend prev" rel="prev" href="/page/7/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/9/">Next &raquo;</a>
+	  </nav>
+	
+
+</div>
+			<footer id="footer">
+				<h1 class="footer-blog-title">
+					<a href="/">Clear Sky</a>
+				</h1>
+				<span class="copyright">
+					&copy; 2018 CLEAR<br>
+					Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+					Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+				</span>
+			</footer>
+  		</div>
+  		
+
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bundle.js"></script>
+	</body>
+</html>

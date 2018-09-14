@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>Firewalld的应用 | Clear Sky</title>
+    <meta name="viewport" content="width=device-width">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Clear Sky" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4e55f04a49a285900817965cb4619021";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div class="mobile-nav-panel">
+        <i class="icon-reorder icon-large"></i>
+      </div>
+      <header id="header">
+        <h1 class="blog-title">
+          <a href="/">Clear Sky</a>
+        </h1>
+        <nav class="nav">
+          <ul>
+            <li><a href="/"><i class="fa fa-home fa-fw"></i>home</a></li>
+            <li><a href="/archives"><i class="fa fa-archive fa-fw"></i>archives</a></li>
+            <li><a href="/categories"><i class="fa fa-list fa-fw"></i>categories</a></li>
+            <li><a href="/tags"><i class="fa fa-tags fa-fw"></i>tags</a></li>
+            <li><a href="/search"><i class="fa fa-search fa-fw"></i>search</a></li>
+            <li><a href="/about"><i class="fa fa-user fa-fw"></i>about</a></li>
+            <li><a href="/atom.xml"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+          </ul>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.clearany.com"></form>
+        </div>
+      </header>
+<div id="main">
+	
+	<article id="post-Firewalld的应用" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2016-07-12T03:21:48.000Z" itemprop="datePublished">2016-07-12</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2016/07/12/Firewalld的应用/">Firewalld的应用</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+    		<h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><pre><code>Firewalld服务是红帽RHEL7系统中默认的防火墙管理工具，特点是拥有运行时配置与永久配置选项且能够支持动态更新以及&quot;zone&quot;的区域功能概念，使用图形化工具firewall-config或文本管理工具firewall-cmd。　防火墙的网络区域定义了网络连接的可信等级，我们可以根据不同场景来调用不同的firewalld区域
+</code></pre><h4 id="zone概念"><a href="#zone概念" class="headerlink" title="zone概念"></a>zone概念</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">硬件防火墙默认一般有三个区，firewalld引入这一概念系统默认存在以下区域：</span><br><span class="line">drop：（丢弃），任何接受的网络数据包都被丢弃，没有任何回复。仅能有发送出去的网络连接。</span><br><span class="line">block：（限制）拒绝所有外部连接，允许内部发起的连接，任何接受的网络连接都被IPV4的icmp-host-prohibited信息和ipv6的icmp6-adm-prohibited信息所拒绝。</span><br><span class="line">public：（公共）在公共区域内使用，不能相信网络内的其他计算机不会对你的计算造成危害，只能接受经过选取的连接。</span><br><span class="line">external：（外部）特别是为路由器启用了伪装功能的外部网。你不能信任来自网络的其他计算，不嫩更相信他们不会对你的计算机造成危害，只能接受经过选择的连接。</span><br><span class="line">dmz：（非军事区）用于你的非军事区内的电脑，此区域内可公开访问，可以有限地进入你的内部网络，仅仅接受经过选择的连接。</span><br><span class="line">work：用于工作区。你可以基本相信网络内的其他电脑不会危害你的电脑。仅仅接受经过选择的连接。</span><br><span class="line">home：用于家庭网络。你可以基本相信网络内的其他计算机不会危害你的计算机。仅仅接受经过选择的连接。</span><br><span class="line">internal：用于内部网络，你可以基本信任网络内的其他计算机不会威胁你的计算机，仅仅接受经过选择的连接。</span><br><span class="line">trusted：可接受所有的网络连接</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h4 id="安装运行Firewalld"><a href="#安装运行Firewalld" class="headerlink" title="安装运行Firewalld"></a>安装运行Firewalld</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#安装</span></span><br><span class="line">yum install firewalld firewall-config</span><br><span class="line"><span class="comment">#启动</span></span><br><span class="line">systemctl start  firewalld</span><br><span class="line"><span class="comment">#查看状态</span></span><br><span class="line">systemctl status firewalld 或者 firewall-cmd --state</span><br><span class="line"><span class="comment">#停止</span></span><br><span class="line">systemctl <span class="built_in">disable</span> firewalld</span><br><span class="line"><span class="comment">#禁用</span></span><br><span class="line">systemctl stop firewalld</span><br></pre></td></tr></table></figure>
+<h4 id="常用操作"><a href="#常用操作" class="headerlink" title="常用操作"></a>常用操作</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#查看版本</span></span><br><span class="line">firewall-cmd --version</span><br><span class="line"><span class="comment">#查看帮助</span></span><br><span class="line">firewall-cmd --<span class="built_in">help</span></span><br><span class="line"><span class="comment">#显示状态</span></span><br><span class="line">firewall-cmd --state</span><br><span class="line"><span class="comment">#查看区域信息</span></span><br><span class="line">firewall-cmd --get-active-zones</span><br><span class="line"><span class="comment">#查看当前的区域</span></span><br><span class="line">firewall-cmd --get-default-zone</span><br><span class="line"><span class="comment">#查看指定接口所属区域</span></span><br><span class="line">firewall-cmd --get-zone-of-interface=eth0</span><br><span class="line"><span class="comment">#给指定网卡设置zone</span></span><br><span class="line">firewall-cmd --zone=public --add-interface=eth0</span><br><span class="line"><span class="comment">#针对网卡更改zone</span></span><br><span class="line">firewall-cmd --zone=dmz --change-interface=eth0</span><br><span class="line"><span class="comment">#针对网卡删除zone</span></span><br><span class="line">firewall-cmd --zone=dmz --remove-interface=eth0</span><br><span class="line"><span class="comment">#设置默认规则为dmz</span></span><br><span class="line">firewall-cmd --<span class="built_in">set</span>-default-zone=dmz</span><br><span class="line"><span class="comment">#查看public域中的所有服务</span></span><br><span class="line">firewall-cmd --zone=public --list-services</span><br><span class="line"><span class="comment">#查看public域中的所有端口</span></span><br><span class="line">firewall-cmd --zone=public --list-ports </span><br><span class="line"></span><br><span class="line"><span class="comment">#允许8080与8081端口流量通过public区域，立即生效且永久生效</span></span><br><span class="line">firewall-cmd --permanent --zone=public --add-port=8080-8081/tcp</span><br><span class="line">firewall-cmd --reload</span><br><span class="line"><span class="comment">#拒绝192.168.10.0/24网段的用户访问ssh服务</span></span><br><span class="line">firewall-cmd --permanent --zone=public --add-rich-rule=<span class="string">"rule family="</span>ipv4<span class="string">" source address="</span>192.168.10.0/24<span class="string">" service name="</span>ssh<span class="string">" reject"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#将访问主机888端口的请求转发至22端口</span></span><br><span class="line">firewall-cmd --permanent --zone=public --add-forward-port=port=888:proto=tcp:toport=22:toaddr=192.168.0.85</span><br><span class="line">firewall-cmd --reload</span><br><span class="line"><span class="comment">#不再允许http服务流量通过public区域，要求立即生效且永久生效</span></span><br><span class="line">firewall-cmd --permanent --zone=public --remove-service=http</span><br><span class="line">firewall-cmd --reload</span><br><span class="line"></span><br><span class="line"><span class="comment">#拒绝所有包</span></span><br><span class="line">firewall-cmd --panic-on</span><br><span class="line"><span class="comment">#取消拒绝状态</span></span><br><span class="line">firewall-cmd --panic-off</span><br><span class="line"><span class="comment">#查看是否拒绝</span></span><br><span class="line">firewall-cmd --query-panic</span><br><span class="line"></span><br><span class="line"><span class="comment">#更新防火墙规则</span></span><br><span class="line">firewall-cmd --reload</span><br><span class="line">firewall-cmd --complete-reload</span><br><span class="line"><span class="comment">#两者的区别就是第一个无需断开连接，就是firewalld特性之一动态添加规则，第二个需要断开连接，类似重启服务</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#将接口添加到区域，默认接口都在public</span></span><br><span class="line">firewall-cmd --zone=public --add-interface=eth0</span><br><span class="line"><span class="comment">#永久生效再加上 --permanent 然后reload防火墙</span></span><br><span class="line"><span class="comment">#设置默认接口区域</span></span><br><span class="line"><span class="comment"># firewall-cmd --set-default-zone=public</span></span><br><span class="line"><span class="comment">#立即生效无需重启</span></span><br><span class="line"><span class="comment">#查看所有打开的端口：</span></span><br><span class="line">firewall-cmd --zone=dmz --list-ports</span><br><span class="line"><span class="comment">#加入一个端口到区域：</span></span><br><span class="line">firewall-cmd --zone=dmz --add-port=8080/tcp</span><br><span class="line"><span class="comment">#添加服务</span></span><br><span class="line">firewall-cmd --zone=work --add-service=smtp</span><br><span class="line"><span class="comment">#移除服务</span></span><br><span class="line">firewall-cmd --zone=work --remove-service=smtp</span><br></pre></td></tr></table></figure>
+
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/linux/">linux</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Firewalld/">Firewalld</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iptales/">iptales</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安全/">安全</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/防火墙/">防火墙</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+		
+<nav id="article-nav">
+  
+    <a href="/2016/07/13/单机多网口高可用实现/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          单机多网口高可用实现
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/07/02/Elasticsearch的备份和恢复/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          Elasticsearch的备份和恢复
+        
+      </div>
+    </a>
+  
+</nav>
+
+  	
+
+</article>
+
+
+
+
+
+
+</div>
+			<footer id="footer">
+				<h1 class="footer-blog-title">
+					<a href="/">Clear Sky</a>
+				</h1>
+				<span class="copyright">
+					&copy; 2018 CLEAR<br>
+					Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+					Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+				</span>
+			</footer>
+  		</div>
+  		
+
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bundle.js"></script>
+	</body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>Redis常用操作 | Clear Sky</title>
+    <meta name="viewport" content="width=device-width">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Clear Sky" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4e55f04a49a285900817965cb4619021";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div class="mobile-nav-panel">
+        <i class="icon-reorder icon-large"></i>
+      </div>
+      <header id="header">
+        <h1 class="blog-title">
+          <a href="/">Clear Sky</a>
+        </h1>
+        <nav class="nav">
+          <ul>
+            <li><a href="/"><i class="fa fa-home fa-fw"></i>home</a></li>
+            <li><a href="/archives"><i class="fa fa-archive fa-fw"></i>archives</a></li>
+            <li><a href="/categories"><i class="fa fa-list fa-fw"></i>categories</a></li>
+            <li><a href="/tags"><i class="fa fa-tags fa-fw"></i>tags</a></li>
+            <li><a href="/search"><i class="fa fa-search fa-fw"></i>search</a></li>
+            <li><a href="/about"><i class="fa fa-user fa-fw"></i>about</a></li>
+            <li><a href="/atom.xml"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+          </ul>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.clearany.com"></form>
+        </div>
+      </header>
+<div id="main">
+	
+	<article id="post-Redis常用操作" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2016-05-16T02:10:09.000Z" itemprop="datePublished">2016-05-16</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2016/05/16/Redis常用操作/">Redis常用操作</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+    		<h4 id="Redis-控制台常用命令"><a href="#Redis-控制台常用命令" class="headerlink" title="Redis 控制台常用命令"></a>Redis 控制台常用命令</h4><pre><code>TIME 查看时间戳与微秒数
+DBSIZE 查看当前库中的key数量
+BGREWRITEAOF 后台进程重写AOF
+BGSAVE       后台保存rdb快照
+SAVE         保存rdb快照
+LASTSAVE     上次保存时间
+SLAVEOF      设为slave服务器
+FLUSHALL     清空所有db
+FLUSHDB      清空当前db
+SHUTDOWN[&quot;&quot;|save|nosave]     断开连接,关闭服务器
+SLOWLOG   显示慢查询
+INFO      显示服务器信息
+CONFIG GET 获取配置信息
+CONFIG SET 设置配置信息
+MONITOR    打开控制台
+SYNC       主从同步
+CLIENT LIST 客户端列表
+CLIENT KILL 关闭某个客户端
+CLIENT SETNAME 为客户端设置名字
+CLIENT GETNAME 获取客户端名字
+</code></pre><a id="more"></a>
+<h4 id="操作实例"><a href="#操作实例" class="headerlink" title="操作实例"></a>操作实例</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">redis 127.0.0.1:6380&gt; time  ,显示服务器时间 , 时间戳(秒), 微秒数</span><br><span class="line">1) <span class="string">"1375270361"</span></span><br><span class="line">2) <span class="string">"504511"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">redis 127.0.0.1:6380&gt; dbsize  // 当前数据库的key的数量</span><br><span class="line">(<span class="built_in">integer</span>) 2</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">redis 127.0.0.1:6380&gt; select 2</span><br><span class="line">OK</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">redis 127.0.0.1:6380[2]&gt; dbsize</span><br><span class="line">(<span class="built_in">integer</span>) 0</span><br></pre></td></tr></table></figure>
+<h4 id="答疑"><a href="#答疑" class="headerlink" title="答疑"></a>答疑</h4><pre><code>注:如果不小心运行了flushall,立即 shutdown nosave ,关闭服务器
+然后 手工编辑aof文件, 去掉文件中的 “flushall ”相关行, 然后开启服务器,就可以导入回原来数据.
+如果,flushall之后,系统恰好bgrewriteaof了,那么aof就清空了,数据丢失.
+
+Slowlog 显示慢查询
+注:多慢才叫慢?
+答:由slowlog-log-slower-than 10000 ,来指定,(单位是微秒)
+
+服务器储存多少条慢查询的记录?
+答: 由 slowlog-max-len 128 ,来做限制
+Info [Replication/CPU/Memory..]
+
+查看redis服务器的信息
+Config get 配置项 
+Config set 配置项值 (特殊的选项,不允许用此命令设置,如slave-of, 需要用单独的slaveof命令来设置)
+
+
+Redis运维时需要注意的参数
+1: 内存
+# Memory
+used_memory:859192 数据结构的空间
+used_memory_rss:7634944 实占空间
+mem_fragmentation_ratio:8.89 前2者的比例,1.N为佳,如果此值过大,说明redis的内存的碎片化严重,可以导出再导入一次.
+
+2: 主从复制
+# Replication
+role:slave
+master_host:192.168.1.128
+master_port:6379
+master_link_status:up
+
+
+3:持久化
+# Persistence
+rdb_changes_since_last_save:0
+rdb_last_save_time:1375224063
+
+
+4: fork耗时
+#Status
+latest_fork_usec:936  上次导出rdb快照,持久化花费微秒
+注意:如果某实例有10G内容,导出需要2分钟,
+每分钟写入10000次,导致不断的rdb导出,磁盘始处于高IO状态.
+
+
+5: 慢日志
+config get/set slowlog-log-slower-than
+CONFIG get/SET slowlog-max-len
+slowlog get N 获取慢日志
+
+
+运行时更改master-slave
+
+修改一台slave(设为A)为new master
+1) 命令该服务不做其他redis服务的slave
+   命令: slaveof no one
+2) 修改其readonly为yes
+
+
+其他的slave再指向new master A
+1) 命令该服务为new master A的slave
+   命令格式 slaveof IP port
+</code></pre>
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/数据库/">数据库</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis集群/">redis集群</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+		
+<nav id="article-nav">
+  
+    <a href="/2016/05/16/Redis集群模式(官方版)/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Redis集群模式(官方版)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/05/16/Redis编译安装/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          Redis编译安装
+        
+      </div>
+    </a>
+  
+</nav>
+
+  	
+
+</article>
+
+
+
+
+
+
+</div>
+			<footer id="footer">
+				<h1 class="footer-blog-title">
+					<a href="/">Clear Sky</a>
+				</h1>
+				<span class="copyright">
+					&copy; 2018 CLEAR<br>
+					Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+					Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+				</span>
+			</footer>
+  		</div>
+  		
+
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bundle.js"></script>
+	</body>
+</html>

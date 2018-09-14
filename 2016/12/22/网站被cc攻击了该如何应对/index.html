@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>网站被cc攻击了该如何应对 | Clear Sky</title>
+    <meta name="viewport" content="width=device-width">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Clear Sky" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4e55f04a49a285900817965cb4619021";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div class="mobile-nav-panel">
+        <i class="icon-reorder icon-large"></i>
+      </div>
+      <header id="header">
+        <h1 class="blog-title">
+          <a href="/">Clear Sky</a>
+        </h1>
+        <nav class="nav">
+          <ul>
+            <li><a href="/"><i class="fa fa-home fa-fw"></i>home</a></li>
+            <li><a href="/archives"><i class="fa fa-archive fa-fw"></i>archives</a></li>
+            <li><a href="/categories"><i class="fa fa-list fa-fw"></i>categories</a></li>
+            <li><a href="/tags"><i class="fa fa-tags fa-fw"></i>tags</a></li>
+            <li><a href="/search"><i class="fa fa-search fa-fw"></i>search</a></li>
+            <li><a href="/about"><i class="fa fa-user fa-fw"></i>about</a></li>
+            <li><a href="/atom.xml"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+          </ul>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.clearany.com"></form>
+        </div>
+      </header>
+<div id="main">
+	
+	<article id="post-网站被cc攻击了该如何应对" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2016-12-22T11:45:18.000Z" itemprop="datePublished">2016-12-22</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2016/12/22/网站被cc攻击了该如何应对/">网站被cc攻击了该如何应对</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+    		<p>如果你的网站是使用的是Nginx做的反向代理，那么可以利用Nginx原生的limit_req模块来针对请求进行限制，(ngx_http_limit_req_module 模块)当然，也可以使用tengine的limit_req模块，对官方模块进行了增强(The Tengine Web Server)或者还有一个比较高端的模块：(yaoweibin/nginx_limit_access_module 路 GitHub), 作者是,姚神</p>
+<a id="more"></a>
+<p>作者：知道创宇 云安全<br>链接：<a href="https://www.zhihu.com/question/19742963/answer/375949327" target="_blank" rel="noopener">https://www.zhihu.com/question/19742963/answer/375949327</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+<p>CC攻击原理攻击者控制某些主机不停地发大量数据包给对方服务器造成服务器资源耗尽，一直到宕机崩溃。<br>CC主要是用来攻击页面的，每个人都有这样的体验：当一个网页访问的人数特别多的时候，打开网页就慢了，CC就是模拟多个用户(多少线程就是多少用户)不停地进行访问那些需要大量数据操作(就是需要大量CPU时间)的页面，造成服务器资源的浪费，CPU长时间处于100%，永远都有处理不完的连接直至就网络拥塞，正常的访问被中止。<br>CC攻击防御策略<br>1.取消域名绑定取消域名绑定后Web服务器的CPU能够马上恢复正常状态，通过IP进行访问连接一切正常。但是不足之处也很明显，取消或者更改域名对于别人的访问带来了不变，另外，对于针对IP的CC攻击它是无效的，就算更换域名攻击者发现之后，攻击者也会对新域名实施攻击。<br>2.更改Web端口一般情况下Web服务器通过80端口对外提供服务，因此攻击者实施攻击就以默认的80端口进行攻击，所以，可以修改Web端口达到防CC攻击的目的。<br>3.IIS屏蔽IP我们通过命令或在查看日志发现了CC攻击的源IP，就可以在IIS中设置屏蔽该IP对Web站点的访问，从而达到防范IIS攻击的目的。</p>
+<p>CC攻击的防范手段<br>1.优化代码尽可能使用缓存来存储重复的查询内容，减少重复的数据查询资源开销。减少复杂框架的调用，减少不必要的数据请求和处理逻辑。程序执行中，及时释放资源，比如及时关闭mysql连接，及时关闭memcache连接等，减少空连接消耗。<br>2.限制手段对一些负载较高的程序增加前置条件判断，可行的判断方法如下：必须具有网站签发的session信息才可以使用（可简单阻止程序发起的集中请求）；必须具有正确的referer（可有效防止嵌入式代码的攻击）；禁止一些客户端类型的请求（比如一些典型的不良蜘蛛特征）；同一session多少秒内只能执行一次。<br>3.完善日志尽可能完整保留访问日志。日志分析程序，能够尽快判断出异常访问，比如单一ip密集访问；比如特定url同比请求激增。面对来势汹汹的CC攻击，其实最好的方式还是选择第三方的云安全厂商（就像我们）来解决问题。</p>
+<p>知道创宇国际顶尖安全研究团队为抗D保自主研发的Nightwatch Anti-CC防护引擎可以根据访问者的URL，频率、行为等访问特征，智能识别CC攻击，迅速识别CC攻击并进行拦截，在大规模CC攻击时可以避免源站资源耗尽，保证企业网站的正常访问。好的广告打完了，感谢您的阅读⁄(⁄ ⁄•⁄ω⁄•⁄ ⁄)⁄</p>
+<ol>
+<li>硬件，如梭子鱼</li>
+<li>开源waf，如openstar</li>
+<li>商业，如知道创宇</li>
+<li>免费 360网站卫士</li>
+</ol>
+
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/linux/">linux</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cc/">cc</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/攻击/">攻击</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+		
+<nav id="article-nav">
+  
+    <a href="/2017/03/22/ELK+Zookeeper+Kafka集群安装配置/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          ELK+Zookeeper+Kafka集群安装配置
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/12/02/Fail2ban的应用/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          Fail2ban的应用
+        
+      </div>
+    </a>
+  
+</nav>
+
+  	
+
+</article>
+
+
+
+
+
+
+</div>
+			<footer id="footer">
+				<h1 class="footer-blog-title">
+					<a href="/">Clear Sky</a>
+				</h1>
+				<span class="copyright">
+					&copy; 2018 CLEAR<br>
+					Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+					Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+				</span>
+			</footer>
+  		</div>
+  		
+
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bundle.js"></script>
+	</body>
+</html>

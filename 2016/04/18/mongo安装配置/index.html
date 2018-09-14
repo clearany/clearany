@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>mongo安装配置 | Clear Sky</title>
+    <meta name="viewport" content="width=device-width">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Clear Sky" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4e55f04a49a285900817965cb4619021";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div class="mobile-nav-panel">
+        <i class="icon-reorder icon-large"></i>
+      </div>
+      <header id="header">
+        <h1 class="blog-title">
+          <a href="/">Clear Sky</a>
+        </h1>
+        <nav class="nav">
+          <ul>
+            <li><a href="/"><i class="fa fa-home fa-fw"></i>home</a></li>
+            <li><a href="/archives"><i class="fa fa-archive fa-fw"></i>archives</a></li>
+            <li><a href="/categories"><i class="fa fa-list fa-fw"></i>categories</a></li>
+            <li><a href="/tags"><i class="fa fa-tags fa-fw"></i>tags</a></li>
+            <li><a href="/search"><i class="fa fa-search fa-fw"></i>search</a></li>
+            <li><a href="/about"><i class="fa fa-user fa-fw"></i>about</a></li>
+            <li><a href="/atom.xml"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+          </ul>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.clearany.com"></form>
+        </div>
+      </header>
+<div id="main">
+	
+	<article id="post-mongo安装配置" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2016-04-18T13:50:29.000Z" itemprop="datePublished">2016-04-18</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2016/04/18/mongo安装配置/">mongo安装配置</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+    		<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><pre><code>Mongo的安装相对简单，官方给出的都是二进制包，下载解压即可，如下：
+</code></pre><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 下载</span></span><br><span class="line">curl -O https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-3.0.6.tgz    </span><br><span class="line"><span class="comment"># 解压</span></span><br><span class="line">tar -zxvf mongodb-linux-x86_64-3.0.6.tgz                                   </span><br><span class="line"><span class="comment">#移动到指定目录</span></span><br><span class="line">mv  mongodb-linux-x86_64-3.0.6/ /data/program/mongodb</span><br></pre></td></tr></table></figure>
+<h4 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h4><pre><code>略....
+</code></pre><a id="more"></a>
+<h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 数据库文件位置</span></span><br><span class="line"><span class="string">dbpath=/data/program/mongodb/data/27017</span></span><br><span class="line"><span class="comment">#日志文件位置</span></span><br><span class="line"><span class="string">logpath=/data/program/mongodb/logs/mongodb.log</span></span><br><span class="line"><span class="comment"># 以追加方式写入日志</span></span><br><span class="line"><span class="string">logappend=true</span></span><br><span class="line"><span class="comment"># 是否以守护进程方式运行</span></span><br><span class="line"><span class="string">fork</span> <span class="string">=</span> <span class="literal">true</span></span><br><span class="line"><span class="comment"># 默认27017</span></span><br><span class="line"><span class="string">port</span> <span class="string">=</span> <span class="number">27017</span></span><br><span class="line"><span class="comment">#noauth = true</span></span><br><span class="line"><span class="comment">#auth = true</span></span><br><span class="line"><span class="comment">#使用此设置来配置复制副本集。指定一个副本集名称作为参数，所有主机都必须有相同的名称作为同一个副本集</span></span><br><span class="line"><span class="string">replSet=setname</span></span><br><span class="line"><span class="comment">#指定存储身份验证信息的密钥文件的路径</span></span><br><span class="line"><span class="string">keyFile=/data/program/mongodb/keyfile</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#以上为常规选项，以下为可选项</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#绑定地址，多个逗号隔开</span></span><br><span class="line"><span class="comment">#bind_ip = 127.0.0.1</span></span><br><span class="line"><span class="string">最大连接数。默认值：取决于系统（即的ulimit和文件描述符）限制，注意：不能设置该值大于20000</span></span><br><span class="line"><span class="string">maxConns</span> <span class="string">=</span> <span class="number">10000</span></span><br><span class="line"><span class="comment">#数据库分析等级设置0 关无分析，1 开仅包括慢操作，2 开包括所有操作。默认0:关闭</span></span><br><span class="line"><span class="string">profile</span> <span class="string">=</span> <span class="number">2</span></span><br><span class="line"><span class="comment">#记录profile分析的慢查询的时间，默认是100毫秒,</span></span><br><span class="line"><span class="string">slowms</span>  <span class="string">=</span> <span class="number">200</span></span><br><span class="line"><span class="comment">#quota：配额，默认false。是否开启配置每个数据库的最多文件数的限制。当为true则用quotaFiles来配置最多文件的数量</span></span><br><span class="line"><span class="string">quota</span> <span class="string">=</span> <span class="literal">true</span></span><br><span class="line"><span class="string">配额数量。每个数据库的数据文件数量的限制。此选项需要quota为true。默认为8</span></span><br><span class="line"><span class="string">quotaFiles</span> <span class="string">=</span> <span class="number">8</span></span><br><span class="line"><span class="comment">#rest： 默认false，设置为true，使一个简单的 REST API</span></span><br><span class="line"><span class="comment">#设置为true，开启后，在MongoDB默认会开启一个HTTP协议的端口提供REST的服务（nohttpinterface = false），这个端口是你Server端口加上1000，即28017</span></span><br><span class="line"><span class="comment">#默认的HTTP端口是数据库状态页面，（开启后，web页面的Commands 行中的命令都可以点进去）。mongodb自带的REST，不支持 增、删、改，同时也不支持 权限认证。</span></span><br><span class="line"><span class="string">详细信息见这里和这里</span></span><br><span class="line"><span class="string">rest</span> <span class="string">=</span> <span class="literal">true</span></span><br><span class="line"><span class="comment">#修复数据库操作，默认是false</span></span><br><span class="line"><span class="comment">#设置为true时，启动后修复所有数据库，设置这个选项最好在命令行上，而不是在配置文件或控制脚本。如：</span></span><br><span class="line"><span class="string">命令行修复：</span></span><br><span class="line"><span class="string">&gt; db.repairDatabase('xxx')</span></span><br><span class="line"><span class="string">&#123; "ok" : 1 &#125;</span></span><br><span class="line"><span class="string">&gt; db.repairDatabase()</span></span><br><span class="line"><span class="string">&#123; "ok" : 1 &#125;</span></span><br><span class="line"><span class="string">#修复路径，默认是在dbpath路径下的_tmp 目录</span></span><br><span class="line"><span class="string">repairpath =</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">#是否使用较小的默认文件。默认为false，不使用。设置为true，使用较小的默认数据文件大小。smallfiles减少数据文件的初始大小，并限制他们到512M，也减少了日志文件的大小，并限制他们到128M。如果数据库很大，各持有少量的数据，会导致mongodb创建很多文件，会影响性能</span></span><br><span class="line"><span class="string">smallfiles = true</span></span><br><span class="line"><span class="string">#syncdelay：刷写数据到日志的频率，通过fsync操作数据。默认60秒,默认就可以，不需要设置。不会对日志文件（journal files）有影响</span></span><br><span class="line"><span class="string">syncdelay = 60</span></span><br><span class="line"><span class="string">#指定的复制操作日志（OPLOG）的最大大小。mongod创建一个OPLOG的大小基于最大可用空间量。对于64位系统，OPLOG通常是5％的可用磁盘空间</span></span><br><span class="line"><span class="string">oplogSize=</span></span><br><span class="line"><span class="string">#master：默认为false，当设置为true，则配置当前实例作为主实例。</span></span><br><span class="line"><span class="string">master = true</span></span><br><span class="line"><span class="string">#slave：默认为false，当设置为true，则配置当前实例作为从实例。</span></span><br><span class="line"><span class="string">slave = true</span></span><br><span class="line"><span class="string">#source：默认为空，格式为：&lt;host&gt;&lt;:port&gt;。用于从实例的复制：设置从的时候指定该选项会让从复制指定主的实例</span></span><br><span class="line"><span class="string">source = 127.0.0.1:30001</span></span><br><span class="line"><span class="string">#only：默认为空，用于从选项，指定一个数据库进行复制。</span></span><br><span class="line"><span class="string">only = abc          #只同步abc集合（库）</span></span><br><span class="line"><span class="string">#slavedelay：设置从库同步主库的延迟时间，用于从设置，默认为0。</span></span><br><span class="line"><span class="string">slavedelay = 60     #延迟60s同步主数据</span></span><br><span class="line"><span class="string">#autoresync：默认为false，用于从设置。是否自动重新同步。设置为true，如果落后主超过10秒，会强制从自动重新同步。如果oplogSize太小，此设置可能有问题。如果OPLOG大小不足以存储主的变化状态和从的状态变化之间的差异，这种情况下强制重新同步是不必要的。当设置autoresync选项设置为false，10分钟内从不会进行大于1次的自动重新同步。</span></span><br><span class="line"><span class="string">autoresync = false</span></span><br></pre></td></tr></table></figure>
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/数据库/">数据库</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/db/">db</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mongo/">mongo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nosql/">nosql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+		
+<nav id="article-nav">
+  
+    <a href="/2016/04/18/mongo的常用操作/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          mongo的常用操作
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/03/13/ mongo运行状态性能监控分析/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          mongo运行状态性能监控分析
+        
+      </div>
+    </a>
+  
+</nav>
+
+  	
+
+</article>
+
+
+
+
+
+
+</div>
+			<footer id="footer">
+				<h1 class="footer-blog-title">
+					<a href="/">Clear Sky</a>
+				</h1>
+				<span class="copyright">
+					&copy; 2018 CLEAR<br>
+					Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+					Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+				</span>
+			</footer>
+  		</div>
+  		
+
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bundle.js"></script>
+	</body>
+</html>

@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>Clear Sky</title>
+    <meta name="viewport" content="width=device-width">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Clear Sky" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4e55f04a49a285900817965cb4619021";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div class="mobile-nav-panel">
+        <i class="icon-reorder icon-large"></i>
+      </div>
+      <header id="header">
+        <h1 class="blog-title">
+          <a href="/">Clear Sky</a>
+        </h1>
+        <nav class="nav">
+          <ul>
+            <li><a href="/"><i class="fa fa-home fa-fw"></i>home</a></li>
+            <li><a href="/archives"><i class="fa fa-archive fa-fw"></i>archives</a></li>
+            <li><a href="/categories"><i class="fa fa-list fa-fw"></i>categories</a></li>
+            <li><a href="/tags"><i class="fa fa-tags fa-fw"></i>tags</a></li>
+            <li><a href="/search"><i class="fa fa-search fa-fw"></i>search</a></li>
+            <li><a href="/about"><i class="fa fa-user fa-fw"></i>about</a></li>
+            <li><a href="/atom.xml"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+          </ul>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.clearany.com"></form>
+        </div>
+      </header>
+<div id="main">
+	
+	
+	    <article id="post- mongo运行状态性能监控分析" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2016-03-13T12:46:25.000Z" itemprop="datePublished">2016-03-13</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2016/03/13/ mongo运行状态性能监控分析/">mongo运行状态性能监控分析</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+			<h4 id="查看运行状态"><a href="#查看运行状态" class="headerlink" title="查看运行状态"></a>查看运行状态</h4><pre><code>mongostat是mongdb自带的状态检测工具，在命令行下使用。它会间隔固定时间获取mongodb的当前运行状态，并输出。如果你发现数据库突然变慢或者有其他问题的话，你第一手的操作就考虑采用mongostat来查看mongo的状态。
+它的输出有以下几列：
+</code></pre><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">inserts/s 每秒插入次数</span><br><span class="line">query/s 每秒查询次数</span><br><span class="line">update/s 每秒更新次数</span><br><span class="line">delete/s 每秒删除次数</span><br><span class="line">getmore/s 每秒执行getmore次数</span><br><span class="line"><span class="built_in">command</span>/s 每秒的命令数，比以上插入、查找、更新、删除的综合还多，还统计了别的命令</span><br><span class="line">flushs/s 每秒执行fsync将数据写入硬盘的次数。</span><br><span class="line">mapped/s 所有的被mmap的数据量，单位是MB，</span><br><span class="line">vsize 虚拟内存使用量，单位MB</span><br><span class="line">res 物理内存使用量，单位MB</span><br><span class="line">faults/s 每秒访问失败数（只有Linux有），数据被交换出物理内存，放到swap。不要超过100，否则就是机器内存太小，造成频繁swap写入。此时要升级内存或者扩展</span><br><span class="line">locked % 被锁的时间百分比，尽量控制在50%以下吧</span><br><span class="line">idx miss % 索引不命中所占百分比。如果太高的话就要考虑索引是不是少了</span><br><span class="line">q t|r|w 当Mongodb接收到太多的命令而数据库被锁住无法执行完成，它会将命令加入队列。这一栏显示了总共、读、写3个队列的长度，都为0的话表示mongo毫无压力。高并发时，一般队列值会升高。</span><br><span class="line">conn 当前连接数</span><br><span class="line">time 时间戳</span><br></pre></td></tr></table></figure>
+			
+				<p class="article-more-link">
+					<a href="/2016/03/13/ mongo运行状态性能监控分析/#more"><i>more >> </i></a>
+				</p>
+      		
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/数据库/">数据库</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/db/">db</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mongo/">mongo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nosql/">nosql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能分析/">性能分析</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/监控/">监控</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+
+</article>
+
+
+	<hr class="article-devider">
+
+
+
+	
+	    <article id="post-linux下TCP状态的统计分析" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2015-10-18T02:30:17.000Z" itemprop="datePublished">2015-10-18</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2015/10/18/linux下TCP状态的统计分析/">linux下TCP状态的统计分析</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+			<h4 id="查看TCP连接状态"><a href="#查看TCP连接状态" class="headerlink" title="查看TCP连接状态"></a>查看TCP连接状态</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">netstat -nat |awk <span class="string">'&#123;print $6&#125;'</span>|sort|uniq -c|sort -rn</span><br><span class="line">netstat -n | awk <span class="string">'/^tcp/ &#123;++S[$NF]&#125;;END &#123;for(a in S) print a, S[a]&#125;'</span>或</span><br><span class="line">netstat -n | awk <span class="string">'/^tcp/ &#123;++state[$NF]&#125;; END &#123;for(key in state) print key,"t",state[key]&#125;'</span></span><br><span class="line">netstat -n | awk <span class="string">'/^tcp/ &#123;++arr[$NF]&#125;;END &#123;for(k in arr) print k,"t",arr[k]&#125;'</span></span><br><span class="line">netstat -n | awk <span class="string">'/^tcp/ &#123;print $NF&#125;'</span>|sort|uniq -c|sort -rn</span><br><span class="line">netstat -ant | awk <span class="string">'&#123;print $NF&#125;'</span> | grep -v <span class="string">'[a-z]'</span> | sort | uniq -c</span><br></pre></td></tr></table></figure>
+			
+				<p class="article-more-link">
+					<a href="/2015/10/18/linux下TCP状态的统计分析/#more"><i>more >> </i></a>
+				</p>
+      		
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/linux/">linux</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/">shell</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tcp/">tcp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/工具/">工具</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+
+</article>
+
+
+	<hr class="article-devider">
+
+
+
+	
+	    <article id="post-gitignore文件不生效问题" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2015-10-12T11:26:42.000Z" itemprop="datePublished">2015-10-12</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2015/10/12/gitignore文件不生效问题/">gitignore文件不生效问题</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+    		<pre><code>在git使用过程中有时会遇到修改了.gitignore文件，修改了之后发现，不能起作用，这是因为git存在缓存问题，所以做一下步骤即可：
+
+git rm -r --cached .
+git add .
+git commit -m &quot;update gitignore&quot;
+</code></pre>
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/代码托管/">代码托管</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+
+</article>
+
+
+	<hr class="article-devider">
+
+
+
+	
+	    <article id="post-linux三剑客之grep" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2015-10-08T13:10:17.000Z" itemprop="datePublished">2015-10-08</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2015/10/08/linux三剑客之grep/">linux三剑客之grep</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+			<h4 id="grep常用参数"><a href="#grep常用参数" class="headerlink" title="grep常用参数"></a>grep常用参数</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">grep [OPTIONS] PATTERN [FILE...]</span><br><span class="line">grep [OPTIONS] [-e PATTERN]...  [-f FILE]...  [FILE...]</span><br><span class="line"></span><br><span class="line">OPTIONS:</span><br><span class="line">-e: 使用正则搜索</span><br><span class="line">-i: 不区分大小写</span><br><span class="line">-v: 查找不包含指定内容的行</span><br><span class="line">-w: 按单词搜索</span><br><span class="line">-c: 统计匹配到的次数</span><br><span class="line">-n: 显示行号</span><br><span class="line">-r: 逐层遍历目录查找</span><br><span class="line">-l:显示匹配的文件名</span><br><span class="line">-A: 显示匹配行及前面多少行, 如: -A3, 则表示显示匹配行及前3行</span><br><span class="line">-B: 显示匹配行及后面多少行, 如: -B3, 则表示显示匹配行及后3行</span><br><span class="line">-C: 显示匹配行前后多少行,   如: -C3, 则表示显示批量行前后3行</span><br><span class="line">--color: 匹配到的内容高亮显示</span><br><span class="line">--include: 指定匹配的文件类型</span><br><span class="line">--exclude: 过滤不需要匹配的文件类型</span><br></pre></td></tr></table></figure>
+			
+				<p class="article-more-link">
+					<a href="/2015/10/08/linux三剑客之grep/#more"><i>more >> </i></a>
+				</p>
+      		
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/linux/">linux</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/grep/">grep</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/三剑客/">三剑客</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+
+</article>
+
+
+	<hr class="article-devider">
+
+
+
+	
+	    <article id="post-linux三剑客之sed" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2015-10-08T12:50:17.000Z" itemprop="datePublished">2015-10-08</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2015/10/08/linux三剑客之sed/">linux三剑客之sed</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+			<h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><pre><code>sed是一个很好的文件处理工具，本身是一个管道命令，主要是以行为单位进行处理，可以将数据行进行替换、删除、新增、选取等特定工作，下面先了解一下sed的用法
+</code></pre><h4 id="sed命令行格式为："><a href="#sed命令行格式为：" class="headerlink" title="sed命令行格式为："></a>sed命令行格式为：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sed [ 选项 ] ‘editing <span class="built_in">command</span>’ [file ...] </span><br><span class="line">sed [ -f ] filename ... [file ...]</span><br></pre></td></tr></table></figure>
+<h4 id="常用选项："><a href="#常用选项：" class="headerlink" title="常用选项："></a>常用选项：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-n∶使用安静(silent)模式。在一般 sed 的用法中，所有来自 STDIN的资料一般都会被列出到萤幕上。但如果加上 -n 参数后，则只有经过sed 特殊处理的那一行(或者动作)才会被列出来。</span><br><span class="line">-e∶直接在指令列模式上进行 sed 的动作编辑；</span><br><span class="line">-f∶直接将 sed 的动作写在一个档案内， -f filename 则可以执行 filename 内的sed 动作；</span><br><span class="line">-r∶sed 的动作支援的是延伸型正规表示法的语法。(预设是基础正规表示法语法)</span><br><span class="line">-i∶直接修改读取的档案内容，而不是由萤幕输出。</span><br></pre></td></tr></table></figure>
+			
+				<p class="article-more-link">
+					<a href="/2015/10/08/linux三剑客之sed/#more"><i>more >> </i></a>
+				</p>
+      		
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/linux/">linux</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sed/">sed</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/三剑客/">三剑客</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+
+</article>
+
+
+	<hr class="article-devider">
+
+
+
+	
+
+	
+	  <nav id="page-nav">
+	    <a class="extend prev" rel="prev" href="/page/10/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/12/">Next &raquo;</a>
+	  </nav>
+	
+
+</div>
+			<footer id="footer">
+				<h1 class="footer-blog-title">
+					<a href="/">Clear Sky</a>
+				</h1>
+				<span class="copyright">
+					&copy; 2018 CLEAR<br>
+					Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+					Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+				</span>
+			</footer>
+  		</div>
+  		
+
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bundle.js"></script>
+	</body>
+</html>

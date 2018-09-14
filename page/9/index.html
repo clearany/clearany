@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>Clear Sky</title>
+    <meta name="viewport" content="width=device-width">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Clear Sky" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4e55f04a49a285900817965cb4619021";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div class="mobile-nav-panel">
+        <i class="icon-reorder icon-large"></i>
+      </div>
+      <header id="header">
+        <h1 class="blog-title">
+          <a href="/">Clear Sky</a>
+        </h1>
+        <nav class="nav">
+          <ul>
+            <li><a href="/"><i class="fa fa-home fa-fw"></i>home</a></li>
+            <li><a href="/archives"><i class="fa fa-archive fa-fw"></i>archives</a></li>
+            <li><a href="/categories"><i class="fa fa-list fa-fw"></i>categories</a></li>
+            <li><a href="/tags"><i class="fa fa-tags fa-fw"></i>tags</a></li>
+            <li><a href="/search"><i class="fa fa-search fa-fw"></i>search</a></li>
+            <li><a href="/about"><i class="fa fa-user fa-fw"></i>about</a></li>
+            <li><a href="/atom.xml"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+          </ul>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.clearany.com"></form>
+        </div>
+      </header>
+<div id="main">
+	
+	
+	    <article id="post-mysql多主与主从配" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2016-04-19T03:40:17.000Z" itemprop="datePublished">2016-04-19</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2016/04/19/mysql多主与主从配/">mysql多主与主从配置</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+			<h4 id="节点准备"><a href="#节点准备" class="headerlink" title="节点准备"></a>节点准备</h4><p>本次配置用一主两从进行记录节点信息如下：</p>
+<table>
+<thead>
+<tr>
+<th>主机名</th>
+<th>IP</th>
+<th>角色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>master</td>
+<td>192.168.10.1</td>
+<td>主</td>
+</tr>
+<tr>
+<td>node01</td>
+<td>192.168.10.2</td>
+<td>从</td>
+</tr>
+<tr>
+<td>node02</td>
+<td>192.168.10.3</td>
+<td>从</td>
+</tr>
+</tbody>
+</table>
+<h4 id="所有节点安装Mysql服务实例"><a href="#所有节点安装Mysql服务实例" class="headerlink" title="所有节点安装Mysql服务实例"></a>所有节点安装Mysql服务实例</h4><pre><code>略...
+</code></pre>
+			
+				<p class="article-more-link">
+					<a href="/2016/04/19/mysql多主与主从配/#more"><i>more >> </i></a>
+				</p>
+      		
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/数据库/">数据库</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/db/">db</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql主从/">mysql主从</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql集群/">mysql集群</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+
+</article>
+
+
+	<hr class="article-devider">
+
+
+
+	
+	    <article id="post-mysql的访问权限" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2016-04-19T03:22:47.000Z" itemprop="datePublished">2016-04-19</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2016/04/19/mysql的访问权限/">mysql的访问权限</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+    		<h4 id="创建root用户并给授所有权限"><a href="#创建root用户并给授所有权限" class="headerlink" title="创建root用户并给授所有权限"></a>创建root用户并给授所有权限</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">grant all on *.* to root@<span class="string">"%"</span> Identified by <span class="string">"worker"</span>;</span><br><span class="line"><span class="comment">#all 所有操作权限</span></span><br><span class="line"><span class="comment">#*.* 所有数据库和表明</span></span><br><span class="line"><span class="comment">#root 为用户</span></span><br><span class="line"><span class="comment">#% 表示允许所有主机连接</span></span><br><span class="line"><span class="comment">#worker 密码</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#这里的all 代表以下权限</span></span><br><span class="line"><span class="comment">#select,insert,update,delete,create,drop,index,alter,grant,references,</span></span><br><span class="line"><span class="comment">#reload,shutdown,process,file共十四种可选</span></span><br></pre></td></tr></table></figure>
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/数据库/">数据库</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/db/">db</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+
+</article>
+
+
+	<hr class="article-devider">
+
+
+
+	
+	    <article id="post-mysql的常用操作" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2016-04-19T03:14:24.000Z" itemprop="datePublished">2016-04-19</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2016/04/19/mysql的常用操作/">mysql的常用操作</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+			<h4 id="备份"><a href="#备份" class="headerlink" title="备份"></a>备份</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#备份整库</span></span><br><span class="line">mysqldump -h主机名 -u用户名 -p 库名 &gt; /data/backup/xxx.sql</span><br><span class="line"><span class="comment">#备份单张表</span></span><br><span class="line">mysqldump -h主机名 -u用户名 -p 库名  表名 &gt; /data/backup/xxx.sql</span><br></pre></td></tr></table></figure>
+<h4 id="恢复"><a href="#恢复" class="headerlink" title="恢复"></a>恢复</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -h主机名 -u用户名 -p 库名 &lt; /data/backup/xxx.sql</span><br></pre></td></tr></table></figure>
+<h4 id="执行sql脚本文件"><a href="#执行sql脚本文件" class="headerlink" title="执行sql脚本文件"></a>执行sql脚本文件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#在shell中执行</span></span><br><span class="line">mysql -h主机名 -u用户名 -p -D库名 &lt; /data/backup/xxx.sql</span><br><span class="line"><span class="comment">#在mysql 控制台执行</span></span><br><span class="line">mysql&gt;<span class="built_in">source</span> /data/backup/xxx.sql</span><br><span class="line"><span class="comment">#或者</span></span><br><span class="line">mysql&gt;\. /data/backup/xxx.sql</span><br></pre></td></tr></table></figure>
+			
+				<p class="article-more-link">
+					<a href="/2016/04/19/mysql的常用操作/#more"><i>more >> </i></a>
+				</p>
+      		
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/数据库/">数据库</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/db/">db</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sql/">sql</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+
+</article>
+
+
+	<hr class="article-devider">
+
+
+
+	
+	    <article id="post-mysql的编译安装" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2016-04-19T02:50:24.000Z" itemprop="datePublished">2016-04-19</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2016/04/19/mysql的编译安装/">Mysql的编译安装</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+			<h3 id="安装依赖包"><a href="#安装依赖包" class="headerlink" title="安装依赖包"></a>安装依赖包</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install gcc gcc-c++ cmake make bison bison-devel ncurses-devel openssl-devel bison perl perl-Module-Install.noarch</span><br></pre></td></tr></table></figure>
+<h3 id="编译安装"><a href="#编译安装" class="headerlink" title="编译安装"></a>编译安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">cmake \</span><br><span class="line">-DCMAKE_INSTALL_PREFIX=/data/program/mysql \</span><br><span class="line">-DMYSQL_DATADIR=/data/program/mysql/data \</span><br><span class="line">-DSYSCONFDIR=/data/program/mysql/etc \</span><br><span class="line">-DWITH_MYISAM_STORAGE_ENGINE=1 \</span><br><span class="line">-DWITH_INNOBASE_STORAGE_ENGINE=1 \</span><br><span class="line">-DWITH_MEMORY_STORAGE_ENGINE=1 \</span><br><span class="line">-DWITH_READLINE=1 \</span><br><span class="line">-DMYSQL_UNIX_ADDR=/data/program/mysql/mysql.sock \</span><br><span class="line">-DMYSQL_TCP_PORT=3306 \</span><br><span class="line">-DENABLED_LOCAL_INFILE=1 \</span><br><span class="line">-DWITH_PARTITION_STORAGE_ENGINE=1 \</span><br><span class="line">-DEXTRA_CHARSETS=all \</span><br><span class="line">-DDEFAULT_CHARSET=utf8 \</span><br><span class="line">-DDEFAULT_COLLATION=utf8_general_ci</span><br><span class="line">-DWITH_SYSTEMD=1    <span class="comment">#centos7.x</span></span><br><span class="line"><span class="comment">#-j使用多线程编译</span></span><br><span class="line">make -j8</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+			
+				<p class="article-more-link">
+					<a href="/2016/04/19/mysql的编译安装/#more"><i>more >> </i></a>
+				</p>
+      		
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/数据库/">数据库</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+
+</article>
+
+
+	<hr class="article-devider">
+
+
+
+	
+	    <article id="post-mongo集群模式_Sharding" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2016-04-19T02:11:14.000Z" itemprop="datePublished">2016-04-19</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2016/04/19/mongo集群模式_Sharding/">mongo集群模式_Sharding</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+			<h4 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h4><pre><code>和Replica Set类似，都需要一个仲裁节点，但是Sharding还需要配置节点和路由节点。就三种集群搭建方式来说，这种是最复杂的。部署图如下：
+</code></pre><p><img src="http://www.machunpeng.cn/server/../Public/Uploads/2018-04-14/5ad0d799efc82.png" alt=""></p>
+<h4 id="启动数据节点"><a href="#启动数据节点" class="headerlink" title="启动数据节点"></a>启动数据节点</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">./mongod --fork --dbpath ../data/set1/ --logpath ../<span class="built_in">log</span>/set1.log --replSet <span class="built_in">test</span> <span class="comment">#192.168.4.43</span></span><br><span class="line">./mongod --fork --dbpath ../data/set2/ --logpath ../<span class="built_in">log</span>/set2.log --replSet <span class="built_in">test</span> <span class="comment">#192.168.4.44</span></span><br><span class="line"><span class="comment">#决策 不存储数据  </span></span><br><span class="line">./mongod --fork --dbpath ../data/set3/ --logpath ../<span class="built_in">log</span>/set3.log --replSet <span class="built_in">test</span> <span class="comment">#192.168.4.45</span></span><br></pre></td></tr></table></figure>
+			
+				<p class="article-more-link">
+					<a href="/2016/04/19/mongo集群模式_Sharding/#more"><i>more >> </i></a>
+				</p>
+      		
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/数据库/">数据库</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Sharding/">Sharding</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/db/">db</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mongo/">mongo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mongo-Sharding/">mongo Sharding</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mongo集群/">mongo集群</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nosql/">nosql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库集群/">数据库集群</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+
+</article>
+
+
+	<hr class="article-devider">
+
+
+
+	
+
+	
+	  <nav id="page-nav">
+	    <a class="extend prev" rel="prev" href="/page/8/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/10/">Next &raquo;</a>
+	  </nav>
+	
+
+</div>
+			<footer id="footer">
+				<h1 class="footer-blog-title">
+					<a href="/">Clear Sky</a>
+				</h1>
+				<span class="copyright">
+					&copy; 2018 CLEAR<br>
+					Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+					Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+				</span>
+			</footer>
+  		</div>
+  		
+
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bundle.js"></script>
+	</body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>shell 常用的操作技巧 | Clear Sky</title>
+    <meta name="viewport" content="width=device-width">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Clear Sky" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4e55f04a49a285900817965cb4619021";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div class="mobile-nav-panel">
+        <i class="icon-reorder icon-large"></i>
+      </div>
+      <header id="header">
+        <h1 class="blog-title">
+          <a href="/">Clear Sky</a>
+        </h1>
+        <nav class="nav">
+          <ul>
+            <li><a href="/"><i class="fa fa-home fa-fw"></i>home</a></li>
+            <li><a href="/archives"><i class="fa fa-archive fa-fw"></i>archives</a></li>
+            <li><a href="/categories"><i class="fa fa-list fa-fw"></i>categories</a></li>
+            <li><a href="/tags"><i class="fa fa-tags fa-fw"></i>tags</a></li>
+            <li><a href="/search"><i class="fa fa-search fa-fw"></i>search</a></li>
+            <li><a href="/about"><i class="fa fa-user fa-fw"></i>about</a></li>
+            <li><a href="/atom.xml"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+          </ul>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.clearany.com"></form>
+        </div>
+      </header>
+<div id="main">
+	
+	<article id="post-shell 常用的操作技巧" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2015-05-09T03:15:17.000Z" itemprop="datePublished">2015-05-09</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2015/05/09/shell 常用的操作技巧/">shell 常用的操作技巧</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+    		<h4 id="重定向操作"><a href="#重定向操作" class="headerlink" title="重定向操作"></a>重定向操作</h4><pre><code>#0 stdin标准输入
+#1 stdout标准输出   
+#2 stderr标准错误
+
+#文件打开模式：
+#&gt; 等同于1&gt; 截断模式
+#&gt;&gt;等同于1&gt;&gt; 追加模式
+#&lt;用于从文件中读取至stdin 只读模式
+
+#stdout不会有任何输出，因为错误已经重定向到out.txt中了
+ls + 2&gt; out.txt
+#可以将stderr单独重定向到一个文件，将stdout重定向到另一个文件：
+cmd 2&gt;stderr.txt 1&gt;stdout.txt
+#将stderr转换成stdout，使得stderr和stdout都被重定向到同一个文件：
+cmd 2&gt;&amp;1 output.txt
+#或者
+cmd &amp;&gt; output.txt
+</code></pre><a id="more"></a>
+<pre><code>#将stderr输出丢弃
+some_command 2&gt; /dev/null
+
+#将文件重定向到命令
+cmd &lt; file
+
+#向log文件中写入头部数据
+#!/bin/bash
+cat &lt;&lt;EOF&gt;log..tt
+LOG FILE HEADER
+this is a test log file
+EOF
+
+#cmd &gt;a 2&gt;a 和 cmd &gt;a 2&gt;&amp;1 为什么不同？
+#cmd &gt;a 2&gt;a ：stdout和stderr都直接送往文件a ，a文件会被打开两遍 ，由此导致stdout和stderr互相覆盖。
+#cmd &gt;a 2&gt;&amp;1 ：stdout直接送往文件a ，stderr是继承了FD1的管道之后，再被送往文件a 。a文件只被打开一遍，就是FD1将其打开
+#他们的不同点在于：
+#cmd &gt;a 2&gt;a 相当于使用了FD1、FD2两个互相竞争使用文件 a 的管道； 
+#而cmd &gt;a 2&gt;&amp;1 只使用了一个管道FD1， 但已经包括了stdout和stderr。
+#从IO效率上来讲，cmd &gt;a 2&gt;&amp;1的效率更高。
+</code></pre><h4 id="History"><a href="#History" class="headerlink" title="History"></a>History</h4><pre><code>|命令 | 说明  |
+| ------------ | ------------ |
+|^foo| 删除上一条命令中的foo|
+|^foo^bar|将上一条命令的第一个foo改为bar|
+|!!|重新执行上一条命令|
+|!N|重新执行第N条命令|
+|!-N|重新执行倒数第N条命令|
+|!string|重新执行以字符串开头的命令|
+|!?string?|重新执行包含字符串的命令|
+| !$|上一条命令的最后一个参数|
+|!^|上一条命令的第一个参数|
+|!cmd:n|上一条命令的第n个参数|
+|!*|上一条命令的所有参数|
+|!*:x|x表示修饰符|
+
+实例演示：
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@ADT:~<span class="comment"># rm /usr/lib/libtpn_http.so </span></span><br><span class="line">root@ADT:~<span class="comment"># cd !:$:h #切换到/usr/lib目录下</span></span><br></pre></td></tr></table></figure>
+</code></pre><h4 id="移动类"><a href="#移动类" class="headerlink" title="移动类"></a>移动类</h4><pre><code>移到命令行首：`Ctrl + a(head)`
+移到命令行尾：`Ctrl + e(nd) `
+在命令行首和光标之间位置切换：`Ctrl + x + x `
+右向按字符前移：`Ctrl + f(orward) `
+左向按字符后移：`Ctrl + b(ackward) `
+</code></pre><h4 id="删除类"><a href="#删除类" class="headerlink" title="删除类"></a>删除类</h4><pre><code>注释当前行：`Alt + # `
+从光标处删除至命令行首：`Ctrl + u `
+从光标处删除至命令行尾：`Ctrl + k `
+从光标处删除至字首(以空格作为word边界)：`Ctrl + w `
+从光标处删除至字首(以空格，斜线，点号作为word边界)：`ESC + Backspace `
+从光标处删除至字尾：`Alt + d `
+删除光标处的字符：`Ctrl + d `
+删除光标前的字符：`Ctrl + h `
+粘贴至光标后：`Ctrl + y `
+重新调用前一个命令中的参数,非常有用!：`Esc+.`
+</code></pre><h4 id="大小写快速转换"><a href="#大小写快速转换" class="headerlink" title="大小写快速转换"></a>大小写快速转换</h4><pre><code>从光标处更改为首字母大写的单词：`Alt + c `
+从光标处更改为全部大写的单词：`Alt + u `
+从光标处更改为全部小写的单词：`Alt + l `
+</code></pre><h4 id="顺序快速调换"><a href="#顺序快速调换" class="headerlink" title="顺序快速调换"></a>顺序快速调换</h4><pre><code>交换光标处和之前的单词：`Alt + t `
+交换光标处和之前的字符：`Ctrl + t `
+</code></pre><h4 id="撤销修改"><a href="#撤销修改" class="headerlink" title="撤销修改"></a>撤销修改</h4><pre><code>C-/ 或 C-_
+撤销当前行的所有内容：`Alt+r`
+</code></pre><h4 id="清屏"><a href="#清屏" class="headerlink" title="清屏"></a>清屏</h4><pre><code>清屏：`Ctrl + l`
+clear
+</code></pre><h4 id="查找历史命令"><a href="#查找历史命令" class="headerlink" title="查找历史命令"></a>查找历史命令</h4><pre><code>逆向搜索历史命令行和当前命令行：`Ctrl + r`
+TIPS　: 在当前行中搜索,可以快速定位到需要修改的字符:Ｐ
+终止搜索并还原原始命令行：`Ctrl + g`
+终止搜索并停留在查找的位置，直接使用ESC也可以实现该功能：`Ctrl + j`
+历史中的上一条命令：`Ctrl + p`
+历史中的下一条命令：`Ctrl + n`
+非增量搜索：`alt + n\p`
+执行当前命令，并选择上一条命令：`Ctrl + o`
+</code></pre>
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/linux/">linux</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/">shell</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技巧/">技巧</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+		
+<nav id="article-nav">
+  
+    <a href="/2015/05/09/shell的时间获取与格式化输出/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Shell的时间的获取与格式化输出
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/04/16/Cobbler安装部署/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          Cobbler安装部署
+        
+      </div>
+    </a>
+  
+</nav>
+
+  	
+
+</article>
+
+
+
+
+
+
+</div>
+			<footer id="footer">
+				<h1 class="footer-blog-title">
+					<a href="/">Clear Sky</a>
+				</h1>
+				<span class="copyright">
+					&copy; 2018 CLEAR<br>
+					Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+					Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+				</span>
+			</footer>
+  		</div>
+  		
+
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bundle.js"></script>
+	</body>
+</html>

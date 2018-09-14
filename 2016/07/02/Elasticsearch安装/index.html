@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>Elasticsearch安装 | Clear Sky</title>
+    <meta name="viewport" content="width=device-width">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Clear Sky" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4e55f04a49a285900817965cb4619021";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div class="mobile-nav-panel">
+        <i class="icon-reorder icon-large"></i>
+      </div>
+      <header id="header">
+        <h1 class="blog-title">
+          <a href="/">Clear Sky</a>
+        </h1>
+        <nav class="nav">
+          <ul>
+            <li><a href="/"><i class="fa fa-home fa-fw"></i>home</a></li>
+            <li><a href="/archives"><i class="fa fa-archive fa-fw"></i>archives</a></li>
+            <li><a href="/categories"><i class="fa fa-list fa-fw"></i>categories</a></li>
+            <li><a href="/tags"><i class="fa fa-tags fa-fw"></i>tags</a></li>
+            <li><a href="/search"><i class="fa fa-search fa-fw"></i>search</a></li>
+            <li><a href="/about"><i class="fa fa-user fa-fw"></i>about</a></li>
+            <li><a href="/atom.xml"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+          </ul>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.clearany.com"></form>
+        </div>
+      </header>
+<div id="main">
+	
+	<article id="post-Elasticsearch安装" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2016-07-02T11:21:27.000Z" itemprop="datePublished">2016-07-02</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2016/07/02/Elasticsearch安装/">Elasticsearch安装</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+    		<h4 id="基本名词"><a href="#基本名词" class="headerlink" title="基本名词"></a>基本名词</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">index: es里的index相当于一个数据库。 </span><br><span class="line"><span class="built_in">type</span>: 相当于数据库里的一个表。 </span><br><span class="line">id： 唯一，相当于主键。 </span><br><span class="line">node:节点是es实例，一台机器可以运行多个实例，但是同一台机器上的实例在配置文件中要确保http和tcp端口不同。 </span><br><span class="line">cluster:代表一个集群，集群中有多个节点，其中有一个会被选为主节点，这个主节点是可以通过选举产生的，主从节点是对于集群内部来说的。 </span><br><span class="line">shards：代表索引分片，es可以把一个完整的索引分成多个分片，这样的好处是可以把一个大的索引拆分成多个，分布到不同的节点上，构成分布式搜索。分片的数量只能在索引创建前指定，并且索引创建后不能更改。 </span><br><span class="line">replicas:代表索引副本，es可以设置多个索引的副本，副本的作用一是提高系统的容错性，当个某个节点某个分片损坏或丢失时可以从副本中恢复。二是提高es的查询效率，es会自动对搜索请求进行负载均衡</span><br></pre></td></tr></table></figure>
+<h4 id="下载安装"><a href="#下载安装" class="headerlink" title="下载安装"></a>下载安装</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.2.2.tar.gz</span><br><span class="line">tar zxvf elasticsearch-6.2.2.tar.gz</span><br><span class="line">mv elasticsearch-6.2.2 /data/program/elasticsearch-6.2.2</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">sed <span class="string">"/^#/d"</span> elasticsearch.yml </span><br><span class="line"></span><br><span class="line"><span class="comment">#----------------- Paths ---------------------</span></span><br><span class="line">path.data: /data/program/elasticsearch/data</span><br><span class="line">path.logs: /data/program/elasticsearch/logs</span><br><span class="line"><span class="comment">#---------------- Memory --------------</span></span><br><span class="line">bootstrap.memory_lock: <span class="literal">false</span></span><br><span class="line">bootstrap.system_call_filter: <span class="literal">false</span></span><br><span class="line"><span class="comment">#--------------- Network -------------</span></span><br><span class="line">network.host: 0.0.0.0</span><br><span class="line">http.port: 9200</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#修改内存配置文件：</span></span><br><span class="line">vim jvm.options</span><br><span class="line"></span><br><span class="line">-Xms512m</span><br><span class="line">-Xmx512m</span><br><span class="line"></span><br><span class="line"><span class="comment">#改系统参数</span></span><br><span class="line">vi /etc/sysctl.conf </span><br><span class="line"><span class="comment">#添加下面配置：</span></span><br><span class="line">vm.max_map_count=65536</span><br><span class="line"></span><br><span class="line">vi /etc/security/limits.conf </span><br><span class="line">* soft nofile 819200 </span><br><span class="line">* hard nofile 819200 </span><br><span class="line">* soft nproc 2048</span><br><span class="line">* hard nproc 4096 </span><br><span class="line"></span><br><span class="line">vi /etc/security/limits.d/90-nproc.conf </span><br><span class="line">* soft nproc 1024</span><br><span class="line"><span class="comment">#修改为</span></span><br><span class="line">* soft nproc 4096</span><br></pre></td></tr></table></figure>
+<h4 id="创建启动脚本"><a href="#创建启动脚本" class="headerlink" title="创建启动脚本"></a>创建启动脚本</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vi start.sh</span><br><span class="line">runuser -l es -c <span class="string">'/data/program/elasticsearch-6.2.2/bin/elasticsearch -d'</span></span><br></pre></td></tr></table></figure>
+<h4 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#安装中文分词插件：</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/medcl/elasticsearch-analysis-ik</span><br><span class="line"><span class="comment">#下载完切换到相应版本：git checkout tags/v6.2.2</span></span><br><span class="line"><span class="comment">#进入elasticsearch-analysis-ik文件夹内执行：mvn clean package命令打包编译。</span></span><br><span class="line"><span class="comment">#将target/releases文件夹内的elasticsearch-analysis-ik-6.2.2.zip copy到es的plugins文件夹内</span></span><br><span class="line"><span class="comment">#解压后修改文件夹名称为analysis-ik</span></span><br><span class="line"><span class="comment">#重启生效</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#安装head插件</span></span><br><span class="line"><span class="comment">#在https://github.com/mobz/elasticsearch-head上下载head插件，并解压到/usr/local/elasticsearch-6.2.2/</span></span><br><span class="line"><span class="comment">#Head插件可以实现基本信息的查看，rest请求的模拟，数据的检索等等</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#必须要有node环境，没有的话需要安装：</span></span><br><span class="line">wget https://npm.taobao.org/mirrors/node/latest-v4.x/node-v4.4.7-linux-x64.tar.gz</span><br><span class="line"></span><br><span class="line"><span class="comment">#添加环境变量：</span></span><br><span class="line">NODE_HOME=/usr/<span class="built_in">local</span>/node-v4.4.7-linux-x64</span><br><span class="line">PATH=<span class="variable">$PATH</span>:<span class="variable">$NODE_HOME</span>/bin </span><br><span class="line">NODE_PATH=<span class="variable">$NODE_HOME</span>/lib/node_modules </span><br><span class="line"><span class="built_in">export</span> NODE_HOME PATH NODE_PATH</span><br><span class="line"></span><br><span class="line">node -v</span><br><span class="line"></span><br><span class="line"><span class="comment">#安装grunt-cli</span></span><br><span class="line">npm install -g grunt-cli</span><br><span class="line">grunt -version</span><br><span class="line"></span><br><span class="line"><span class="comment">#修改文件Gruntfile.js，在第93行添加一行：</span></span><br><span class="line">hostname: <span class="string">'0.0.0.0'</span>,</span><br><span class="line"></span><br><span class="line"><span class="comment">#在/usr/local/elasticsearch-6.2.2/elasticsearch-head下执行：</span></span><br><span class="line">npm install</span><br><span class="line"><span class="comment">#安装完成后会生成一个node_modules的文件夹</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#修改elasticsearch.yml配置文件，添加两行：</span></span><br><span class="line">http.cors.enabled: <span class="literal">true</span> </span><br><span class="line">http.cors.allow-origin: <span class="string">"*"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#执行命令启动head服务：</span></span><br><span class="line">grunt server</span><br></pre></td></tr></table></figure>
+<h4 id="导入数据测试"><a href="#导入数据测试" class="headerlink" title="导入数据测试"></a>导入数据测试</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -H <span class="string">"Content-Type: application/json"</span> -XPOST <span class="string">'localhost:9200/bank/account/_bulk?pretty'</span> --data-binary <span class="string">"@accounts.json"</span></span><br></pre></td></tr></table></figure>
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/数据库/">数据库</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+		
+<nav id="article-nav">
+  
+    <a href="/2016/07/02/Elasticsearch的备份和恢复/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Elasticsearch的备份和恢复
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/07/02/Elasticsearch-head介绍/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          Elasticsearch-head介绍
+        
+      </div>
+    </a>
+  
+</nav>
+
+  	
+
+</article>
+
+
+
+
+
+
+</div>
+			<footer id="footer">
+				<h1 class="footer-blog-title">
+					<a href="/">Clear Sky</a>
+				</h1>
+				<span class="copyright">
+					&copy; 2018 CLEAR<br>
+					Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+					Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+				</span>
+			</footer>
+  		</div>
+  		
+
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bundle.js"></script>
+	</body>
+</html>

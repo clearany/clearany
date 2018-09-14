@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>RabbitMQ源码安装 | Clear Sky</title>
+    <meta name="viewport" content="width=device-width">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Clear Sky" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4e55f04a49a285900817965cb4619021";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div class="mobile-nav-panel">
+        <i class="icon-reorder icon-large"></i>
+      </div>
+      <header id="header">
+        <h1 class="blog-title">
+          <a href="/">Clear Sky</a>
+        </h1>
+        <nav class="nav">
+          <ul>
+            <li><a href="/"><i class="fa fa-home fa-fw"></i>home</a></li>
+            <li><a href="/archives"><i class="fa fa-archive fa-fw"></i>archives</a></li>
+            <li><a href="/categories"><i class="fa fa-list fa-fw"></i>categories</a></li>
+            <li><a href="/tags"><i class="fa fa-tags fa-fw"></i>tags</a></li>
+            <li><a href="/search"><i class="fa fa-search fa-fw"></i>search</a></li>
+            <li><a href="/about"><i class="fa fa-user fa-fw"></i>about</a></li>
+            <li><a href="/atom.xml"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+          </ul>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.clearany.com"></form>
+        </div>
+      </header>
+<div id="main">
+	
+	<article id="post-RabbitMQ源码安装" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2016-05-11T08:19:27.000Z" itemprop="datePublished">2016-05-11</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2016/05/11/RabbitMQ源码安装/">RabbitMQ源码安装</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+    		<h4 id="安装语言环境"><a href="#安装语言环境" class="headerlink" title="安装语言环境"></a>安装语言环境</h4><pre><code>RabbitMQ是基于Erlang的，所以首先必须配置Erlang环境.
+</code></pre><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">yum -y install make gcc gcc-c++ kernel-devel m4 ncurses ncurses-devel openssl-devel perl</span><br><span class="line"><span class="built_in">cd</span> /data/src</span><br><span class="line"><span class="comment">#下载解压</span></span><br><span class="line">tar -zxvf otp_src_18.2.1.tar.gz</span><br><span class="line"><span class="built_in">cd</span> otp_src_17.4;</span><br><span class="line">./configure --prefix=/data/program/erlang;</span><br><span class="line">make &amp;&amp; make install</span><br><span class="line"></span><br><span class="line"><span class="comment">#修改/etc/profile文件，增加下面的环境变量：</span></span><br><span class="line"><span class="comment">#set erlang environment</span></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:/usr/<span class="built_in">local</span>/erlang/bin</span><br><span class="line"></span><br><span class="line"><span class="built_in">source</span> /etc/profile</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h4 id="安装RabbitMQ"><a href="#安装RabbitMQ" class="headerlink" title="安装RabbitMQ"></a>安装RabbitMQ</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装依赖文件 否则编译时报错：line 1: xmlto: command not found </span></span><br><span class="line">yum install xmlto -y</span><br><span class="line">tar -zxvf rabbitmq-server-3.5.7.tar.gz</span><br><span class="line"><span class="built_in">cd</span> rabbitmq-server-3.5.7</span><br><span class="line">make TARGET_DIR=/data/program/rabbitmq SBIN_DIR=/data/program/rabbitmq/sbin MAN_DIR=/data/program/rabbitmq/man DOC_INSTALL_DIR=/data/program/rabbitmq/doc</span><br><span class="line">make TARGET_DIR=/data/program/rabbitmq SBIN_DIR=/data/program/rabbitmq/sbin MAN_DIR=/data/program/rabbitmq/man DOC_INSTALL_DIR=/data/program/rabbitmq/doc install</span><br><span class="line">添加系统环境变量：</span><br><span class="line">修改/etc/profile文件，增加下面的环境变量：</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:/data/program/erlang/bin:/data/program/rabbitmq/sbin</span><br><span class="line"><span class="built_in">source</span> /etc/profile</span><br></pre></td></tr></table></figure>
+<h4 id="服务管理"><a href="#服务管理" class="headerlink" title="服务管理"></a>服务管理</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#启动服务</span></span><br><span class="line"><span class="comment">#运行rabbitmq:</span></span><br><span class="line">/usr/rabbitmq/sbin/rabbitmq-server  -detached            <span class="comment">#默认监听端口5672、25672</span></span><br><span class="line"><span class="comment">#查看rabbitmq状态:</span></span><br><span class="line">/usr/rabbitmq/sbin/rabbitmqctl status</span><br><span class="line"><span class="comment">#关闭rabbitmq:</span></span><br><span class="line">/usr/rabbitmq/sbin/rabbitmqctl stop</span><br></pre></td></tr></table></figure>
+<h4 id="启用Web管理"><a href="#启用Web管理" class="headerlink" title="启用Web管理"></a>启用Web管理</h4><pre><code>RabbitMQ提供了完善的管理和监控工具，分management plugin 和 rabbitmqctl 两种类型的工具。
+rabbitmq-management plugin提供HTTP API来管理和监控RabbitMQ Server，具体包含如下功能：
+删除、生成、列表，包括：exchanges，queues，bindings，users，virtual hosts and permissions。
+监视 queue 长度，每个 channel的message rates ，每个连接的data rates，等等。
+发送和接收messages。
+监控Erlang processes，file descriptors，memory use。
+导出／导出object definitions to JSON。
+强制关闭 connections，清空 queues。
+
+management plugin默认就在RabbitMQ的发布版本中，只需要enable就可以了，执行以下命令：
+</code></pre><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /data/program/rabbitmq/bin/</span><br><span class="line">rabbitmq-plugins <span class="built_in">enable</span> rabbitmq_management</span><br><span class="line"></span><br><span class="line"><span class="comment">#打开浏览器，输入http://[server-name]:15672/ 如 http://localhost:15672/ 即可访问</span></span><br></pre></td></tr></table></figure>
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/数据库/">数据库</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RabbitMQ/">RabbitMQ</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/消息中间件/">消息中间件</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+		
+<nav id="article-nav">
+  
+    <a href="/2016/05/11/RabbitMQ基础概念/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          RabbitMQ 基础概念
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/04/24/NG流控和f2b防止CC/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          NG流控和f2b防止CC
+        
+      </div>
+    </a>
+  
+</nav>
+
+  	
+
+</article>
+
+
+
+
+
+
+</div>
+			<footer id="footer">
+				<h1 class="footer-blog-title">
+					<a href="/">Clear Sky</a>
+				</h1>
+				<span class="copyright">
+					&copy; 2018 CLEAR<br>
+					Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+					Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+				</span>
+			</footer>
+  		</div>
+  		
+
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bundle.js"></script>
+	</body>
+</html>

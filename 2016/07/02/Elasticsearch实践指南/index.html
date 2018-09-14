@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>Elasticsearch实践指南 | Clear Sky</title>
+    <meta name="viewport" content="width=device-width">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Clear Sky" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4e55f04a49a285900817965cb4619021";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div class="mobile-nav-panel">
+        <i class="icon-reorder icon-large"></i>
+      </div>
+      <header id="header">
+        <h1 class="blog-title">
+          <a href="/">Clear Sky</a>
+        </h1>
+        <nav class="nav">
+          <ul>
+            <li><a href="/"><i class="fa fa-home fa-fw"></i>home</a></li>
+            <li><a href="/archives"><i class="fa fa-archive fa-fw"></i>archives</a></li>
+            <li><a href="/categories"><i class="fa fa-list fa-fw"></i>categories</a></li>
+            <li><a href="/tags"><i class="fa fa-tags fa-fw"></i>tags</a></li>
+            <li><a href="/search"><i class="fa fa-search fa-fw"></i>search</a></li>
+            <li><a href="/about"><i class="fa fa-user fa-fw"></i>about</a></li>
+            <li><a href="/atom.xml"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+          </ul>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.clearany.com"></form>
+        </div>
+      </header>
+<div id="main">
+	
+	<article id="post-Elasticsearch实践指南" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2016-07-02T10:00:12.000Z" itemprop="datePublished">2016-07-02</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2016/07/02/Elasticsearch实践指南/">Elasticsearch实践指南</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+    		<h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><pre><code>Elasticsearch是基于Lucene开发的一个准实时搜索服务，搜索延时在秒级。ES存储主要通过自身解析json数据，然后json里面的key映射为Lucene里面的字段，使用lucene进行搜索和索引。ES不仅支持普通的全文搜索和按词搜索，还支持模糊匹配，近义词搜索，聚合，排序，geo等特性。ES的开源特性也使得它社区活跃，版本迭代更新迅速，现在主要分为2.0和5.0两个大版本，建议大家使用最新的5.0版本会更容易升级和获取一些更高级的特性。
+下面是一些上线或者线上使用Elasticsearch需要了解的特性
+</code></pre><a id="more"></a>
+<h4 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a>CPU</h4><pre><code>es主要依赖于硬盘和内存，所以对CPU要求不高，一般8核就行，如果并发比较多可以适当增加。
+</code></pre><h4 id="硬盘"><a href="#硬盘" class="headerlink" title="硬盘"></a>硬盘</h4><pre><code>硬盘决定你es写入读取数据速度，磁盘建议用15k的机械硬盘,并配置为raid0，如果集群节点&lt;5个，请使用raid5，这样保证一个硬盘故障不会影响服务。虽然es本身可以通过分片去保证数据的冗余，但是es每个节点大量数据爬行还是对较小的集群有一定影响。（土豪直接上SSD，需要正确配置I/O调度程序，阵列卡建议&gt;h710，否则就像ssd跑车上安装一个拖拉机引擎）
+</code></pre><h4 id="内存优化"><a href="#内存优化" class="headerlink" title="内存优化"></a>内存优化</h4><pre><code>1  .ES的内存使用分为两部分ES缓存和Lucene通过内核缓存加速一些数据。
+2  . 如果服务器内存  `nG &gt; 64G`,ES的内存尽量设置低于32G，建议最大31G. 因为es使用“内存指针压缩”技术，一旦内存内存大于32G这项技术将失效，内存有效使用只有原来的60%~70%。你不必为内存浪费而担心，因为lucene会通过系统把一些聚合和排序的数据缓存起来方便你快速查询使用。
+3 .如果服务器内存  `nG &lt; 64G`，建议给ES分配  内存 (n-2)/2G.  首先2G是给系统预留，然后es和lucene
+4 . 如果你想继续你的实时查询，尽量不要使用swap(交换分区)，建议关闭系统swap使用
+</code></pre><h4 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h4><pre><code>建议千兆光纤，高速网络可以保证集群节点故障后快速恢复，以及添加节点后快速再平衡。
+尽量不要跨机房，除非需要灾备，或者有足够的带宽，否则你将迎来es节点数据同步的无限等待。
+</code></pre><h4 id="数据文档结构数据"><a href="#数据文档结构数据" class="headerlink" title="数据文档结构数据"></a>数据文档结构数据</h4><pre><code>因为所有es节点需要实时同步‘索引列表’，‘文档类型’，‘字段名’等信息，所以在节点数固定的情况下索引，字段名等不要太多否则会给es的master节点造成压力。
+简单举例：我要保存用户提交字段和信息，各个字段名因为是动态生成，理论上是无上限的，但是es的master要实时的同步这些字段信息到每个节点，如果现在只有100个字段还好，要是有1000个字段就会产生问题，如果有2000个字段就严重到无法使用了，当然索引的数量也是同样的意义，
+</code></pre><h4 id="索引优化"><a href="#索引优化" class="headerlink" title="索引优化"></a>索引优化</h4><pre><code>es的每个索引默认总计10个分片，5个主分片，每个主分片对应一个副分片。
+1 .  当然很多情况下这个无法满足你实际需求，例如你的集群有8个节点，计划单个索引超过100亿条数据，为了让这个索引查询速度快一点，你可以增加索引分片数量：1.增加主副分片对数，增加副分片的数量。这样不仅加速搜索还增加了数据的冗余。
+2 . 一些只读的索引可以使用‘optimize的API’进行把每个索引合并为一个单独数据段，这样可以节省资源加速操作，但是需要注意这样会消耗一定IO，如果当前节点请求繁忙，不要进行此类操作。
+3 . 在使用索引的时候尽量使用索引别名，在以后索引重建或者索引名变更时避免宕机维护。
+</code></pre><h4 id="操作优化"><a href="#操作优化" class="headerlink" title="操作优化"></a>操作优化</h4><pre><code>1 . 并发请求不要一次太多，否则超过es内部队列长度将失败。
+2 . 如果一次一定要提交太多任务写入尽量添加失败判断，一旦失败等待3~5秒重试操作，否则数据将丢失。
+3 .文档尽量一次写入不要更改和删除，因为es的更改和删除只是给旧数据做了一个标签，查询的时候依然会查询匹配，只是不在结果中计算。
+</code></pre><h4 id="故障处理"><a href="#故障处理" class="headerlink" title="故障处理"></a>故障处理</h4><pre><code>如果有ES集群单节点掉出集群不要慌张ES有自愈的能力，你只需要保证集群稳定，磁盘充足即可自动修复。
+如果集群突然大多节点掉出集群，且出现分片丢失，那你需要考虑分片丢失是否能够接受，如果不能你可以通过同时停止全部节点，并启动全部节点进入时间门来尝试恢复全部数据。
+正常情况下少数节点掉出集群，导致一些只读的分片丢失，可以把这些掉出的节点重新加入回集群即可恢复分片。
+</code></pre>
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/数据库/">数据库</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+		
+<nav id="article-nav">
+  
+    <a href="/2016/07/02/Elasticsearch之基本操作/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Elasticsearch之基本操作
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/05/19/系统任务调度-Rundeck/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          系统任务调度-Rundeck
+        
+      </div>
+    </a>
+  
+</nav>
+
+  	
+
+</article>
+
+
+
+
+
+
+</div>
+			<footer id="footer">
+				<h1 class="footer-blog-title">
+					<a href="/">Clear Sky</a>
+				</h1>
+				<span class="copyright">
+					&copy; 2018 CLEAR<br>
+					Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+					Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+				</span>
+			</footer>
+  		</div>
+  		
+
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bundle.js"></script>
+	</body>
+</html>

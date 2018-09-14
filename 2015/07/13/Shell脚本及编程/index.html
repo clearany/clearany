@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>Shell脚本及编程 | Clear Sky</title>
+    <meta name="viewport" content="width=device-width">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Clear Sky" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4e55f04a49a285900817965cb4619021";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div class="mobile-nav-panel">
+        <i class="icon-reorder icon-large"></i>
+      </div>
+      <header id="header">
+        <h1 class="blog-title">
+          <a href="/">Clear Sky</a>
+        </h1>
+        <nav class="nav">
+          <ul>
+            <li><a href="/"><i class="fa fa-home fa-fw"></i>home</a></li>
+            <li><a href="/archives"><i class="fa fa-archive fa-fw"></i>archives</a></li>
+            <li><a href="/categories"><i class="fa fa-list fa-fw"></i>categories</a></li>
+            <li><a href="/tags"><i class="fa fa-tags fa-fw"></i>tags</a></li>
+            <li><a href="/search"><i class="fa fa-search fa-fw"></i>search</a></li>
+            <li><a href="/about"><i class="fa fa-user fa-fw"></i>about</a></li>
+            <li><a href="/atom.xml"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+          </ul>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.clearany.com"></form>
+        </div>
+      </header>
+<div id="main">
+	
+	<article id="post-Shell脚本及编程" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2015-07-13T02:46:25.000Z" itemprop="datePublished">2015-07-13</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2015/07/13/Shell脚本及编程/">Shell脚本及编程</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+    		<h4 id="shell调试"><a href="#shell调试" class="headerlink" title="shell调试"></a>shell调试</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/bin/bash -xv </span></span><br><span class="line"><span class="comment">#不用任何其他选项就可以启用调试功能了</span></span><br><span class="line"><span class="comment">#sh -n sh16.sh 不执行script，仅查询语法</span></span><br><span class="line"><span class="comment">#sh -x sh16.sh 将script执行过程全部列出来</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h4 id="特殊变量"><a href="#特殊变量" class="headerlink" title="特殊变量"></a>特殊变量</h4><pre><code>$$       Shell本身的PID（ProcessID）
+$!       Shell最后运行的后台Process的PID
+$?       最后运行的命令的结束代码（返回值） 0 表示成功  ，非0 不成功
+$-       使用Set命令设定的Flag一览
+$*       所有参数列表。如&quot;$*&quot;用「&quot;」括起来的情况、以&quot;$1 $2 … $n&quot;的形式输出所有参数。
+$@       所有参数列表。如&quot;$@&quot;用「&quot;」括起来的情况、以&quot;$1&quot; &quot;$2&quot; … &quot;$n&quot; 的形式输出所有参数。
+$#       添加到Shell的参数个数
+$0       Shell本身的文件名
+$1～$n   添加到Shell的各参数值。$1是第1参数、$2是第2参数…。
+
+
+#将命令的输出读入一个变量中，可以将它放入双引号中，即可保留空格和换行符(\n)
+out=$(cat text.txt)
+输出1 2 3
+out=&quot;$(cat text.txt)&quot;
+输出：
+1
+2
+3
+
+#获取名称.扩展名
+file_jpg=&quot;sample.jpg&quot;
+name=${file_jpg%.*}
+#输出sample
+file_jpg=&quot;sample.jpg&quot;
+extension=${file_jpg#*.}
+#输出jpg
+</code></pre><h4 id="常用运算符"><a href="#常用运算符" class="headerlink" title="常用运算符"></a>常用运算符</h4><table>
+<thead>
+<tr>
+<th>操作符</th>
+<th>说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-eq</td>
+<td>检测两个数是否相等，相等返回 true。</td>
+<td>[ $a -eq $b ] 返回 false。</td>
+</tr>
+<tr>
+<td>-ne</td>
+<td>检测两个数是否相等，不相等返回 true。</td>
+<td>[ $a -ne $b ] 返回 true。</td>
+</tr>
+<tr>
+<td>-gt</td>
+<td>检测左边的数是否大于右边的，如果是，则返回 true。</td>
+<td>[ $a -gt $b ] 返回 false。</td>
+</tr>
+<tr>
+<td>-lt</td>
+<td>检测左边的数是否小于右边的，如果是，则返回 true。</td>
+<td>[ $a -lt $b ] 返回 true。</td>
+</tr>
+<tr>
+<td>-ge</td>
+<td>检测左边的数是否大于等于右边的，如果是，则返回 true。</td>
+<td>[ $a -ge $b ] 返回 false。</td>
+</tr>
+<tr>
+<td>-le</td>
+<td>检测左边的数是否小于等于右边的，如果是，则返回 true。</td>
+<td>[ $a -le $b ] 返回 true。</td>
+</tr>
+<tr>
+<td>-z</td>
+<td>检测字符串长度是否为0，为0返回 true。</td>
+<td>[ -z $a ] 返回 false。</td>
+</tr>
+<tr>
+<td>-n</td>
+<td>检测字符串长度是否为0，不为0返回 true。</td>
+<td>[ -n $a ] 返回 true。</td>
+</tr>
+<tr>
+<td>str</td>
+<td>检测字符串是否为空，不为空返回 true。</td>
+<td>[ $a ] 返回 true</td>
+</tr>
+<tr>
+<td>-b file</td>
+<td>检测文件是否是块设备文件，如果是，则返回 true。</td>
+<td>[ -b $file ] 返回 false。</td>
+</tr>
+<tr>
+<td>-c file</td>
+<td>检测文件是否是字符设备文件，如果是，则返回 true。</td>
+<td>[ -c $file ] 返回 false。</td>
+</tr>
+<tr>
+<td>-S file</td>
+<td>侦测是否为一个socket 标签档案</td>
+<td>[ -S $file ] 返回 false。</td>
+</tr>
+<tr>
+<td>-d file</td>
+<td>检测文件是否是目录，如果是，则返回 true。</td>
+<td>[ -d $file ] 返回 false。</td>
+</tr>
+<tr>
+<td>-f file</td>
+<td>检测文件是否是普通文件（既不是目录，也不是设备文件），如果是，则返回 true。</td>
+<td>[ -f $file ] 返回 true</td>
+</tr>
+<tr>
+<td>-g file</td>
+<td>检测文件是否设置了 SGID 位，如果是，则返回 true。</td>
+<td>[ -g $file ] 返回 false</td>
+</tr>
+<tr>
+<td>-k file</td>
+<td>检测文件是否设置了粘着位(Sticky Bit)，如果是，则返回 true。</td>
+<td>[ -k $file ] 返回 false</td>
+</tr>
+<tr>
+<td>-p file</td>
+<td>检测文件是否是有名管道，如果是，则返回 true。</td>
+<td>[ -p $file ] 返回 false</td>
+</tr>
+<tr>
+<td>-u file</td>
+<td>检测文件是否设置了 SUID 位，如果是，则返回 true。</td>
+<td>[ -u $file ] 返回 false</td>
+</tr>
+<tr>
+<td>-r file</td>
+<td>检测文件是否可读，如果是，则返回 true。</td>
+<td>[ -r $file ] 返回 true</td>
+</tr>
+<tr>
+<td>-w file</td>
+<td>检测文件是否可写，如果是，则返回 true。</td>
+<td>[ -w $file ] 返回 true</td>
+</tr>
+<tr>
+<td>-x file</td>
+<td>检测文件是否可执行，如果是，则返回 true。</td>
+<td>[ -x $file ] 返回 true</td>
+</tr>
+<tr>
+<td>-s file</td>
+<td>检测文件是否为空（文件大小是否大于0），不为空返回 true。</td>
+<td>[ -s $file ] 返回 true</td>
+</tr>
+<tr>
+<td>-e file</td>
+<td>检测文件（包括目录）是否存在，如果是，则返回 true。</td>
+<td>[ -e $file ] 返回 true</td>
+</tr>
+<tr>
+<td>!</td>
+<td>非运算，表达式为 true 则返回 false，否则返回 true</td>
+<td>[ ! false ] 返回 true</td>
+</tr>
+<tr>
+<td>-o</td>
+<td>或运算，有一个表达式为 true 则返回 true</td>
+<td>[ $a -lt 20 -o $b -gt 100 ] 返回 true</td>
+</tr>
+<tr>
+<td>-a</td>
+<td>与运算，两个表达式都为 true 才返回 true</td>
+<td>[ $a -lt 20 -a $b -gt 100 ] 返回 false</td>
+</tr>
+</tbody>
+</table>
+<h4 id="逻辑表达式"><a href="#逻辑表达式" class="headerlink" title="逻辑表达式"></a>逻辑表达式</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#使用方法：test EXPRESSION如：</span></span><br><span class="line">[root@localhost ~]<span class="comment"># test 1 = 1 &amp;&amp; echo 'ok'</span></span><br><span class="line">ok</span><br><span class="line">[root@localhost ~]<span class="comment"># test -d /etc/ &amp;&amp; echo 'ok' </span></span><br><span class="line">ok</span><br><span class="line">[root@localhost ~]<span class="comment"># test 1 -eq 1 &amp;&amp; echo 'ok'</span></span><br><span class="line">ok</span><br><span class="line">[root@localhost ~]<span class="comment"># if test 1 = 1 ; then echo 'ok'; fi</span></span><br><span class="line">ok</span><br><span class="line"><span class="comment">#注意：所有字符 与逻辑运算符直接用“空格”分开，不能连到一起。</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#[] 表达式</span></span><br><span class="line">[root@localhost ~]<span class="comment"># [ 1 -eq 1 ] &amp;&amp; echo 'ok'           </span></span><br><span class="line">ok</span><br><span class="line">[root@localhost ~]<span class="comment"># [ 2 &lt; 1 ] &amp;&amp; echo 'ok'                  </span></span><br><span class="line">-bash: 2: No such file or directory</span><br><span class="line">[root@localhost ~]<span class="comment"># [ 2 \&lt; 1 ] &amp;&amp; echo 'ok'</span></span><br><span class="line">[root@localhost ~]<span class="comment"># [ 2 -gt 1 -a 3 -lt 4 ] &amp;&amp; echo 'ok'</span></span><br><span class="line">ok    </span><br><span class="line">[root@localhost ~]<span class="comment"># [ 2 -gt 1 &amp;&amp; 3 -lt 4 ] &amp;&amp; echo 'ok'   </span></span><br><span class="line">-bash: [: missing `]`</span><br><span class="line"></span><br><span class="line"><span class="comment">#意：在[] 表达式中，常见的&gt;,&lt;需要加转义字符，表示字符串大小比较，以acill码 位置作为比较。 不直接支持&lt;&gt;运算符，还有逻辑运算符|| &amp;&amp; 它需要用-a[and] –o[or]表示</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#[[]] 表达式</span></span><br><span class="line">[root@localhost ~]<span class="comment"># [ 1 -eq 1 ] &amp;&amp; echo 'ok'           </span></span><br><span class="line">ok</span><br><span class="line">[root@localhost ~]$ [[ 2 &lt; 3 ]] &amp;&amp; <span class="built_in">echo</span> <span class="string">'ok'</span> </span><br><span class="line">ok</span><br><span class="line">[root@localhost ~]$ [[ 2 &lt; 3 &amp;&amp; 4 &gt; 5 ]] &amp;&amp; <span class="built_in">echo</span> <span class="string">'ok'</span> </span><br><span class="line">ok</span><br><span class="line"></span><br><span class="line"><span class="comment">#注意：[[]] 运算符只是[]运算符的扩充。能够支持&lt;,&gt;符号运算不需要转义符，它还是以字符串比较大小。里面支持逻辑运算符：|| &amp;&amp;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">type</span> [</span><br><span class="line">[ is a shell <span class="built_in">builtin</span></span><br><span class="line">$ <span class="built_in">type</span> [[</span><br><span class="line">[[ is a shell keyword</span><br><span class="line"><span class="comment">#也就是说[处理里面的字串是当作参数来处理的，而[[对待其中的字串是当作表达式来处理的那么当作参数和表达式有什么不同呢？</span></span><br><span class="line"><span class="comment">#表达式中不会有wordsplitting 或者glob expansion，而参数处理会有</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#性能比较</span></span><br><span class="line">[root@localhost ~]$ time (<span class="keyword">for</span> m <span class="keyword">in</span> &#123;1..100000&#125;; <span class="keyword">do</span> <span class="built_in">test</span> -d .;<span class="keyword">done</span>;)</span><br><span class="line">real    0m0.658s</span><br><span class="line">user    0m0.558s</span><br><span class="line">sys     0m0.100s</span><br><span class="line"></span><br><span class="line">[root@localhost ~]$ time (<span class="keyword">for</span> m <span class="keyword">in</span> &#123;1..100000&#125;; <span class="keyword">do</span> [ -d . ];<span class="keyword">done</span>;)</span><br><span class="line">real    0m0.609s</span><br><span class="line">user    0m0.524s</span><br><span class="line">sys     0m0.085s</span><br><span class="line"></span><br><span class="line">[root@localhost ~]$ time (<span class="keyword">for</span> m <span class="keyword">in</span> &#123;1..100000&#125;; <span class="keyword">do</span> [[ -d . ]];<span class="keyword">done</span>;)</span><br><span class="line">real    0m0.311s</span><br><span class="line">user    0m0.275s</span><br><span class="line">sys     0m0.036s</span><br></pre></td></tr></table></figure>
+<h4 id="循环遍历"><a href="#循环遍历" class="headerlink" title="循环遍历"></a>循环遍历</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#for循环</span></span><br><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> 1 2 3 4 5</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="variable">$i</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#注：ls会将当前目录下的所有文件列出来，然后逐个赋值给file，就可以逐个输出了</span></span><br><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> $(ls) </span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="variable">$file</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#(( 初始值;循环控制条件;变量变化 ))</span></span><br><span class="line">sum=0</span><br><span class="line"><span class="keyword">for</span> ((i=1;i&lt;=100;i=i+1))</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="comment">#同样可以使用，sum=$[$sum+$i]</span></span><br><span class="line">    sum=$((<span class="variable">$sum</span>+<span class="variable">$i</span>)) </span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$sum</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#while循环</span></span><br><span class="line"><span class="comment">#说明：当条件判断式成立时，才会执行程序，直到条件判断式不成立时，才退出循环。</span></span><br><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">i=1</span><br><span class="line">sum=0</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> [ <span class="variable">$i</span> -le 100 ]</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    sum=$(( sum+i ))</span><br><span class="line">    i=$(( i+1 ))</span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$sum</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#until循环</span></span><br><span class="line"><span class="comment">#说明：until循环和while循环是相反的，当条件判断式不成立时，才会执行程序，直到条件判断式成立，才退出循环</span></span><br><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">i=1</span><br><span class="line">sum=0</span><br><span class="line"></span><br><span class="line">until [ <span class="variable">$i</span> -gt 100 ]</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    sum=$(( sum+i ))</span><br><span class="line">    i=$(( i+1 ))</span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$sum</span></span><br></pre></td></tr></table></figure>
+<h4 id="数组的遍历"><a href="#数组的遍历" class="headerlink" title="数组的遍历"></a>数组的遍历</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#在Linux下使用shell的时候，为方便起见，偶尔会用到一下数组。数组的申明方式是：array=(element1 element2 element3 .... elementN)  也就是直接用圆括号包数组元素包起来，数组元素之间用空格隔开就行了。</span></span><br><span class="line">数据的读取如下</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;array[0]&#125;</span>  </span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;array[index]&#125;</span>  </span><br><span class="line"></span><br><span class="line"><span class="comment">#数组的遍历用到一个取全部</span></span><br><span class="line"><span class="variable">$&#123;array[@]&#125;</span>  </span><br><span class="line"></span><br><span class="line"><span class="comment">#完整示例如下：</span></span><br><span class="line"><span class="keyword">for</span> data <span class="keyword">in</span> <span class="variable">$&#123;array[@]&#125;</span>  </span><br><span class="line"><span class="keyword">do</span>  </span><br><span class="line">	<span class="built_in">echo</span> <span class="variable">$&#123;data&#125;</span>  </span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/linux/">linux</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/">shell</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/编程/">编程</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/脚本/">脚本</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+		
+<nav id="article-nav">
+  
+    <a href="/2015/07/13/网络管理工具之netstat/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          网络管理工具之netstat
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/07/11/网络统计分析脚本/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          网络统计分析脚本
+        
+      </div>
+    </a>
+  
+</nav>
+
+  	
+
+</article>
+
+
+
+
+
+
+</div>
+			<footer id="footer">
+				<h1 class="footer-blog-title">
+					<a href="/">Clear Sky</a>
+				</h1>
+				<span class="copyright">
+					&copy; 2018 CLEAR<br>
+					Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+					Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+				</span>
+			</footer>
+  		</div>
+  		
+
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bundle.js"></script>
+	</body>
+</html>

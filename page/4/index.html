@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>Clear Sky</title>
+    <meta name="viewport" content="width=device-width">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Clear Sky" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4e55f04a49a285900817965cb4619021";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div class="mobile-nav-panel">
+        <i class="icon-reorder icon-large"></i>
+      </div>
+      <header id="header">
+        <h1 class="blog-title">
+          <a href="/">Clear Sky</a>
+        </h1>
+        <nav class="nav">
+          <ul>
+            <li><a href="/"><i class="fa fa-home fa-fw"></i>home</a></li>
+            <li><a href="/archives"><i class="fa fa-archive fa-fw"></i>archives</a></li>
+            <li><a href="/categories"><i class="fa fa-list fa-fw"></i>categories</a></li>
+            <li><a href="/tags"><i class="fa fa-tags fa-fw"></i>tags</a></li>
+            <li><a href="/search"><i class="fa fa-search fa-fw"></i>search</a></li>
+            <li><a href="/about"><i class="fa fa-user fa-fw"></i>about</a></li>
+            <li><a href="/atom.xml"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+          </ul>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.clearany.com"></form>
+        </div>
+      </header>
+<div id="main">
+	
+	
+	    <article id="post-单机多网口高可用实现" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2016-07-13T05:16:20.000Z" itemprop="datePublished">2016-07-13</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2016/07/13/单机多网口高可用实现/">单机多网口高可用实现</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+			<h4 id="查看内核是否支持bonding模块"><a href="#查看内核是否支持bonding模块" class="headerlink" title="查看内核是否支持bonding模块"></a>查看内核是否支持bonding模块</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@mfsmaster ~]<span class="comment"># cat /boot/config-2.6.32-358.el6.x86_64 |grep -i bonding</span></span><br><span class="line">CONFIG_BONDING=m</span><br></pre></td></tr></table></figure>
+<h4 id="创建虚拟网口定义文件"><a href="#创建虚拟网口定义文件" class="headerlink" title="创建虚拟网口定义文件"></a>创建虚拟网口定义文件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/sysconfig/network-scripts/ifcfg-bond0</span><br><span class="line">DEVICE=<span class="string">"bond0"</span></span><br><span class="line">BOOTPROTO=<span class="string">"static"</span></span><br><span class="line">IPV6INIT=<span class="string">"no"</span></span><br><span class="line">IPADDR=172.26.1.1</span><br><span class="line">NETMASK=255.255.255.0</span><br><span class="line">GATEWAY=172.26.1.254</span><br><span class="line">DNS1=114.114.114.114</span><br><span class="line">DNS2=211.136.20.203</span><br><span class="line">MTU=<span class="string">"1500"</span></span><br><span class="line">NM_CONTROLLED=<span class="string">"yes"</span></span><br><span class="line">ONBOOT=<span class="string">"yes"</span></span><br><span class="line">TYPE=<span class="string">"Ethernet"</span></span><br><span class="line">USERCTL=<span class="string">"no"</span></span><br></pre></td></tr></table></figure>
+			
+				<p class="article-more-link">
+					<a href="/2016/07/13/单机多网口高可用实现/#more"><i>more >> </i></a>
+				</p>
+      		
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/linux/">linux</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网卡绑定/">网卡绑定</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/高可用/">高可用</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+
+</article>
+
+
+	<hr class="article-devider">
+
+
+
+	
+	    <article id="post-Firewalld的应用" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2016-07-12T03:21:48.000Z" itemprop="datePublished">2016-07-12</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2016/07/12/Firewalld的应用/">Firewalld的应用</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+			<h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><pre><code>Firewalld服务是红帽RHEL7系统中默认的防火墙管理工具，特点是拥有运行时配置与永久配置选项且能够支持动态更新以及&quot;zone&quot;的区域功能概念，使用图形化工具firewall-config或文本管理工具firewall-cmd。　防火墙的网络区域定义了网络连接的可信等级，我们可以根据不同场景来调用不同的firewalld区域
+</code></pre><h4 id="zone概念"><a href="#zone概念" class="headerlink" title="zone概念"></a>zone概念</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">硬件防火墙默认一般有三个区，firewalld引入这一概念系统默认存在以下区域：</span><br><span class="line">drop：（丢弃），任何接受的网络数据包都被丢弃，没有任何回复。仅能有发送出去的网络连接。</span><br><span class="line">block：（限制）拒绝所有外部连接，允许内部发起的连接，任何接受的网络连接都被IPV4的icmp-host-prohibited信息和ipv6的icmp6-adm-prohibited信息所拒绝。</span><br><span class="line">public：（公共）在公共区域内使用，不能相信网络内的其他计算机不会对你的计算造成危害，只能接受经过选取的连接。</span><br><span class="line">external：（外部）特别是为路由器启用了伪装功能的外部网。你不能信任来自网络的其他计算，不嫩更相信他们不会对你的计算机造成危害，只能接受经过选择的连接。</span><br><span class="line">dmz：（非军事区）用于你的非军事区内的电脑，此区域内可公开访问，可以有限地进入你的内部网络，仅仅接受经过选择的连接。</span><br><span class="line">work：用于工作区。你可以基本相信网络内的其他电脑不会危害你的电脑。仅仅接受经过选择的连接。</span><br><span class="line">home：用于家庭网络。你可以基本相信网络内的其他计算机不会危害你的计算机。仅仅接受经过选择的连接。</span><br><span class="line">internal：用于内部网络，你可以基本信任网络内的其他计算机不会威胁你的计算机，仅仅接受经过选择的连接。</span><br><span class="line">trusted：可接受所有的网络连接</span><br></pre></td></tr></table></figure>
+			
+				<p class="article-more-link">
+					<a href="/2016/07/12/Firewalld的应用/#more"><i>more >> </i></a>
+				</p>
+      		
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/linux/">linux</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Firewalld/">Firewalld</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iptales/">iptales</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安全/">安全</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/防火墙/">防火墙</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+
+</article>
+
+
+	<hr class="article-devider">
+
+
+
+	
+	    <article id="post-Elasticsearch的备份和恢复" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2016-07-02T11:26:42.000Z" itemprop="datePublished">2016-07-02</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2016/07/02/Elasticsearch的备份和恢复/">Elasticsearch的备份和恢复</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+			<h4 id="创建备份目录"><a href="#创建备份目录" class="headerlink" title="创建备份目录"></a>创建备份目录</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir /data/backup</span><br><span class="line">chmod 777 /data/backup</span><br></pre></td></tr></table></figure>
+<h4 id="修改ES配置"><a href="#修改ES配置" class="headerlink" title="修改ES配置"></a>修改ES配置</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#在elasticsearch.yml中加入一行:</span></span><br><span class="line">path.repo:  /mnt/backup/</span><br><span class="line"><span class="comment">#或者直接修改/etc/init.d/elasticsearch,将原来的DAEMON_OPTS选项</span></span><br><span class="line">DAEMON_OPTS=<span class="string">"-d -p <span class="variable">$PID_FILE</span> --default.path.home=<span class="variable">$ES_HOME</span> --default.path.logs=<span class="variable">$LOG_DIR</span> --default.path.data=<span class="variable">$DATA_DIR</span> --default.path.conf=<span class="variable">$CONF_DIR</span>"</span></span><br><span class="line"><span class="comment">#修改为:</span></span><br><span class="line">REPO_DIR=/mnt/backup</span><br><span class="line">DAEMON_OPTS=<span class="string">"-d -p <span class="variable">$PID_FILE</span> --default.path.home=<span class="variable">$ES_HOME</span> --default.path.logs=<span class="variable">$LOG_DIR</span> </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">#修改后重启es集群</span></span><br></pre></td></tr></table></figure>
+			
+				<p class="article-more-link">
+					<a href="/2016/07/02/Elasticsearch的备份和恢复/#more"><i>more >> </i></a>
+				</p>
+      		
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/数据库/">数据库</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+
+</article>
+
+
+	<hr class="article-devider">
+
+
+
+	
+	    <article id="post-Elasticsearch安装" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2016-07-02T11:21:27.000Z" itemprop="datePublished">2016-07-02</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2016/07/02/Elasticsearch安装/">Elasticsearch安装</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+			<h4 id="基本名词"><a href="#基本名词" class="headerlink" title="基本名词"></a>基本名词</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">index: es里的index相当于一个数据库。 </span><br><span class="line"><span class="built_in">type</span>: 相当于数据库里的一个表。 </span><br><span class="line">id： 唯一，相当于主键。 </span><br><span class="line">node:节点是es实例，一台机器可以运行多个实例，但是同一台机器上的实例在配置文件中要确保http和tcp端口不同。 </span><br><span class="line">cluster:代表一个集群，集群中有多个节点，其中有一个会被选为主节点，这个主节点是可以通过选举产生的，主从节点是对于集群内部来说的。 </span><br><span class="line">shards：代表索引分片，es可以把一个完整的索引分成多个分片，这样的好处是可以把一个大的索引拆分成多个，分布到不同的节点上，构成分布式搜索。分片的数量只能在索引创建前指定，并且索引创建后不能更改。 </span><br><span class="line">replicas:代表索引副本，es可以设置多个索引的副本，副本的作用一是提高系统的容错性，当个某个节点某个分片损坏或丢失时可以从副本中恢复。二是提高es的查询效率，es会自动对搜索请求进行负载均衡</span><br></pre></td></tr></table></figure>
+<h4 id="下载安装"><a href="#下载安装" class="headerlink" title="下载安装"></a>下载安装</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.2.2.tar.gz</span><br><span class="line">tar zxvf elasticsearch-6.2.2.tar.gz</span><br><span class="line">mv elasticsearch-6.2.2 /data/program/elasticsearch-6.2.2</span><br></pre></td></tr></table></figure>
+			
+				<p class="article-more-link">
+					<a href="/2016/07/02/Elasticsearch安装/#more"><i>more >> </i></a>
+				</p>
+      		
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/数据库/">数据库</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+
+</article>
+
+
+	<hr class="article-devider">
+
+
+
+	
+	    <article id="post-Elasticsearch-head介绍" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2016-07-02T11:10:16.000Z" itemprop="datePublished">2016-07-02</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2016/07/02/Elasticsearch-head介绍/">Elasticsearch-head介绍</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+    		<pre><code>elasticsearch-head是一个界面化的集群操作和管理工具，可以对集群进行傻瓜式操作。你可以通过插件把它集成到es（首选方式）,也可以安装成一个独立webapp。
+
+es-head主要有三个方面的操作：
+
+显示集群的拓扑,并且能够执行索引和节点级别操作
+搜索接口能够查询集群中原始json或表格格式的检索数据
+能够快速访问并显示集群的状态
+有一个输入窗口,允许任意调用RESTful API。这个接口包含几个选项,可以组合在一起以产生有趣的结果; 
+请求方法(get、put、post、delete),查询json数据,节点和路径
+支持JSON验证器
+支持重复请求计时器
+支持使用javascript表达式变换结果
+收集结果的能力随着时间的推移(使用定时器),或比较的结果
+能力图表转换后的结果在一个简单的条形图(包括时间序列)
+</code></pre>
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/数据库/">数据库</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch-head/">Elasticsearch-head</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+
+</article>
+
+
+	<hr class="article-devider">
+
+
+
+	
+
+	
+	  <nav id="page-nav">
+	    <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
+	  </nav>
+	
+
+</div>
+			<footer id="footer">
+				<h1 class="footer-blog-title">
+					<a href="/">Clear Sky</a>
+				</h1>
+				<span class="copyright">
+					&copy; 2018 CLEAR<br>
+					Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+					Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+				</span>
+			</footer>
+  		</div>
+  		
+
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bundle.js"></script>
+	</body>
+</html>

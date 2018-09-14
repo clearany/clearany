@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>mongo的集群模式_Replica Set | Clear Sky</title>
+    <meta name="viewport" content="width=device-width">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Clear Sky" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4e55f04a49a285900817965cb4619021";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div class="mobile-nav-panel">
+        <i class="icon-reorder icon-large"></i>
+      </div>
+      <header id="header">
+        <h1 class="blog-title">
+          <a href="/">Clear Sky</a>
+        </h1>
+        <nav class="nav">
+          <ul>
+            <li><a href="/"><i class="fa fa-home fa-fw"></i>home</a></li>
+            <li><a href="/archives"><i class="fa fa-archive fa-fw"></i>archives</a></li>
+            <li><a href="/categories"><i class="fa fa-list fa-fw"></i>categories</a></li>
+            <li><a href="/tags"><i class="fa fa-tags fa-fw"></i>tags</a></li>
+            <li><a href="/search"><i class="fa fa-search fa-fw"></i>search</a></li>
+            <li><a href="/about"><i class="fa fa-user fa-fw"></i>about</a></li>
+            <li><a href="/atom.xml"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+          </ul>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.clearany.com"></form>
+        </div>
+      </header>
+<div id="main">
+	
+	<article id="post-mongo的集群模式_Replica Set" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2016-04-18T14:22:34.000Z" itemprop="datePublished">2016-04-18</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2016/04/18/mongo的集群模式_Replica Set/">mongo的集群模式_Replica Set</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+    		<h4 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h4><pre><code>副本集模式集群，其实简单来说就是集群当中包含了多份数据，保证主节点挂掉了，备节点能继续提供数据服务，提供的前提就是数据需要和主节点一致。如下图
+</code></pre><p><img src="http://www.machunpeng.cn/server/../Public/Uploads/2018-04-13/5ad0d19122560.png" alt="图"></p>
+<pre><code>Mongodb(M)表示主节点，Mongodb(S)表示备节点，Mongodb(A)表示仲裁节点。主备节点存储数据，仲裁节点不存储数据。客户端同时连接主节点与备节点，不连接仲裁节点。
+
+默认设置下，主节点提供所有增删查改服务，备节点不提供任何服务。但是可以通过设置使备节点提供查询服务，这样就可以减少主节点的压力，当客户端进行数据查询时，请求自动转到备节点上。这个设置叫做Read Preference Modes，同时Java客户端提供了简单的配置方式，可以不必直接对数据库进行操作。
+
+仲裁节点是一种特殊的节点，它本身并不存储数据，主要的作用是决定哪一个备节点在主节点挂掉之后提升为主节点，所以客户端不需要连接此节点。这里虽然只有一个备节点，但是仍然需要一个仲裁节点来提升备节点级别。我开始也不相信必须要有仲裁节点，但是自己也试过没仲裁节点的话，主节点挂了备节点还是备节点，所以咱们还是需要它的。
+
+介绍完了集群方案，那么现在就开始搭建了
+</code></pre><a id="more"></a>
+<h4 id="安装Mongo-服务，所有节点"><a href="#安装Mongo-服务，所有节点" class="headerlink" title="安装Mongo 服务，所有节点"></a>安装Mongo 服务，所有节点</h4><pre><code>略...
+</code></pre><h4 id="修改配置文件，所有节点"><a href="#修改配置文件，所有节点" class="headerlink" title="修改配置文件，所有节点"></a>修改配置文件，所有节点</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">dbpath=/data/program/mongodb/data/</span><br><span class="line">logpath=/data/program/mongodb/<span class="built_in">log</span>/[master slave/arbiter] .<span class="built_in">log</span>  </span><br><span class="line">pidfilepath=/data/program/mongodb/[master slave/arbiter].pid  </span><br><span class="line">directoryperdb=<span class="literal">true</span>  </span><br><span class="line">logappend=<span class="literal">true</span>  </span><br><span class="line">replSet=testrs  </span><br><span class="line">bind_ip=10.10.148.130  </span><br><span class="line">port=27017  </span><br><span class="line">oplogSize=10000  </span><br><span class="line">fork=<span class="literal">true</span>  </span><br><span class="line">noprealloc=<span class="literal">true</span>  </span><br><span class="line"></span><br><span class="line"><span class="comment">#三个节点的配置基本相同，除了文件路径和bind的IP不同</span></span><br><span class="line"><span class="comment">#参数解释：</span></span><br><span class="line"><span class="comment">#dbpath：数据存放目录</span></span><br><span class="line"><span class="comment">#logpath：日志存放路径</span></span><br><span class="line"><span class="comment">#pidfilepath：进程文件，方便停止mongodb</span></span><br><span class="line"><span class="comment">#directoryperdb：为每一个数据库按照数据库名建立文件夹存放</span></span><br><span class="line"><span class="comment">#logappend：以追加的方式记录日志</span></span><br><span class="line"><span class="comment">#replSet：replica set的名字</span></span><br><span class="line"><span class="comment">#bind_ip：mongodb所绑定的ip地址</span></span><br><span class="line"><span class="comment">#port：mongodb进程所使用的端口号，默认为27017</span></span><br><span class="line"><span class="comment">#oplogSize：mongodb操作日志文件的最大大小。单位为Mb，默认为硬盘剩余空间的5%</span></span><br><span class="line"><span class="comment">#fork：以后台方式运行进程</span></span><br><span class="line"><span class="comment">#noprealloc：不预先分配存储</span></span><br></pre></td></tr></table></figure>
+<h4 id="启动Mongo，所有节点"><a href="#启动Mongo，所有节点" class="headerlink" title="启动Mongo，所有节点"></a>启动Mongo，所有节点</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./monood -f mongo.conf</span><br></pre></td></tr></table></figure>
+<h4 id="配置集群"><a href="#配置集群" class="headerlink" title="配置集群"></a>配置集群</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#ip和port是某个节点的地址</span></span><br><span class="line">./mongo 127.0.0.1:27017</span><br><span class="line">&gt;use admin</span><br><span class="line">&gt;cfg=&#123; _id:<span class="string">"testrs"</span>, members:[ &#123;_id:0,host:<span class="string">'192.168.1.10:27017'</span>,priority:2&#125;, &#123;_id:1,host:<span class="string">'193.168.1.11:27017'</span>,priority:1&#125;,&#123;_id:2,host:<span class="string">'192.168.1.12:27017'</span>,arbiterOnly:<span class="literal">true</span>&#125;] &#125;;</span><br><span class="line"><span class="comment">#使配置生效</span></span><br><span class="line">&gt;rs.initiate(cfg)</span><br><span class="line"></span><br><span class="line"><span class="comment">#cfg是可以任意的名字，当然最好不要是mongodb的关键字，conf，config都可以。最外层的_id表示replica set的名字，members里包含的是所有节点的地址以及优先级。优先级最高的即成为主节点，即这里的10.10.148.130:27017。特别注意的是，对于仲裁节点，需要有个特别的配置——arbiterOnly:true。这个千万不能少了，不然主备模式就不能生效</span></span><br></pre></td></tr></table></figure>
+<h4 id="完成"><a href="#完成" class="headerlink" title="完成"></a>完成</h4>
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/数据库/">数据库</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/db/">db</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mongo/">mongo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mongo-replica-set/">mongo replica set</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mongo集群/">mongo集群</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nosql/">nosql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库集群/">数据库集群</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+		
+<nav id="article-nav">
+  
+    <a href="/2016/04/18/mongo的用户和授权/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          mongo的用户和授权
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/04/18/mongo的集群模式_Master-Slaver/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          mongo的集群模式_Master-Slaver
+        
+      </div>
+    </a>
+  
+</nav>
+
+  	
+
+</article>
+
+
+
+
+
+
+</div>
+			<footer id="footer">
+				<h1 class="footer-blog-title">
+					<a href="/">Clear Sky</a>
+				</h1>
+				<span class="copyright">
+					&copy; 2018 CLEAR<br>
+					Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+					Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+				</span>
+			</footer>
+  		</div>
+  		
+
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bundle.js"></script>
+	</body>
+</html>

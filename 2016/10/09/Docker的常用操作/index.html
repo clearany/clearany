@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>Docker的常用操作 | Clear Sky</title>
+    <meta name="viewport" content="width=device-width">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Clear Sky" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4e55f04a49a285900817965cb4619021";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div class="mobile-nav-panel">
+        <i class="icon-reorder icon-large"></i>
+      </div>
+      <header id="header">
+        <h1 class="blog-title">
+          <a href="/">Clear Sky</a>
+        </h1>
+        <nav class="nav">
+          <ul>
+            <li><a href="/"><i class="fa fa-home fa-fw"></i>home</a></li>
+            <li><a href="/archives"><i class="fa fa-archive fa-fw"></i>archives</a></li>
+            <li><a href="/categories"><i class="fa fa-list fa-fw"></i>categories</a></li>
+            <li><a href="/tags"><i class="fa fa-tags fa-fw"></i>tags</a></li>
+            <li><a href="/search"><i class="fa fa-search fa-fw"></i>search</a></li>
+            <li><a href="/about"><i class="fa fa-user fa-fw"></i>about</a></li>
+            <li><a href="/atom.xml"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+          </ul>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.clearany.com"></form>
+        </div>
+      </header>
+<div id="main">
+	
+	<article id="post-Docker的常用操作" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2016-10-09T11:48:18.000Z" itemprop="datePublished">2016-10-09</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2016/10/09/Docker的常用操作/">Docker的常用操作</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+    		<h4 id="搭建私有仓库"><a href="#搭建私有仓库" class="headerlink" title="搭建私有仓库"></a>搭建私有仓库</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#拉取镜像</span></span><br><span class="line">docker pull registry</span><br><span class="line"><span class="comment">#创建数据库镜像</span></span><br><span class="line">mkdir -p /data/docker/registry</span><br><span class="line"><span class="comment">#启动容器，建立registry实例。/data/docker/registry/ 这个为物理机的路径。</span></span><br><span class="line">docker run -d --name registry -p 5000:5000 --restart=always -v /data/docker/registry/:/var/lib/registry/ registry</span><br><span class="line"></span><br><span class="line"><span class="comment">#配置daemon.json，去掉docker默认的https的访问</span></span><br><span class="line">cat /etc/docker/daemon.json</span><br><span class="line">&#123; <span class="string">"insecure-registries"</span>:[<span class="string">"192.168.3.180:5000"</span>] &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Docker-CLI自动补全"><a href="#Docker-CLI自动补全" class="headerlink" title="Docker CLI自动补全"></a>Docker CLI自动补全</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#执行以下脚本，重新打开shell即可</span></span><br><span class="line">yum install -y bash-completion</span><br><span class="line">/usr/share/bash-completion/bash_completion</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h4 id="镜像操作"><a href="#镜像操作" class="headerlink" title="镜像操作"></a>镜像操作</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Dockerfile生成镜像</span></span><br><span class="line">docker build -t group/nginx .</span><br><span class="line"><span class="comment">#-t 指定生成镜像的名字</span></span><br><span class="line"><span class="comment">#.  指定Dockerfile的位置</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#拉取镜像，从默认仓库</span></span><br><span class="line">docker pull nginx</span><br><span class="line"><span class="comment">#拉取镜像，从指定仓库</span></span><br><span class="line">docker pull 192.168.3.180:5000/nginx</span><br><span class="line"></span><br><span class="line"><span class="comment">#查看本地镜像 -a，代表所有镜像</span></span><br><span class="line">docker images -a</span><br><span class="line"></span><br><span class="line"><span class="comment">#删除镜像,rmi 后面可以是镜像名称或者ID,-f 代表强制删除</span></span><br><span class="line">docker rmi -f nginx</span><br><span class="line"></span><br><span class="line"><span class="comment">#tag镜像</span></span><br><span class="line">docker tag nginx 192.168.3.180:5000/nginx:v1.2</span><br><span class="line"></span><br><span class="line"><span class="comment">#提交镜像</span></span><br><span class="line">docker push 192.168.3.180:5000/nginx:v1.2</span><br></pre></td></tr></table></figure>
+<h4 id="容器操作"><a href="#容器操作" class="headerlink" title="容器操作"></a>容器操作</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#运行一个容器</span></span><br><span class="line">docker run -dit -p 80:8080 -v /volume/:/data 015502052fc4</span><br><span class="line">docker run -dit -p 80:8080 -v /volume/:/data 192.168.3.180:5000/nginx:v1.2</span><br><span class="line"></span><br><span class="line"><span class="comment">#查看所有容器</span></span><br><span class="line">docker ps -a</span><br><span class="line"></span><br><span class="line"><span class="comment">#进入容器Shell(可交互)</span></span><br><span class="line">docker <span class="built_in">exec</span> -it 578e7904aae7 /bin/bash</span><br><span class="line"></span><br><span class="line"><span class="comment">#启动一个容器</span></span><br><span class="line">docker start 578e7904aae7</span><br><span class="line"><span class="comment">#关闭一个容器</span></span><br><span class="line">docker stop 578e7904aae7</span><br><span class="line"><span class="comment">#删除一个容器</span></span><br><span class="line">docker rm 578e7904aae7</span><br></pre></td></tr></table></figure>
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/容器化/">容器化</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/容器化/">容器化</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+		
+<nav id="article-nav">
+  
+    <a href="/2016/10/13/使用CacheCloud管理Redis实例/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          使用CacheCloud管理Redis实例
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/10/09/Docker的核心及概念/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          Docker的核心及概念
+        
+      </div>
+    </a>
+  
+</nav>
+
+  	
+
+</article>
+
+
+
+
+
+
+</div>
+			<footer id="footer">
+				<h1 class="footer-blog-title">
+					<a href="/">Clear Sky</a>
+				</h1>
+				<span class="copyright">
+					&copy; 2018 CLEAR<br>
+					Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+					Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+				</span>
+			</footer>
+  		</div>
+  		
+
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bundle.js"></script>
+	</body>
+</html>

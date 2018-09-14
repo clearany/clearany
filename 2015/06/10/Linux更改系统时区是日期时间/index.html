@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>Linux更改系统时区是日期时间 | Clear Sky</title>
+    <meta name="viewport" content="width=device-width">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Clear Sky" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4e55f04a49a285900817965cb4619021";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div class="mobile-nav-panel">
+        <i class="icon-reorder icon-large"></i>
+      </div>
+      <header id="header">
+        <h1 class="blog-title">
+          <a href="/">Clear Sky</a>
+        </h1>
+        <nav class="nav">
+          <ul>
+            <li><a href="/"><i class="fa fa-home fa-fw"></i>home</a></li>
+            <li><a href="/archives"><i class="fa fa-archive fa-fw"></i>archives</a></li>
+            <li><a href="/categories"><i class="fa fa-list fa-fw"></i>categories</a></li>
+            <li><a href="/tags"><i class="fa fa-tags fa-fw"></i>tags</a></li>
+            <li><a href="/search"><i class="fa fa-search fa-fw"></i>search</a></li>
+            <li><a href="/about"><i class="fa fa-user fa-fw"></i>about</a></li>
+            <li><a href="/atom.xml"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+          </ul>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.clearany.com"></form>
+        </div>
+      </header>
+<div id="main">
+	
+	<article id="post-Linux更改系统时区是日期时间" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2015-06-10T15:00:19.000Z" itemprop="datePublished">2015-06-10</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2015/06/10/Linux更改系统时区是日期时间/">Linux更改系统时区是日期时间</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+    		<h4 id="查看时区"><a href="#查看时区" class="headerlink" title="查看时区"></a>查看时区</h4><pre><code>命令 ： &quot;date -R&quot; 或者 more /etc/sysconfig/clock
+</code></pre><h4 id="修改设置时区"><a href="#修改设置时区" class="headerlink" title="修改设置时区"></a>修改设置时区</h4><pre><code>方法 A
+命令 ： &quot;tzselect&quot;
+
+方法 B 仅限于RedHat Linux 和 CentOS
+命令 ： &quot;timeconfig&quot;
+
+方法 C 适用于Debian
+命令 ： &quot;dpkg-reconfigure tzdata&quot;
+</code></pre><a id="more"></a>
+<h4 id="复制相应的时区文件，替换系统时区文件"><a href="#复制相应的时区文件，替换系统时区文件" class="headerlink" title="复制相应的时区文件，替换系统时区文件"></a>复制相应的时区文件，替换系统时区文件</h4><pre><code>cp /usr/share/zoneinfo/$主时区/$次时区 /etc/localtime
+例如：在设置中国时区使用亚洲/上海（+8）
+cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+</code></pre><h4 id="查看Linux的时间"><a href="#查看Linux的时间" class="headerlink" title="查看Linux的时间"></a>查看Linux的时间</h4><pre><code>命令 ： &quot;date&quot;
+</code></pre><h4 id="设置时间和日期"><a href="#设置时间和日期" class="headerlink" title="设置时间和日期"></a>设置时间和日期</h4><pre><code>例如：将系统日期设定成2009年11月3日的命令
+命令 ： &quot;date -s 11/03/2009&quot;
+
+将系统时间设定成下午5点55分55秒的命令
+命令 ： &quot;date -s 17:55:55&quot;
+
+date
+显示当前时间 Fri Aug  3 14:15:16 CST 2007
+
+date -s 
+按字符串方式修改时间
+可以只修改日期,不修改时间,输入: date -s 2007-08-03
+只修改时间,输入:date -s 14:15:00
+同时修改日期时间,注意要加双引号,日期与时间之间有一空格,输入:date -s &quot;2007-08-03 14:15:00&quot;
+
+修改完后,需要的话可以输入:clock -w 
+把系统时间写入CMOS
+</code></pre><h4 id="将当前时间写入BIOS永久生效"><a href="#将当前时间写入BIOS永久生效" class="headerlink" title="将当前时间写入BIOS永久生效"></a>将当前时间写入BIOS永久生效</h4><pre><code>hwclock
+</code></pre><h4 id="时区与UTC的偏移量描述"><a href="#时区与UTC的偏移量描述" class="headerlink" title="时区与UTC的偏移量描述"></a>时区与UTC的偏移量描述</h4><pre><code>NZDT +13:00 新西兰白昼时间（夏时制） 
+IDLE +12:00 国际日期变更线，东边 
+NZST +12:00 新西兰标准时间 
+NZT +12:00 新西兰时间 
+AESST +11:00 澳大利亚东部标准夏时制 
+ACSST +10:30 中澳大利亚标准夏时制 
+CADT +10:30 中澳大利亚夏时制 
+SADT +10:30 南澳大利亚夏时制 
+AEST +10:00 澳大利亚东部标准时间 
+EAST +10:00 东澳大利亚标准时间 
+GST +10:00 关岛标准时间，（USSR Zone 9？） 
+LIGT +10:00 澳大利亚墨尔本 
+ACST +09:30 中澳大利亚标准时间 
+CAST +09:30 中澳大利亚标准时间 
+SAT +9:30 南澳大利亚标准时间 
+AWSST +9:00 澳大利亚西部标准夏时制 
+JST +9:00 日本标准时间，（USSR Zone 8） 
+KST +9:00 韩国标准时间 
+WDT +9:00 西澳大利亚夏时制 
+MT +8:30 毛里求斯时间（？） 
+AWST +8:00 澳大利亚西部标准时间 
+CCT +8:00 中国沿海时间 
+WADT +8:00 西澳大利亚夏时制 
+WST +8:00 西澳大利亚时间 
+JT +7:30 爪哇时间（译注：这里的 Java 可不是语言） 
+WAST +7:00 西澳大利亚标准时间 
+IT +3:30 伊朗时间 
+BT +3:00 巴格达时间 
+EETDST +3:00 东欧夏时制 
+CETDST +2:00 中欧夏时制 
+EET +2:00 东欧，（USSR Zone 1） 
+FWT +2:00 法国冬时制 
+IST +2:00 以色列标准时间 
+MEST +2:00 中欧夏时制 
+METDST +2:00 中欧白昼时间 
+SST +2:00 瑞典夏时制 
+BST +1:00 英国夏时制 
+CET +1:00 中欧时间 
+DNT +1:00 Dansk Normal Tid（？） 
+DST +1:00 Dansk Standard Time （？） 
+FST +1:00 法国夏时制 
+MET +1:00 中欧时间 
+MEWT +1:00 中欧冬时制 
+MEZ +1:00 中欧时区 
+NOR +1:00 挪威标准时间 
+SET +1:00 Seychelles Time（？） 
+SWT +1:00 瑞典冬时制 
+WETDST +1:00 西欧光照利用时间（夏时制） 
+GMT 0:00 格林威治平均时间 
+WET 0:00 西欧 
+WAT -1:00 西非时间 
+NDT -2:30 纽芬兰（新大陆）白昼时间 
+ADT -03:00 大西洋白昼时间 
+NFT -3:30 纽芬兰（新大陆）标准时间 
+NST -3:30 纽芬兰（新大陆）标准时间 
+AST -4:00 大西洋标准时间（加拿大） 
+EDT -4:00 东部白昼时间 
+ZP4 -4:00 GMT +4 小时 
+CDT -5:00 中部白昼时间 
+EST -5:00 东部标准时间 
+ZP5 -5:00 GMT +5 小时 
+CST -6:00 中部标准时间 
+MDT -6:00 山区白昼时间（译注：Mountain Daylight Time那位知道怎么译？） 
+ZP6 -6:00 GMT +6 小时 
+MST -7:00 山区标准时间 
+PDT -7:00 太平洋白昼时间 
+PST -8:00 太平洋标准时间 
+YDT -8:00 Yukon 白昼时间 
+HDT -9:00 夏威仪/阿拉斯加白昼时间 
+YST -9:00 Yukon 标准时间 
+AHST -10:00 夏威仪-阿拉斯加标准时间 
+CAT -10:00 中阿拉斯加时间 
+NT -11:00 州时间（Nome Time） 
+IDLW -12:00 国际日期变更线，西边
+</code></pre>
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/linux/">linux</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/时区/">时区</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+		
+<nav id="article-nav">
+  
+    <a href="/2015/07/09/网络管理工具之tcpdump/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          网络管理工具之tcpdump
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/06/09/linux常用的解压缩命令/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          linux常用的解压缩命令
+        
+      </div>
+    </a>
+  
+</nav>
+
+  	
+
+</article>
+
+
+
+
+
+
+</div>
+			<footer id="footer">
+				<h1 class="footer-blog-title">
+					<a href="/">Clear Sky</a>
+				</h1>
+				<span class="copyright">
+					&copy; 2018 CLEAR<br>
+					Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+					Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+				</span>
+			</footer>
+  		</div>
+  		
+
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bundle.js"></script>
+	</body>
+</html>

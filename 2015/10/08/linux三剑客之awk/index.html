@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>linux三剑客之awk | Clear Sky</title>
+    <meta name="viewport" content="width=device-width">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Clear Sky" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4e55f04a49a285900817965cb4619021";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div class="mobile-nav-panel">
+        <i class="icon-reorder icon-large"></i>
+      </div>
+      <header id="header">
+        <h1 class="blog-title">
+          <a href="/">Clear Sky</a>
+        </h1>
+        <nav class="nav">
+          <ul>
+            <li><a href="/"><i class="fa fa-home fa-fw"></i>home</a></li>
+            <li><a href="/archives"><i class="fa fa-archive fa-fw"></i>archives</a></li>
+            <li><a href="/categories"><i class="fa fa-list fa-fw"></i>categories</a></li>
+            <li><a href="/tags"><i class="fa fa-tags fa-fw"></i>tags</a></li>
+            <li><a href="/search"><i class="fa fa-search fa-fw"></i>search</a></li>
+            <li><a href="/about"><i class="fa fa-user fa-fw"></i>about</a></li>
+            <li><a href="/atom.xml"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+          </ul>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.clearany.com"></form>
+        </div>
+      </header>
+<div id="main">
+	
+	<article id="post-linux三剑客之awk" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2015-10-08T12:36:42.000Z" itemprop="datePublished">2015-10-08</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2015/10/08/linux三剑客之awk/">linux三剑客之awk</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+    		<h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><pre><code>AWK是一种处理文本文件的语言，是一个强大的文本分析工具。之所以叫AWK是因为其取了三位创始人 Alfred Aho，Peter Weinberger, 和 Brian Kernighan 的Family Name的首字符。
+</code></pre><h4 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">awk [选项参数] <span class="string">'script'</span> var=value file(s)</span><br><span class="line">或</span><br><span class="line">awk [选项参数] -f scriptfile var=value file(s)</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h4 id="选项参数说明"><a href="#选项参数说明" class="headerlink" title="选项参数说明"></a>选项参数说明</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">-F fs or --field-separator fs</span><br><span class="line">指定输入文件折分隔符，fs是一个字符串或者是一个正则表达式，如-F:。</span><br><span class="line">-v var=value or --asign var=value</span><br><span class="line">赋值一个用户定义变量。</span><br><span class="line">-f scripfile or --file scriptfile</span><br><span class="line">从脚本文件中读取awk命令。</span><br><span class="line">-mf nnn and -mr nnn</span><br><span class="line">对nnn值设置内在限制，-mf选项限制分配给nnn的最大块数目；-mr选项限制记录的最大数目。这两个功能是Bell实验室版awk的扩展功能，在标准awk中不适用。</span><br><span class="line">-W compact or --compat, -W traditional or --traditional</span><br><span class="line">在兼容模式下运行awk。所以gawk的行为和标准的awk完全一样，所有的awk扩展都被忽略。</span><br><span class="line">-W copyleft or --copyleft, -W copyright or --copyright</span><br><span class="line">打印简短的版权信息。</span><br><span class="line">-W <span class="built_in">help</span> or --<span class="built_in">help</span>, -W usage or --usage</span><br><span class="line">打印全部awk选项和每个选项的简短说明。</span><br><span class="line">-W lint or --lint</span><br><span class="line">打印不能向传统unix平台移植的结构的警告。</span><br><span class="line">-W lint-old or --lint-old</span><br><span class="line">打印关于不能向传统unix平台移植的结构的警告。</span><br><span class="line">-W posix</span><br><span class="line">打开兼容模式。但有以下限制，不识别：/x、函数关键字、func、换码序列以及当fs是一个空格时，将新行作为一个域分隔符；操作符**和**=不能代替^和^=；fflush无效。</span><br><span class="line">-W re-interval or --re-inerval</span><br><span class="line">允许间隔正则表达式的使用，参考(grep中的Posix字符类)，如括号表达式[[:alpha:]]。</span><br><span class="line">-W <span class="built_in">source</span> program-text or --<span class="built_in">source</span> program-text</span><br><span class="line">使用program-text作为源代码，可与-f命令混用。</span><br><span class="line">-W version or --version</span><br><span class="line">打印bug报告信息的版本。</span><br></pre></td></tr></table></figure>
+<h4 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#log.txt文本内容如下：</span></span><br><span class="line"></span><br><span class="line">2 this is a <span class="built_in">test</span></span><br><span class="line">3 Are you like awk</span><br><span class="line">This<span class="string">'s a test</span></span><br><span class="line"><span class="string">10 There are orange,apple,mongo</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">用法一：</span><br><span class="line">awk <span class="string">'&#123;[pattern] action&#125;'</span> &#123;filenames&#125;   <span class="comment"># 行匹配语句 awk '' 只能用单引号</span></span><br><span class="line">实例：</span><br><span class="line"><span class="comment"># 每行按空格或TAB分割，输出文本中的1、4项</span></span><br><span class="line"> awk <span class="string">'&#123;print $1,$4&#125;'</span> log.txt</span><br><span class="line"> ---------------------------------------------</span><br><span class="line"> 2 a</span><br><span class="line"> 3 like</span><br><span class="line"> This<span class="string">'s</span></span><br><span class="line"><span class="string"> 10 orange,apple,mongo</span></span><br><span class="line"><span class="string"> # 格式化输出</span></span><br><span class="line"><span class="string">awk '</span>&#123;<span class="built_in">printf</span> <span class="string">"%-8s %-10s\n"</span>,<span class="variable">$1</span>,<span class="variable">$4</span>&#125;<span class="string">' log.txt</span></span><br><span class="line"><span class="string"> ---------------------------------------------</span></span><br><span class="line"><span class="string"> 2        a</span></span><br><span class="line"><span class="string"> 3        like</span></span><br><span class="line"><span class="string"> This'</span>s</span><br><span class="line"> 10       orange,apple,mongo</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#用法二：</span></span><br><span class="line">awk -F  <span class="comment">#-F相当于内置变量FS, 指定分割字符</span></span><br><span class="line"><span class="comment">#实例：</span></span><br><span class="line"><span class="comment"># 使用","分割</span></span><br><span class="line">awk -F, <span class="string">'&#123;print $1,$2&#125;'</span>   log.txt</span><br><span class="line"> ---------------------------------------------</span><br><span class="line"> 2 this is a <span class="built_in">test</span></span><br><span class="line"> 3 Are you like awk</span><br><span class="line"> This<span class="string">'s a test</span></span><br><span class="line"><span class="string"> 10 There are orange apple</span></span><br><span class="line"><span class="string"># 或者使用内建变量</span></span><br><span class="line"><span class="string">awk '</span>BEGIN&#123;FS=<span class="string">","</span>&#125; &#123;<span class="built_in">print</span> <span class="variable">$1</span>,<span class="variable">$2</span>&#125;<span class="string">'     log.txt</span></span><br><span class="line"><span class="string"> ---------------------------------------------</span></span><br><span class="line"><span class="string"> 2 this is a test</span></span><br><span class="line"><span class="string"> 3 Are you like awk</span></span><br><span class="line"><span class="string"> This'</span>s a <span class="built_in">test</span></span><br><span class="line"> 10 There are orange apple</span><br><span class="line"><span class="comment"># 使用多个分隔符.先使用空格分割，然后对分割结果再使用","分割</span></span><br><span class="line">awk -F <span class="string">'[ ,]'</span>  <span class="string">'&#123;print $1,$2,$5&#125;'</span>   log.txt</span><br><span class="line"> ---------------------------------------------</span><br><span class="line"> 2 this <span class="built_in">test</span></span><br><span class="line"> 3 Are awk</span><br><span class="line"> This<span class="string">'s a</span></span><br><span class="line"><span class="string"> 10 There apple</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#用法三：</span></span><br><span class="line">awk -v  <span class="comment"># 设置变量</span></span><br><span class="line"><span class="comment">#实例：</span></span><br><span class="line">awk -va=1 <span class="string">'&#123;print $1,$1+a&#125;'</span> log.txt</span><br><span class="line"> ---------------------------------------------</span><br><span class="line"> 2 3</span><br><span class="line"> 3 4</span><br><span class="line"> This<span class="string">'s 1</span></span><br><span class="line"><span class="string"> 10 11</span></span><br><span class="line"><span class="string">awk -va=1 -vb=s '</span>&#123;<span class="built_in">print</span> <span class="variable">$1</span>,<span class="variable">$1</span>+a,<span class="variable">$1b</span>&#125;<span class="string">' log.txt</span></span><br><span class="line"><span class="string"> ---------------------------------------------</span></span><br><span class="line"><span class="string"> 2 3 2s</span></span><br><span class="line"><span class="string"> 3 4 3s</span></span><br><span class="line"><span class="string"> This'</span>s 1 This<span class="string">'ss</span></span><br><span class="line"><span class="string"> 10 11 10s</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#用法四：</span></span><br><span class="line">awk -f &#123;awk脚本&#125; &#123;文件名&#125;</span><br><span class="line"><span class="comment">#实例：</span></span><br><span class="line">awk -f cal.awk log.txt</span><br></pre></td></tr></table></figure>
+<h4 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h4><table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>= += -= *= /= %= ^= **=</td>
+<td>赋值</td>
+</tr>
+<tr>
+<td>?:</td>
+<td>C条件表达式</td>
+</tr>
+<tr>
+<td></td>
+<td>逻辑或</td>
+</tr>
+<tr>
+<td>&amp;&amp;</td>
+<td>逻辑与</td>
+</tr>
+<tr>
+<td>~ ~!</td>
+<td>匹配正则表达式和不匹配正则表达式</td>
+</tr>
+<tr>
+<td>&lt; &lt;= &gt; &gt;= != ==</td>
+<td>关系运算符</td>
+</tr>
+<tr>
+<td>空格</td>
+<td>连接</td>
+</tr>
+<tr>
+<td>+ -</td>
+<td>加，减</td>
+</tr>
+<tr>
+<td>* / %</td>
+<td>乘，除与求余</td>
+</tr>
+<tr>
+<td>+ - !</td>
+<td>一元加，减和逻辑非</td>
+</tr>
+<tr>
+<td>^ ***</td>
+<td>求幂</td>
+</tr>
+<tr>
+<td>++ –</td>
+<td>增加或减少，作为前缀或后缀</td>
+</tr>
+<tr>
+<td>$</td>
+<td>字段引用</td>
+</tr>
+<tr>
+<td>in</td>
+<td>数组成员</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#过滤第一列大于2的行</span></span><br><span class="line">awk <span class="string">'$1&gt;2'</span> log.txt    <span class="comment">#命令</span></span><br><span class="line"><span class="comment">#输出</span></span><br><span class="line">3 Are you like awk</span><br><span class="line">This<span class="string">'s a test</span></span><br><span class="line"><span class="string">10 There are orange,apple,mongo</span></span><br><span class="line"><span class="string">#过滤第一列等于2的行</span></span><br><span class="line"><span class="string">awk '</span><span class="variable">$1</span>==2 &#123;<span class="built_in">print</span> <span class="variable">$1</span>,<span class="variable">$3</span>&#125;<span class="string">' log.txt    #命令</span></span><br><span class="line"><span class="string">#输出</span></span><br><span class="line"><span class="string">2 is</span></span><br><span class="line"><span class="string">#过滤第一列大于2并且第二列等于'</span>Are<span class="string">'的行</span></span><br><span class="line"><span class="string">awk '</span><span class="variable">$1</span>&gt;2 &amp;&amp; <span class="variable">$2</span>==<span class="string">"Are"</span> &#123;<span class="built_in">print</span> <span class="variable">$1</span>,<span class="variable">$2</span>,<span class="variable">$3</span>&#125;<span class="string">' log.txt    #命令</span></span><br><span class="line"><span class="string">#输出</span></span><br><span class="line"><span class="string">3 Are you</span></span><br></pre></td></tr></table></figure>
+<h4 id="内建变量"><a href="#内建变量" class="headerlink" title="内建变量"></a>内建变量</h4><table>
+<thead>
+<tr>
+<th>变量</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>\$n</td>
+<td>当前记录的第n个字段，字段间由FS分隔</td>
+</tr>
+<tr>
+<td>\$0</td>
+<td>完整的输入记录</td>
+</tr>
+<tr>
+<td>ARGC</td>
+<td>命令行参数的数目</td>
+</tr>
+<tr>
+<td>ARGIND</td>
+<td>命令行中当前文件的位置(从0开始算)</td>
+</tr>
+<tr>
+<td>ARGV</td>
+<td>包含命令行参数的数组</td>
+</tr>
+<tr>
+<td>CONVFMT</td>
+<td>数字转换格式(默认值为%.6g)ENVIRON环境变量关联数组</td>
+</tr>
+<tr>
+<td>ERRNO</td>
+<td>最后一个系统错误的描述</td>
+</tr>
+<tr>
+<td>FIELDWIDTHS</td>
+<td>字段宽度列表(用空格键分隔)</td>
+</tr>
+<tr>
+<td>FILENAME</td>
+<td>当前文件名</td>
+</tr>
+<tr>
+<td>FNR</td>
+<td>各文件分别计数的行号</td>
+</tr>
+<tr>
+<td>FS</td>
+<td>字段分隔符(默认是任何空格)</td>
+</tr>
+<tr>
+<td>IGNORECASE</td>
+<td>如果为真，则进行忽略大小写的匹配</td>
+</tr>
+<tr>
+<td>NF</td>
+<td>一条记录的字段的数目</td>
+</tr>
+<tr>
+<td>NR</td>
+<td>已经读出的记录数，就是行号，从1开始</td>
+</tr>
+<tr>
+<td>OFMT</td>
+<td>数字的输出格式(默认值是%.6g)</td>
+</tr>
+<tr>
+<td>OFS</td>
+<td>输出记录分隔符（输出换行符），输出时用指定的符号代替换行符</td>
+</tr>
+<tr>
+<td>ORS</td>
+<td>输出记录分隔符(默认值是一个换行符)</td>
+</tr>
+<tr>
+<td>RLENGTH</td>
+<td>由match函数所匹配的字符串的长度</td>
+</tr>
+<tr>
+<td>RS</td>
+<td>记录分隔符(默认是一个换行符)</td>
+</tr>
+<tr>
+<td>RSTART</td>
+<td>由match函数所匹配的字符串的第一个位置</td>
+</tr>
+<tr>
+<td>SUBSEP</td>
+<td>数组下标分隔符(默认值是/034)</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">'BEGIN&#123;printf "%4s %4s %4s %4s %4s %4s %4s %4s %4s\n","FILENAME","ARGC","FNR","FS","NF","NR","OFS","ORS","RS";printf "---------------------------------------------\n"&#125; &#123;printf "%4s %4s %4s %4s %4s %4s %4s %4s %4s\n",FILENAME,ARGC,FNR,FS,NF,NR,OFS,ORS,RS&#125;'</span>  log.txt</span><br><span class="line">FILENAME ARGC  FNR   FS   NF   NR  OFS  ORS   RS</span><br><span class="line">---------------------------------------------</span><br><span class="line">log.txt    2    1         5    1</span><br><span class="line">log.txt    2    2         5    2</span><br><span class="line">log.txt    2    3         3    3</span><br><span class="line">log.txt    2    4         4    4</span><br><span class="line">awk -F\<span class="string">' '</span>BEGIN&#123;<span class="built_in">printf</span> <span class="string">"%4s %4s %4s %4s %4s %4s %4s %4s %4s\n"</span>,<span class="string">"FILENAME"</span>,<span class="string">"ARGC"</span>,<span class="string">"FNR"</span>,<span class="string">"FS"</span>,<span class="string">"NF"</span>,<span class="string">"NR"</span>,<span class="string">"OFS"</span>,<span class="string">"ORS"</span>,<span class="string">"RS"</span>;<span class="built_in">printf</span> <span class="string">"---------------------------------------------\n"</span>&#125; &#123;<span class="built_in">printf</span> <span class="string">"%4s %4s %4s %4s %4s %4s %4s %4s %4s\n"</span>,FILENAME,ARGC,FNR,FS,NF,NR,OFS,ORS,RS&#125;<span class="string">'  log.txt</span></span><br><span class="line"><span class="string">FILENAME ARGC  FNR   FS   NF   NR  OFS  ORS   RS</span></span><br><span class="line"><span class="string">---------------------------------------------</span></span><br><span class="line"><span class="string">log.txt    2    1    '</span>    1    1</span><br><span class="line">log.txt    2    2    <span class="string">'    1    2</span></span><br><span class="line"><span class="string">log.txt    2    3    '</span>    2    3</span><br><span class="line">log.txt    2    4    <span class="string">'    1    4</span></span><br><span class="line"><span class="string"># 输出顺序号 NR, 匹配文本行号</span></span><br><span class="line"><span class="string">awk '</span>&#123;<span class="built_in">print</span> NR,FNR,<span class="variable">$1</span>,<span class="variable">$2</span>,<span class="variable">$3</span>&#125;<span class="string">' log.txt</span></span><br><span class="line"><span class="string">---------------------------------------------</span></span><br><span class="line"><span class="string">1 1 2 this is</span></span><br><span class="line"><span class="string">2 2 3 Are you</span></span><br><span class="line"><span class="string">3 3 This'</span>s a <span class="built_in">test</span></span><br><span class="line">4 4 10 There are</span><br><span class="line"><span class="comment"># 指定输出分割符</span></span><br><span class="line">awk <span class="string">'&#123;print $1,$2,$5&#125;'</span> OFS=<span class="string">" $ "</span>  log.txt</span><br><span class="line">---------------------------------------------</span><br><span class="line">2 $ this $ <span class="built_in">test</span></span><br><span class="line">3 $ Are $ awk</span><br><span class="line">This<span class="string">'s $ a $</span></span><br><span class="line"><span class="string">10 $ There $</span></span><br></pre></td></tr></table></figure>
+<h4 id="使用正则，字符串匹配"><a href="#使用正则，字符串匹配" class="headerlink" title="使用正则，字符串匹配"></a>使用正则，字符串匹配</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 输出第二列包含 "th"，并打印第二列与第四列</span></span><br><span class="line">awk <span class="string">'$2 ~ /th/ &#123;print $2,$4&#125;'</span> log.txt</span><br><span class="line">---------------------------------------------</span><br><span class="line">this a</span><br><span class="line"><span class="comment">#~ 表示模式开始。// 中是模式。</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出包含"re" 的行</span></span><br><span class="line">awk <span class="string">'/re/ '</span> log.txt</span><br><span class="line">---------------------------------------------</span><br><span class="line">3 Are you like awk</span><br><span class="line">10 There are orange,apple,mongo</span><br><span class="line"></span><br><span class="line"><span class="comment">#忽略大小写</span></span><br><span class="line">awk <span class="string">'BEGIN&#123;IGNORECASE=1&#125; /this/'</span> log.txt</span><br><span class="line">---------------------------------------------</span><br><span class="line">2 this is a <span class="built_in">test</span></span><br><span class="line">This<span class="string">'s a test</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">#模式取反</span></span><br><span class="line"><span class="string">awk '</span><span class="variable">$2</span> !~ /th/ &#123;<span class="built_in">print</span> <span class="variable">$2</span>,<span class="variable">$4</span>&#125;<span class="string">' log.txt</span></span><br><span class="line"><span class="string">---------------------------------------------</span></span><br><span class="line"><span class="string">Are like</span></span><br><span class="line"><span class="string">a</span></span><br><span class="line"><span class="string">There orange,apple,mongo</span></span><br><span class="line"><span class="string">awk '</span>!/th/ &#123;<span class="built_in">print</span> <span class="variable">$2</span>,<span class="variable">$4</span>&#125;<span class="string">' log.txt</span></span><br><span class="line"><span class="string">---------------------------------------------</span></span><br><span class="line"><span class="string">Are like</span></span><br><span class="line"><span class="string">a</span></span><br><span class="line"><span class="string">There orange,apple,mongo</span></span><br></pre></td></tr></table></figure>
+<h4 id="awk脚本"><a href="#awk脚本" class="headerlink" title="awk脚本"></a>awk脚本</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#关于awk脚本，我们需要注意两个关键词BEGIN和END。</span></span><br><span class="line"><span class="comment">#BEGIN&#123; 这里面放的是执行前的语句 &#125;</span></span><br><span class="line"><span class="comment">#END &#123;这里面放的是处理完所有的行后要执行的语句 &#125;</span></span><br><span class="line"><span class="comment">#&#123;这里面放的是处理每一行时要执行的语句&#125;</span></span><br><span class="line"><span class="comment">#假设有这么一个文件（学生成绩表）：</span></span><br><span class="line">cat score.txt</span><br><span class="line">Marry   2143 78 84 77</span><br><span class="line">Jack    2321 66 78 45</span><br><span class="line">Tom     2122 48 77 71</span><br><span class="line">Mike    2537 87 97 95</span><br><span class="line">Bob     2415 40 57 62</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#我们的awk脚本如下：</span></span><br><span class="line">cat cal.awk</span><br><span class="line"><span class="comment">#!/bin/awk -f</span></span><br><span class="line"><span class="comment">#运行前</span></span><br><span class="line">BEGIN &#123;</span><br><span class="line">    math = 0</span><br><span class="line">    english = 0</span><br><span class="line">    computer = 0</span><br><span class="line"> </span><br><span class="line">    <span class="built_in">printf</span> <span class="string">"NAME    NO.   MATH  ENGLISH  COMPUTER   TOTAL\n"</span></span><br><span class="line">    <span class="built_in">printf</span> <span class="string">"---------------------------------------------\n"</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">#运行中</span></span><br><span class="line">&#123;</span><br><span class="line">    math+=<span class="variable">$3</span></span><br><span class="line">    english+=<span class="variable">$4</span></span><br><span class="line">    computer+=<span class="variable">$5</span></span><br><span class="line">    <span class="built_in">printf</span> <span class="string">"%-6s %-6s %4d %8d %8d %8d\n"</span>, <span class="variable">$1</span>, <span class="variable">$2</span>, <span class="variable">$3</span>,<span class="variable">$4</span>,<span class="variable">$5</span>, <span class="variable">$3</span>+<span class="variable">$4</span>+<span class="variable">$5</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">#运行后</span></span><br><span class="line">END &#123;</span><br><span class="line">    <span class="built_in">printf</span> <span class="string">"---------------------------------------------\n"</span></span><br><span class="line">    <span class="built_in">printf</span> <span class="string">"  TOTAL:%10d %8d %8d \n"</span>, math, english, computer</span><br><span class="line">    <span class="built_in">printf</span> <span class="string">"AVERAGE:%10.2f %8.2f %8.2f\n"</span>, math/NR, english/NR, computer/NR</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#我们来看一下执行结果</span></span><br><span class="line">awk -f cal.awk score.txt</span><br><span class="line">NAME    NO.   MATH  ENGLISH  COMPUTER   TOTAL</span><br><span class="line">---------------------------------------------</span><br><span class="line">Marry  2143     78       84       77      239</span><br><span class="line">Jack   2321     66       78       45      189</span><br><span class="line">Tom    2122     48       77       71      196</span><br><span class="line">Mike   2537     87       97       95      279</span><br><span class="line">Bob    2415     40       57       62      159</span><br><span class="line">---------------------------------------------</span><br><span class="line">  TOTAL:       319      393      350</span><br><span class="line">AVERAGE:     63.80    78.60    70.00</span><br></pre></td></tr></table></figure>
+
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/linux/">linux</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/awk/">awk</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/三剑客/">三剑客</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+		
+<nav id="article-nav">
+  
+    <a href="/2015/10/08/linux三剑客之sed/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          linux三剑客之sed
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/08/11/Ansible实现批量化管理/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          Ansible实现批量化管理
+        
+      </div>
+    </a>
+  
+</nav>
+
+  	
+
+</article>
+
+
+
+
+
+
+</div>
+			<footer id="footer">
+				<h1 class="footer-blog-title">
+					<a href="/">Clear Sky</a>
+				</h1>
+				<span class="copyright">
+					&copy; 2018 CLEAR<br>
+					Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+					Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+				</span>
+			</footer>
+  		</div>
+  		
+
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bundle.js"></script>
+	</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>mongo的常用操作 | Clear Sky</title>
+    <meta name="viewport" content="width=device-width">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Clear Sky" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4e55f04a49a285900817965cb4619021";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div class="mobile-nav-panel">
+        <i class="icon-reorder icon-large"></i>
+      </div>
+      <header id="header">
+        <h1 class="blog-title">
+          <a href="/">Clear Sky</a>
+        </h1>
+        <nav class="nav">
+          <ul>
+            <li><a href="/"><i class="fa fa-home fa-fw"></i>home</a></li>
+            <li><a href="/archives"><i class="fa fa-archive fa-fw"></i>archives</a></li>
+            <li><a href="/categories"><i class="fa fa-list fa-fw"></i>categories</a></li>
+            <li><a href="/tags"><i class="fa fa-tags fa-fw"></i>tags</a></li>
+            <li><a href="/search"><i class="fa fa-search fa-fw"></i>search</a></li>
+            <li><a href="/about"><i class="fa fa-user fa-fw"></i>about</a></li>
+            <li><a href="/atom.xml"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+          </ul>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.clearany.com"></form>
+        </div>
+      </header>
+<div id="main">
+	
+	<article id="post-mongo的常用操作" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2016-04-18T14:10:21.000Z" itemprop="datePublished">2016-04-18</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2016/04/18/mongo的常用操作/">mongo的常用操作</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+    		<h4 id="备份"><a href="#备份" class="headerlink" title="备份"></a>备份</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#用户密码要要有认证库的权限</span></span><br><span class="line">mongodump -h 主机名 -u 用户名 -p 密码 -d 库名 -o /data/backup/ --authenticationDatabase=库名</span><br></pre></td></tr></table></figure>
+<h4 id="恢复"><a href="#恢复" class="headerlink" title="恢复"></a>恢复</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongorestore -h 主机名 -d 库名 --dir /data/backup/备份库目录 -u 用户名 -p 密码 --authenticationDatabase=库名</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h4 id="导出JSON文件"><a href="#导出JSON文件" class="headerlink" title="导出JSON文件"></a>导出JSON文件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongoexport -u 用户名 -p 密码 -d 库名 -c 集合 -o 文件名.dat --authenticationDatabase=库名</span><br></pre></td></tr></table></figure>
+<h4 id="导入JSON文件"><a href="#导入JSON文件" class="headerlink" title="导入JSON文件"></a>导入JSON文件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongoimport --db 库名 -u 用户 -p 密码 --collection 集合名 --file 文件名.json --host 127.0.0.1:27017</span><br></pre></td></tr></table></figure>
+<h4 id="导入CSV"><a href="#导入CSV" class="headerlink" title="导入CSV"></a>导入CSV</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongoimport -d 库名 -c 集合 --<span class="built_in">type</span> csv -f 字段1,字段2,... --file 文件名.csv</span><br></pre></td></tr></table></figure>
+<h4 id="导出CSV"><a href="#导出CSV" class="headerlink" title="导出CSV"></a>导出CSV</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongoexport -u 用户 -p 密码 -d 库名 -c 集合 --csv -f _id,name,userType,status -o 文件名.csv --authenticationDatabase=库名</span><br></pre></td></tr></table></figure>
+<h4 id="按条件导出csv"><a href="#按条件导出csv" class="headerlink" title="按条件导出csv"></a>按条件导出csv</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongoexport -u 用户 -p 密码 -d 库名 -c 集合 --csv -f _id,name,userType,status -q <span class="string">'&#123;"a":"B"&#125;'</span> -o 文件名.csv --authenticationDatabase=库名</span><br></pre></td></tr></table></figure>
+<h4 id="执行JS脚本"><a href="#执行JS脚本" class="headerlink" title="执行JS脚本"></a>执行JS脚本</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongo -u 用户 -p 密码 127.0.0.1:27017/库名 文件名.js</span><br></pre></td></tr></table></figure>
+<h4 id="增删改差"><a href="#增删改差" class="headerlink" title="增删改差"></a>增删改差</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mongo</span><br><span class="line">&gt;user 库名</span><br><span class="line">&gt;db.auth(<span class="string">"库名"</span>,<span class="string">"密码"</span>)</span><br><span class="line">&gt;db.库名.find(&#123;<span class="string">"key"</span>:<span class="string">"value"</span>&#125;)</span><br><span class="line"><span class="comment">#删除库</span></span><br><span class="line">&gt;db.dropDatabase()</span><br></pre></td></tr></table></figure>
+<h4 id="关闭Mongo"><a href="#关闭Mongo" class="headerlink" title="关闭Mongo"></a>关闭Mongo</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongo&gt;db.shutdownServer()</span><br></pre></td></tr></table></figure>
+<h4 id="查看已存在的用户"><a href="#查看已存在的用户" class="headerlink" title="查看已存在的用户"></a>查看已存在的用户</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; db.system.users.find()</span><br></pre></td></tr></table></figure>
+<h4 id="删除用户"><a href="#删除用户" class="headerlink" title="删除用户"></a>删除用户</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; use mydb</span><br><span class="line">&gt; db.system.users.remove(&#123;user:<span class="string">"root"</span>&#125;)</span><br><span class="line">&gt; db.system.users.find()</span><br></pre></td></tr></table></figure>
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/数据库/">数据库</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/db/">db</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mongo/">mongo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nosql/">nosql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+		
+<nav id="article-nav">
+  
+    <a href="/2016/04/18/mongo的集群模式_Master-Slaver/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          mongo的集群模式_Master-Slaver
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/04/18/mongo安装配置/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          mongo安装配置
+        
+      </div>
+    </a>
+  
+</nav>
+
+  	
+
+</article>
+
+
+
+
+
+
+</div>
+			<footer id="footer">
+				<h1 class="footer-blog-title">
+					<a href="/">Clear Sky</a>
+				</h1>
+				<span class="copyright">
+					&copy; 2018 CLEAR<br>
+					Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+					Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+				</span>
+			</footer>
+  		</div>
+  		
+
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bundle.js"></script>
+	</body>
+</html>

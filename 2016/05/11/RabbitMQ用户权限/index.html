@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>RabbitMQ用户权限 | Clear Sky</title>
+    <meta name="viewport" content="width=device-width">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Clear Sky" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4e55f04a49a285900817965cb4619021";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div class="mobile-nav-panel">
+        <i class="icon-reorder icon-large"></i>
+      </div>
+      <header id="header">
+        <h1 class="blog-title">
+          <a href="/">Clear Sky</a>
+        </h1>
+        <nav class="nav">
+          <ul>
+            <li><a href="/"><i class="fa fa-home fa-fw"></i>home</a></li>
+            <li><a href="/archives"><i class="fa fa-archive fa-fw"></i>archives</a></li>
+            <li><a href="/categories"><i class="fa fa-list fa-fw"></i>categories</a></li>
+            <li><a href="/tags"><i class="fa fa-tags fa-fw"></i>tags</a></li>
+            <li><a href="/search"><i class="fa fa-search fa-fw"></i>search</a></li>
+            <li><a href="/about"><i class="fa fa-user fa-fw"></i>about</a></li>
+            <li><a href="/atom.xml"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+          </ul>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.clearany.com"></form>
+        </div>
+      </header>
+<div id="main">
+	
+	<article id="post-RabbitMQ用户权限" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2016-05-11T10:09:08.000Z" itemprop="datePublished">2016-05-11</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2016/05/11/RabbitMQ用户权限/">RabbitMQ用户权限</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+    		<h4 id="用户角色分类"><a href="#用户角色分类" class="headerlink" title="用户角色分类"></a>用户角色分类</h4><pre><code>none、management、policymaker、monitoring、administrator
+</code></pre><a id="more"></a>
+<h4 id="各类角色描述："><a href="#各类角色描述：" class="headerlink" title="各类角色描述："></a>各类角色描述：</h4><pre><code>none
+不能访问 management plugin
+
+management
+用户可以通过AMQP做的任何事外加：
+列出自己可以通过AMQP登入的virtual hosts  
+查看自己的virtual hosts中的queues, exchanges 和 bindings
+查看和关闭自己的channels 和 connections
+查看有关自己的virtual hosts的“全局”的统计信息，包含其他用户在这些virtual hosts中的活动。
+
+policymaker 
+management可以做的任何事外加：
+查看、创建和删除自己的virtual hosts所属的policies和parameters
+
+monitoring  
+management可以做的任何事外加：
+列出所有virtual hosts，包括他们不能登录的virtual hosts
+查看其他用户的connections和channels
+查看节点级别的数据如clustering和memory使用情况
+查看真正的关于所有virtual hosts的全局的统计信息
+
+administrator   
+policymaker和monitoring可以做的任何事外加:
+创建和删除virtual hosts
+查看、创建和删除users
+查看创建和删除permissions
+关闭其他用户的connections
+</code></pre><h4 id="创建用户并设置角色"><a href="#创建用户并设置角色" class="headerlink" title="创建用户并设置角色"></a>创建用户并设置角色</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#可以创建管理员用户，负责整个MQ的运维，例如：</span></span><br><span class="line">rabbitmqctl add_user  user_admin  passwd_admin</span><br><span class="line"><span class="comment">#赋予其administrator角色</span></span><br><span class="line">rabbitmqctl set_user_tags user_admin administrator</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#可以创建RabbitMQ监控用户，负责整个MQ的监控，例如：</span></span><br><span class="line">sudo rabbitmqctl add_user  user_monitoring  passwd_monitor</span><br><span class="line"><span class="comment">#赋予其monitoring角色：</span></span><br><span class="line">sudo rabbitmqctl set_user_tags user_monitoring monitoring</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#可以创建某个项目的专用用户，只能访问项目自己的virtual hosts</span></span><br><span class="line">sudo rabbitmqctl  add_user  user_proj  passwd_proj</span><br><span class="line"><span class="comment">#赋予其monitoring角色：</span></span><br><span class="line">sudo rabbitmqctl set_user_tags user_proj management</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#创建和赋角色完成后查看并确认：</span></span><br><span class="line">sudo rabbitmqctl list_users</span><br></pre></td></tr></table></figure>
+<h4 id="权限控制"><a href="#权限控制" class="headerlink" title="权限控制"></a>权限控制</h4><pre><code>默认virtual host：&quot;/&quot;
+默认用户：guest 
+guest具有&quot;/&quot;上的全部权限，仅能有localhost访问RabbitMQ包括Plugin，建议删除或更改密码。可通过将配置文件中loopback_users置孔来取消其本地访问的限制：
+[{rabbit, [{loopback_users, []}]}]
+
+用户仅能对其所能访问的virtual hosts中的资源进行操作。这里的资源指的是virtual hosts中的exchanges、queues等，操作包括对资源进行配置、写、读。配置权限可创建、删除、资源并修改资源的行为，写权限可向资源发送消息，读权限从资源获取消息。比如：
+exchange和queue的declare与delete分别需要exchange和queue上的配置权限
+exchange的bind与unbind需要exchange的读写权限
+queue的bind与unbind需要queue写权限exchange的读权限
+发消息(publish)需exchange的写权限
+获取或清除(get、consume、purge)消息需queue的读权限
+
+对何种资源具有配置、写、读的权限通过正则表达式来匹配，具体命令如下：
+set_permissions [-p &lt;vhostpath&gt;] &lt;user&gt; &lt;conf&gt; &lt;write&gt; &lt;read&gt;
+其中，&lt;conf&gt; &lt;write&gt; &lt;read&gt;的位置分别用正则表达式来匹配特定的资源，如&apos;^(amq\.gen.*|amq\.default)$&apos;可以匹配server生成的和默认的exchange，&apos;^$&apos;不匹配任何资源
+
+需要注意的是RabbitMQ会缓存每个connection或channel的权限验证结果、因此权限发生变化后需要重连才能生效。
+</code></pre><h4 id="为用户授权"><a href="#为用户授权" class="headerlink" title="为用户授权"></a>为用户授权</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">sudo rabbitmqctl  set_permissions -p /vhost1  user_admin <span class="string">'.*'</span> <span class="string">'.*'</span> <span class="string">'.*'</span>  </span><br><span class="line"><span class="comment">#该命令使用户user_admin具有/vhost1这个virtual host中所有资源的配置、写、读权限以便管理其中的资源</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#查看权限：</span></span><br><span class="line">sudo rabbitmqctl list_user_permissions user_admin  </span><br><span class="line">Listing permissions <span class="keyword">for</span> user <span class="string">"user_admin"</span> ...  </span><br><span class="line">/vhost1&lt;span style=<span class="string">"white-space:pre"</span>&gt; &lt;/span&gt;.*&lt;span style=<span class="string">"white-space:pre"</span>&gt; &lt;/span&gt;.*&lt;span style=<span class="string">"white-space:pre"</span>&gt; &lt;/span&gt;.*  </span><br><span class="line">  </span><br><span class="line"><span class="variable">$sudo</span> rabbitmqctl list_permissions -p /vhost1  </span><br><span class="line">Listing permissions <span class="keyword">in</span> vhost <span class="string">"/vhost1"</span> ...  </span><br><span class="line">user_admin&lt;span style=<span class="string">"white-space:pre"</span>&gt;  &lt;/span&gt;.*&lt;span style=<span class="string">"white-space:pre"</span>&gt; &lt;/span&gt;.*&lt;span style=<span class="string">"white-space:pre"</span>&gt; &lt;/span&gt;.*</span><br></pre></td></tr></table></figure>
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/数据库/">数据库</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RabbitMQ/">RabbitMQ</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/消息中间件/">消息中间件</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+		
+<nav id="article-nav">
+  
+    <a href="/2016/05/16/Redis编译安装/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Redis编译安装
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/05/11/RabbitMQ集群镜像设置/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          RabbitMQ集群镜像设置
+        
+      </div>
+    </a>
+  
+</nav>
+
+  	
+
+</article>
+
+
+
+
+
+
+</div>
+			<footer id="footer">
+				<h1 class="footer-blog-title">
+					<a href="/">Clear Sky</a>
+				</h1>
+				<span class="copyright">
+					&copy; 2018 CLEAR<br>
+					Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+					Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+				</span>
+			</footer>
+  		</div>
+  		
+
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bundle.js"></script>
+	</body>
+</html>

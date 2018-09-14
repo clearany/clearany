@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>Docker的核心及概念 | Clear Sky</title>
+    <meta name="viewport" content="width=device-width">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Clear Sky" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4e55f04a49a285900817965cb4619021";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div class="mobile-nav-panel">
+        <i class="icon-reorder icon-large"></i>
+      </div>
+      <header id="header">
+        <h1 class="blog-title">
+          <a href="/">Clear Sky</a>
+        </h1>
+        <nav class="nav">
+          <ul>
+            <li><a href="/"><i class="fa fa-home fa-fw"></i>home</a></li>
+            <li><a href="/archives"><i class="fa fa-archive fa-fw"></i>archives</a></li>
+            <li><a href="/categories"><i class="fa fa-list fa-fw"></i>categories</a></li>
+            <li><a href="/tags"><i class="fa fa-tags fa-fw"></i>tags</a></li>
+            <li><a href="/search"><i class="fa fa-search fa-fw"></i>search</a></li>
+            <li><a href="/about"><i class="fa fa-user fa-fw"></i>about</a></li>
+            <li><a href="/atom.xml"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+          </ul>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.clearany.com"></form>
+        </div>
+      </header>
+<div id="main">
+	
+	<article id="post-Docker的核心及概念" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2016-10-09T06:10:00.000Z" itemprop="datePublished">2016-10-09</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2016/10/09/Docker的核心及概念/">Docker的核心及概念</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+    		<p><img src="http://www.machunpeng.cn/server/../Public/Uploads/2018-04-26/5ae16fe530602.jpg" alt=""></p>
+<h4 id="镜像-image"><a href="#镜像-image" class="headerlink" title="镜像 image"></a>镜像 image</h4><pre><code>Docker 把应用程序及其依赖，打包在 image 文件里面。只有通过这个文件，才能生成 Docker 容器。image 文件可以看作是容器的模板。Docker 根据 image 文件生成容器的实例。同一个 image 文件，可以生成多个同时运行的容器实例。
+image 是二进制文件。实际开发中，一个 image 文件往往通过继承另一个 image 文件，加上一些个性化设置而生成。举例来说，你可以在 Ubuntu 的 image 基础上，往里面加入 Apache 服务器，形成你的 image。
+</code></pre><a id="more"></a>
+<h4 id="仓库-registry"><a href="#仓库-registry" class="headerlink" title="仓库 registry"></a>仓库 registry</h4><pre><code>仓库是集中存放镜像的地方，注册服务器是存放仓库的具体服务器，每个服务器可以有多个仓库，每个仓库可以有多个镜像。
+仓库分为公共仓库和私有仓库。
+1、Docker Hub
+Docker官方维护了一个公共的仓库https://hub.docker.com 其中包含了15000多个镜像，大部分需求都可以通过DockerHub中直接下载镜像来实现。
+我们可以通过docker login命令来输入用户名、密码和邮箱来完成注册和登录。注册成功后，本地用户目录的.dockercfg中将保存用户的认证信息。
+我们可以通过docker search命令来搜索镜像，docker pull 下载镜像,docker push命令上传本地镜像。
+2、创建和使用私有仓库
+我们可以通过官方提供的registry镜像来简单搭建一套本地私有仓库。
+</code></pre><h4 id="容器-container"><a href="#容器-container" class="headerlink" title="容器 container"></a>容器 container</h4><pre><code>容器是从镜像创建的应用运行实例，容器之间是相互隔离、互不可见的。可以把容器看做一个简易版的linux系统环境（包括root权限、进程空间、用户空间和网络空间等），以及运行在这个环境上的应用打包而成的应用盒子。
+镜像自身是自读的，容器从镜像启动的时候，docker会在镜像的最上层创建一个可写文件层，镜像本身保持不变。
+可以利用docker create命令创建一个容器，创建后的的容器处于停止状态，可以使用docker start命令来启动它。也可以运行docker run命令来直接从镜像启动运行一个容器。docker run = docker create + docker start。
+ 当利用docker run创建并启动一个容器时，docker在后台的标准操作包括：
+（1）检查本地是否存在指定的镜像，不存在就从公有仓库下载。
+（2）利用镜像创建并启动一个容器。
+（3）分配一个文件系统，并在只读的镜像层外面挂载一层可读写层。
+（4）从宿主机配置的网桥接口中桥接一个虚拟的接口到容器中。
+（5）从地址池中配置一个IP地址给容器。
+（6）执行用户指定的应用程序。
+（7）执行完毕后容器终止。
+</code></pre>
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/容器化/">容器化</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/容器化/">容器化</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+		
+<nav id="article-nav">
+  
+    <a href="/2016/10/09/Docker的常用操作/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Docker的常用操作
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/10/09/Docker简介/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          Docker简介
+        
+      </div>
+    </a>
+  
+</nav>
+
+  	
+
+</article>
+
+
+
+
+
+
+</div>
+			<footer id="footer">
+				<h1 class="footer-blog-title">
+					<a href="/">Clear Sky</a>
+				</h1>
+				<span class="copyright">
+					&copy; 2018 CLEAR<br>
+					Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+					Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+				</span>
+			</footer>
+  		</div>
+  		
+
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bundle.js"></script>
+	</body>
+</html>

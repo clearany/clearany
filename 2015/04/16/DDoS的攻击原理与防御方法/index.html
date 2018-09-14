@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>DDoS的攻击原理与防御方法 | Clear Sky</title>
+    <meta name="viewport" content="width=device-width">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Clear Sky" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4e55f04a49a285900817965cb4619021";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div class="mobile-nav-panel">
+        <i class="icon-reorder icon-large"></i>
+      </div>
+      <header id="header">
+        <h1 class="blog-title">
+          <a href="/">Clear Sky</a>
+        </h1>
+        <nav class="nav">
+          <ul>
+            <li><a href="/"><i class="fa fa-home fa-fw"></i>home</a></li>
+            <li><a href="/archives"><i class="fa fa-archive fa-fw"></i>archives</a></li>
+            <li><a href="/categories"><i class="fa fa-list fa-fw"></i>categories</a></li>
+            <li><a href="/tags"><i class="fa fa-tags fa-fw"></i>tags</a></li>
+            <li><a href="/search"><i class="fa fa-search fa-fw"></i>search</a></li>
+            <li><a href="/about"><i class="fa fa-user fa-fw"></i>about</a></li>
+            <li><a href="/atom.xml"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+          </ul>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.clearany.com"></form>
+        </div>
+      </header>
+<div id="main">
+	
+	<article id="post-DDoS的攻击原理与防御方法" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2015-04-16T04:10:28.000Z" itemprop="datePublished">2015-04-16</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2015/04/16/DDoS的攻击原理与防御方法/">DDoS的攻击原理与防御方法</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+    		<pre><code>DoS是Denial of Service的简写就是拒绝服务,而DDoS就是Distributed Denial of Service的简写就是分布式拒绝服务,而DRDoS就是Distributed Reflection Denial of Service的简写,这是分布反射式拒绝服务的意思。
+
+　　不过这3中攻击方法最厉害的还是DDoS,那个DRDoS攻击虽然是新近出的一种攻击方法,但它只是DDoS攻击的变形,它的唯一不同就是不用占领大量的“肉鸡”。这三种方法都是利用TCP三次握手的漏洞进行攻击的,所以对它们的防御办法都是差不多的。
+</code></pre><a id="more"></a>    
+<pre><code>　　DoS攻击是最早出现的,它的攻击方法说白了就是单挑,是比谁的机器性能好、速度快。但是现在的科技飞速发展,一般的网站主机都有十几台主机,而且各个主机的处理能力、内存大小和网络速度都有飞速的发展,有的网络带宽甚至超过了千兆级别。这样我们的一对一单挑式攻击就没有什么作用了,搞不好自己的机子就会死掉。举个这样的攻击例子,假如你的机器每秒能够发送10个攻击用的数据包,而被你攻击的机器(性能、网络带宽都是顶尖的)每秒能够接受并处理100攻击数据包,那样的话,你的攻击就什么用处都没有了,而且非常有死机的可能。要知道,你若是发送这种1Vs1的攻击,你的机器的CPU占用率是90%以上的,你的机器要是配置不够高的话,那你就死定了。
+
+　　不过,科技在发展,黑客的技术也在发展。正所谓道高一尺,魔高一仗。经过无数次当机,黑客们终于又找到一种新的DoS攻击方法,这就是DDoS攻击。它的原理说白了就是群殴,用好多的机器对目标机器一起发动DoS攻击,但这不是很多黑客一起参与的,这种攻击只是由一名黑客来操作的。这名黑客不是拥有很多机器,他是通过他的机器在网络上占领很多的“肉鸡”,并且控制这些“肉鸡”来发动DDoS攻击,要不然怎么叫做分布式呢。还是刚才的那个例子,你的机器每秒能发送10攻击数据包,而被攻击的机器每秒能够接受100的数据包,这样你的攻击肯定不会起作用,而你再用10台或更多的机器来对被攻击目标的机器进行攻击的话,嘿嘿!结果我就不说了。
+
+　DRDoS分布反射式拒绝服务攻击这是DDoS攻击的变形,它与DDoS的不同之处就是DrDoS不需要在攻击之前占领大量的“肉鸡”。它的攻击原理和Smurf攻击原理相近,不过DRDoS是可以在广域网上进行的,而Smurf攻击是在局域网进行的。它的作用原理是基于广播地址与回应请求的。一台计算机向另一台计算机发送一些特殊的数据包如ping请求时,会接到它的回应;如果向本网络的广播地址发送请求包,实际上会到达网络上所有的计算机,这时就会得到所有计算机的回应。这些回应是需要被接收的计算机处理的,每处理一个就要占用一份系统资源,如果同时接到网络上所有计算机的回应,接收方的系统是有可能吃不消的,就象遭到了DDoS攻击一样。不过是没有人笨到自己攻击自己,不过这种方法被黑客加以改进就具有很大的威力了。黑客向广播地址发送请求包,所有的计算机得到请求后,却不会把回应发到黑客那里,而是发到被攻击主机。这是因为黑客冒充了被攻击主机。黑客发送请求包所用的软件是可以伪造源地址的,接到伪造数据包的主机会根据源地址把回应发出去,这当然就是被攻击主机的地址。黑客同时还会把发送请求包的时间间隔减小,这样在短时间能发出大量的请求包,使被攻击主机接到从被欺骗计算机那里传来的洪水般的回应,就像遭到了DDoS攻击导致系统崩溃。骇客借助了网络中所有计算机来攻击受害者,而不需要事先去占领这些被欺骗的主机,这就是Smurf攻击。而DRDoS攻击正是这个原理,黑客同样利用特殊的发包工具,首先把伪造了源地址的SYN连接请求包发送到那些被欺骗的计算机上,根据TCP三次握手的规则,这些计算机会向源IP发出SYN+ACK或RST包来响应这个请求。同Smurf攻击一样,黑客所发送的请求包的源IP地址是被攻击主机的地址,这样受欺骗的主机就都会把回应发到被攻击主机处,造成被攻击主机忙于处理这些回应而瘫痪。
+</code></pre><p>　　解释:<br>　　SYN:(Synchronize sequence numbers)用来建立连接,在连接请求中,SYN=1,ACK=0,连接响应时,SYN=1,ACK=1。即,SYN和ACK来区分Connection Request和Connection Accepted。<br>　　RST:(Reset the connection)用于复位因某种原因引起出现的错误连接,也用来拒绝非法数据和请求。如果接收到RST位时候,通常发生了某些错误。<br>　　ACK:(Acknowledgment field significant)置1时表示确认号(Acknowledgment Number)为合法,为0的时候表示数据段不包含确认信息,确认号被忽略。</p>
+<p>　　TCP三次握手:图略</p>
+<p>　　假设我们要准备建立连接,服务器正处于正常的接听状态。</p>
+<p>　　第一步:我们也就是客户端发送一个带SYN位的请求,向服务器表示需要连接,假设请求包的序列号为10,那么则为:SYN=10,ACK=0,然后等待服务器的回应。</p>
+<p>　　第二步:服务器接收到这样的请求包后,查看是否在接听的是指定的端口,如果不是就发送RST=1回应,拒绝建立连接。如果接收请求包,那么服务器发送确认回应,SYN为服务器的一个内码,假设为100,ACK位则是客户端的请求序号加1,本例中发送的数据是:SYN=100,ACK=11,用这样的数据回应给我们。向我们表示,服务器连接已经准备好了,等待我们的确认。这时我们接收到回应后,分析得到的信息,准备发送确认连接信号到服务器。</p>
+<p>　　第三步:我们发送确认建立连接的信息给服务器。确认信息的SYN位是服务器发送的ACK位,ACK位是服务器发送的SYN位加1。即:SYN=11,ACK=101。</p>
+<p>　　这样我们的连接就建立起来了。</p>
+<p>　　DDoS究竟如何攻击?目前最流行也是最好用的攻击方法就是使用SYN-Flood进行攻击,SYN-Flood也就是SYN洪水攻击。SYN-Flood不会完成TCP三次握手的第三步,也就是不发送确认连接的信息给服务器。这样,服务器无法完成第三次握手,但服务器不会立即放弃,服务器会不停的重试并等待一定的时间后放弃这个未完成的连接,这段时间叫做SYN timeout,这段时间大约30秒-2分钟左右。若是一个用户在连接时出现问题导致服务器的一个线程等待1分钟并不是什么大不了的问题,但是若有人用特殊的软件大量模拟这种情况,那后果就可想而知了。一个服务器若是处理这些大量的半连接信息而消耗大量的系统资源和网络带宽,这样服务器就不会再有空余去处理普通用户的正常请求(因为客户的正常请求比率很小)。这样这个服务器就无法工作了,这种攻击就叫做:SYN-Flood攻击。</p>
+<p>常规的一些防御方法<br>　　到目前为止,进行DDoS攻击的防御还是比较困难的。首先,这种攻击的特点是它利用了TCP/IP协议的漏洞,除非你不用TCP/IP,才有可能完全抵御住DDoS攻击。不过这不等于我们就没有办法阻挡DDoS攻击,我们可以尽力来减少DDoS的攻击。下面就是一些防御方法:</p>
+<p>　　1。确保服务器的系统文件是最新的版本,并及时更新系统补丁。<br>要定期扫描现有的网络主节点,清查可能存在的安全漏洞,对新出现的漏洞及时进行清理。骨干节点的计算机因为具有较高的带宽,是黑客利用的最佳位置,因此对这些主机本身加强主机安全是非常重要的。而且连接到网络主节点的都是服务器级别的计算机,所以定期扫描漏洞就变得更加重要了。</p>
+<p>　　2。关闭不必要的服务。<br>过滤不必要的服务和端口.可以使用Inexpress、Express、Forwarding等工具来过滤不必要的服务和端口,即在路由器上过滤假IP。比如Cisco公司的 CEF(Cisco Express Forwarding)可以针对封包Source IP和Routing Table做比较,并加以过滤。只开放服务端口成为目前很多服务器的流行做法,例如WWW服务器那么只开放80而将其他所有端口关闭或在防火墙上做阻止策略。</p>
+<p>　　3。限制同时打开的SYN半连接数目,缩短SYN半连接的time out 时间,限制SYN/ICMP流量<br>　　用户应在路由器上配置SYN/ICMP的最大流量来限制SYN/ICMP封包所能占有的最高频宽,这样,当出现大量的超过所限定的SYN/ICMP流量时,说明不是正常的网络访问,而是有黑客入侵。早期通过限制SYN/ICMP流量是最好的防范DOS的方法,虽然目前该方法对于Ddos效果不太明显了, 不过仍然能够起到一定的作用。<br>　　<br>4。正确设置防火墙</p>
+<p>　　禁止对主机的非开放服务的访问</p>
+<p>　　限制特定IP地址的访问<br>过滤所有RFC1918 IP地址RFC1918 IP地址是内部网的IP地址,像10.0.0.0、192.168.0.0和172.16.0.0,它们不是某个网段的固定的IP地址,而是Internet内部保留的区域性IP地址,应该把它们过滤掉。此方法并不是过滤内部员工的访问,而是将攻击时伪造的大量虚假内部IP过滤,这样也可以减轻Ddos的攻击。 </p>
+<p>　　启用防火墙的防DDoS的属性</p>
+<p>　　严格限制对外开放的服务器的向外访问</p>
+<p>　　运行端口映射程序祸端口扫描程序,要认真检查特权端口和非特权端口。</p>
+<p>在骨干节点配置防火墙<br>　　防火墙本身能抵御Ddos攻击和其他一些攻击。在发现受到攻击的时候,可以将攻击导向一些牺牲主机,这样可以保护真正的主机不被攻击。当然导向的这些牺牲主机可以选择不重要的,或者是linux以及unix等漏洞少和天生防范攻击优秀的系统。</p>
+<p>　　5。认真检查网络设备和主机/服务器系统的日志。只要日志出现漏洞或是时间变更,那这台机器就可能遭到了攻击。<br>　　6。限制在防火墙外与网络文件共享。这样会给黑客截取系统文件的机会,主机的信息暴露给黑客,无疑是给了对方入侵的机会。<br>　　7。充分利用网络设备保护网络资源<br>　　所谓网络设备是指路由器、防火墙等负载均衡设备,它们可将网络有效地保护起来。当网络被攻击时最先死掉的是路由器,但其他机器没有死。死掉的路由器经重 启后会恢复正常,而且启动起来还很快,没有什么损失。若其他服务器死掉,其中的数据会丢失,而且重启服务器又是一个漫长的过程。特别是一个公司使用了负载 均衡设备,这样当一台路由器被攻击死机时,另一台将马上工作。从而最大程度的削减了Ddos的攻击。</p>
+<p>路由器</p>
+<p>　　以Cisco路由器为例</p>
+<p>　　Cisco Express Forwarding(CEF)</p>
+<p>　　使用 unicast reverse-path</p>
+<p>　　访问控制列表(ACL)过滤</p>
+<p>　　设置SYN数据包流量速率</p>
+<p>　　升级版本过低的ISO</p>
+<p>　　为路由器建立log server<br>8。 用足够的机器承受黑客攻击<br>　　这是一种较为理想的应对策略。如果用户拥有足够的容量和足够的资源给黑客攻击,在它不断访问用户、夺取用户资源之时,自己的能量也在逐渐耗失,或许未等用户被攻死,黑客已无力支招儿了。不过此方法需要投入的资金比较多,平时大多数设备处于空闲状态,和目前中小企业网络实际运行情况不相符。</p>
+<p>9。 检查访问者的来源<br>　　使用Unicast Reverse Path Forwarding等通过反向路由器查询的方法检查访问者的IP地址是否是真,如果是假的,它将予以屏蔽。许多黑客攻击常采用假IP地址方式迷惑用户, 很难查出它来自何处。因此,利用Unicast Reverse Path Forwarding可减少假IP地址的出现,有助于提高网络安全性。</p>
+<p>能够了解DDoS攻击的原理,对我们防御的措施在加以改进,我们就可以挡住一部分的DDoS攻击,知己知彼,百战不殆嘛。</p>
+<p>linux下防DDOS攻击软件及使用方法详解</p>
+<p>互联网如同现实社会一样充满钩心斗角,网站被DDOS也成为站长最头疼的事。在没有硬防的情况下,寻找软件代替是最直接的方法,比如用 iptables,但是iptables不能在自动屏蔽,只能手动屏蔽。<br>一、什么是DDOS攻击？<br>DDoS也就是分布式拒绝服务攻击。它使用与普通的拒绝服务攻击同样的方法,但是发起攻击的源是多个。通常攻击者使用下载的工具渗透无保护的主机,当获得该主机的适当的访问权限后,攻击者在主机中安装软件的服务或进程（以下简侈怔理）。这些代理保持睡眠状态,直到从它们的主控端得到指令,对指定的目标发起拒绝服务攻击。<br>二、如何确认自己受到DDOS攻击？<br>在系统上执行：<br>netstat -ntu | awk ‘{print $5}’ | cut -d: -f1 | sort | uniq -c | sort -n<br>执行后,将会显示服务器上所有的每个IP多少个连接数。<br>以下是我自己用VPS测试的结果：<br>li88-99:~# netstat -ntu | awk ‘{print $5}’ | cut -d: -f1 | sort | uniq -c | sort -n<br>1 114.226.9.132<br>1 174.129.237.157<br>1 58.60.118.142<br>1 Address<br>1 servers)<br>2 118.26.131.78<br>3 123.125.1.202<br>3 220.248.43.119<br>4 117.36.231.253<br>4 119.162.46.124<br>6 219.140.232.128<br>8 220.181.61.31<br>2311 67.215.242.196<br>每个IP几个、十几个或几十个连接数都还算比较正常,如果像上面成百上千肯定就不正常了。<br>三、防范DDOS攻击的方法:<br>一些常用的防DDOS攻击的方法,罗列如下：<br>1.增加硬件防火墙和增加硬件设备来承载和抵御DDOS攻击,最基本的方法,但成本比较高。<br>2.修改SYN设置抵御SYN攻击：<br>SYN攻击是利用TCP/IP协议3次握手的原理,发送大量的建立连接的网络包,但不实际建立连接,最终导致被攻击服务器的网络队列被占满,无法被正常用户访问。<br>Linux内核提供了若干SYN相关设置,使用命令：<br>sysctl -a | grep syn<br>看到：<br>net.ipv4.tcp_max_syn_backlog = 1024<br>net.ipv4.tcp_syncookies = 0<br>net.ipv4.tcp_synack_retries = 5<br>net.ipv4.tcp_syn_retries = 5<br>tcp_max_syn_backlog是SYN队列的长度,tcp_syncookies是一个开关,是否打开SYN Cookie<br>功能,该功能可以防止部分SYN攻击。tcp_synack_retries和tcp_syn_retries定义SYN<br>的重试次数。<br>加大SYN队列长度可以容纳更多等待连接的网络连接数,打开SYN Cookie功能可以阻止部分<br>SYN攻击,降低重试次数也有一定效果。<br>调整上述设置的方法是：<br>增加SYN队列长度到2048：<br>sysctl -w net.ipv4.tcp_max_syn_backlog=2048<br>打开SYN COOKIE功能：<br>sysctl -w net.ipv4.tcp_syncookies=1<br>降低重试次数：<br>sysctl -w net.ipv4.tcp_synack_retries=3<br>sysctl -w net.ipv4.tcp_syn_retries=3<br>为了系统重启动时保持上述配置,可将上述命令加入到/etc/rc.d/rc.local文件中。<br>3.安装iptables对特定ip进行屏蔽。<br>A.安装iptables和系统内核版本对应的内核模块kernel-smp-modules-connlimit<br>B. 配置相应的iptables规则<br>示例如下：<br>(1)控制单个IP的最大并发连接数<br>iptables -I INPUT -p tcp –dport 80 -m connlimit –connlimit-above 50 -j REJECT</p>
+<p>#允许单个IP的最大连接数为 30<br>(2)控制单个IP在一定的时间（比如60秒）内允许新建立的连接数<br>iptables -A INPUT -p tcp –dport 80 -m recent –name BAD_HTTP_ACCESS –update –seconds 60 \<br>–hitcount 30 -j REJECT<br>iptables -A INPUT -p tcp –dport 80 -m recent –name BAD_HTTP_ACCESS –set -j ACCEPT</p>
+<p>#单个IP在60秒内只允许最多新建30个连接<br>(3)用iptables屏蔽IP<br>iptables -I RH-Lokkit-0-50-INPUT 1 -p tcp -m tcp -s 213.8.166.227 –dport 80 –syn -j REJECT<br>指定端口的参数是–dport 80;多了–syn参数,可以自动检测sync攻击<br>(4)使用iptables禁止ping：<br>iptables -A INPUT -p icmp -m icmp –icmp-type 8 -m limit –limit 6/min –limit-burst 2 -j ACCEPT-A INPUT -p icmp -m icmp –icmp-type 8 -j REJECT –reject-with icmp-port-unreachable<br>(5)允许某ip连接<br>iptables -I RH-Firewall-1-INPUT 1 -p tcp -m tcp -s 192.168.0.51 –syn -j ACCEPT<br>C. 验证<br>（1）工具：flood_connect.c（用来模拟攻击)<br>（2）查看效果：<br>使用<br>watch ‘netstat -an | grep:21 | \ grep&lt; 模拟攻击客户机的IP&gt;| wc -l’<br>实时查看模拟攻击客户机建立起来的连接数,<br>使用<br>watch ‘iptables -L -n -v | \grep&lt; 模拟攻击客户机的IP&gt;’<br>查看模拟攻击客户机被 DROP 的数据包数。<br>D．注意<br>为了增强iptables防止CC攻击的能力,最好调整一下ipt_recent的参数如下：</p>
+<p>#cat/etc/modprobe.conf<br>options ipt_recent ip_list_tot=1000 ip_pkt_list_tot=60</p>
+<p>#记录1000个IP地址,每个地址记录60个数据包</p>
+<p>#modprobe ipt_recent<br>E.可编写脚本自动提娶攻击ip然后自动屏蔽：<br><em>/2 </em> <em> </em> * /usr/local/nginx/var/log/drop.sh</p>
+<p>#!/bin/sh<br>cd /usr/local/nginx/var/log<br>tail access.log -n 1000 |grep vote.php | |sort |uniq -c |sort -nr |awk ‘{if ($2!=null &amp;&amp; $1&gt;50)}’ &gt; drop_ip.txt<br>for i in <code>cat drop_ip.txt</code><br>do<br>/sbin/iptables -I INPUT -s $i -j DROP;<br>done<br>这shell 每几分钟执行一次,就可自动屏蔽那些不正常IP,相信大家都看的懂,下面是针对连接数屏蔽代码</p>
+<p>#!/bin/sh<br>/bin/netstat -ant |grep 80 |awk ‘{print $5}’ |awk -F : ‘{print $1}’ |sort |uniq -c |sort -rn |grep -v -E ‘192.168|127.0’ |awk ‘{if ($2!=null &amp;&amp; $1&gt;50)}’ &gt; drop_ip.txt<br>for i in <code>cat drop_ip.txt</code><br>do<br>/sbin/iptables -I INPUT -s $i -j DROP;<br>done<br>说下,grep -v -E ‘192.168|127.0’ 也就是排除内网IP,免得把自己给屏蔽了,当然还可以加些自己的IP。<br>4.安装DDoS deflate自动抵御DDOS攻击：<br>DDoS deflate是一款免费的用来防御和减轻DDoS攻击的脚本。它通过netstat监测跟踪创建大量网络连接的IP地址,在检测到某个结点超过预设的限制时,该程序会通过APF或IPTABLES禁止或阻挡这些IP.<br>DDoS deflate官方网站：<br>（1）安装DDoS deflate<br>wget<br>chmod 0700 install.sh //添加权限<br>./install.sh //执行<br>（2）配置DDoS deflate<br>下面是DDoS deflate的默认配置位于/usr/local/ddos/ddos.conf ,内容如下：</p>
+<h5 id="Paths-of-the-script-and-other-files"><a href="#Paths-of-the-script-and-other-files" class="headerlink" title="Paths of the script and other files"></a>Paths of the script and other files</h5><p>PROGDIR=”/usr/local/ddos”<br>PROG=”/usr/local/ddos/ddos.sh”<br>IGNORE_IP_LIST=”/usr/local/ddos/ignore.ip.list” //IP地址白名单<br>CRON=”/etc/cron.d/ddos.cron” //定时执行程序<br>APF=”/etc/apf/apf”<br>IPT=”/sbin/iptables”</p>
+<h5 id="frequency-in-minutes-for-running-the-script"><a href="#frequency-in-minutes-for-running-the-script" class="headerlink" title="frequency in minutes for running the script"></a>frequency in minutes for running the script</h5><h5 id="Caution-Every-time-this-setting-is-changed-run-the-script-with-–cron"><a href="#Caution-Every-time-this-setting-is-changed-run-the-script-with-–cron" class="headerlink" title="Caution: Every time this setting is changed run the script with –cron"></a>Caution: Every time this setting is changed run the script with –cron</h5><h5 id="option-so-that-the-new-frequency-takes-effect"><a href="#option-so-that-the-new-frequency-takes-effect" class="headerlink" title="option so that the new frequency takes effect"></a>option so that the new frequency takes effect</h5><p>FREQ=1 //检查时间间隔,默认1分钟</p>
+<h5 id="How-many-connections-define-a-bad-IP-Indicate-that-below"><a href="#How-many-connections-define-a-bad-IP-Indicate-that-below" class="headerlink" title="How many connections define a bad IP? Indicate that below."></a>How many connections define a bad IP? Indicate that below.</h5><p>NO_OF_CONNECTIONS=150 //最大连接数,超过这个数IP就会被屏蔽,一般默认即可</p>
+<h5 id="APF-BAN-1-Make-sure-your-APF-version-is-atleast-0-96"><a href="#APF-BAN-1-Make-sure-your-APF-version-is-atleast-0-96" class="headerlink" title="APF_BAN=1 (Make sure your APF version is atleast 0.96)"></a>APF_BAN=1 (Make sure your APF version is atleast 0.96)</h5><h5 id="APF-BAN-0-Uses-iptables-for-banning-ips-instead-of-APF"><a href="#APF-BAN-0-Uses-iptables-for-banning-ips-instead-of-APF" class="headerlink" title="APF_BAN=0 (Uses iptables for banning ips instead of APF)"></a>APF_BAN=0 (Uses iptables for banning ips instead of APF)</h5><p>APF_BAN=1 //使用APF还是iptables,推荐使用iptables</p>
+<h5 id="KILL-0-Bad-IPs-are’nt-banned-good-for-interactive-execution-of-script"><a href="#KILL-0-Bad-IPs-are’nt-banned-good-for-interactive-execution-of-script" class="headerlink" title="KILL=0 (Bad IPs are’nt banned good for interactive execution of script)"></a>KILL=0 (Bad IPs are’nt banned good for interactive execution of script)</h5><h5 id="KILL-1-Recommended-setting"><a href="#KILL-1-Recommended-setting" class="headerlink" title="KILL=1 (Recommended setting)"></a>KILL=1 (Recommended setting)</h5><p>KILL=1 //是否屏蔽IP,默认即可</p>
+<h4 id="An-email-is-sent-to-the-following-address-when-an-IP-is-banned"><a href="#An-email-is-sent-to-the-following-address-when-an-IP-is-banned" class="headerlink" title="An email is sent to the following address when an IP is banned."></a>An email is sent to the following address when an IP is banned.</h4><h5 id="Blank-would-suppress-sending-of-mails"><a href="#Blank-would-suppress-sending-of-mails" class="headerlink" title="Blank would suppress sending of mails"></a>Blank would suppress sending of mails</h5><p>EMAIL_TO=”root” //当IP被屏蔽时给指定邮箱发送邮件,推荐使用,换成自己的邮箱即可</p>
+<h5 id="Number-of-seconds-the-banned-ip-should-remain-in-blacklist"><a href="#Number-of-seconds-the-banned-ip-should-remain-in-blacklist" class="headerlink" title="Number of seconds the banned ip should remain in blacklist."></a>Number of seconds the banned ip should remain in blacklist.</h5><p>BAN_PERIOD=600 //禁用IP时间,默认600秒,可根据情况调整<br>用户可根据给默认配置文件加上的注释提示内容,修岗?置文件。<br>喜欢折腾的可以用Web压力测试软件（《web服务器性能/压力测试工具http_load、webbench、ab、Siege使用教程》）测试一下效果,这东西只能防御小流量的攻击了,聊胜于无吧。<br>5.APACHE上安装mod_evasive 组件增强抵御力<br>mod_evasive是一个预防Apache 遭受DDos 攻击的模块,可以防止同一个IP 对相同URI 发出的大量请求,可设定的选项有：<br>– 限制同一个IP 在一定秒数内请求一个页面或档案的次数。<br>– 限制同一个IP 一秒内只可发出50 个请求。<br>– 设定被禁止的 IP 封锁时间。</p>
+<p>以下是 mod_evasive 的安装方法：<br>A. 先将原来的 httpd.conf 备份起来。<br>B. 到<br>C. 在指令模式解压及编译 mod_evasive：<br>tar zxvf mod_evasive_1.10.1.tar.gz<br>cd mod_evasive/<br>apxs -cia mod_evasive20.c<br>以上的apxs 会放在Apache 的bin 目录内；如果Apache 版本是1.3 的话,指令要改为：<br>apxs -cia mod_evasive.c<br>安装好mod_evasive 后,便要修改httpd.conf 内容。<br>D. 开启 httpd.conf,加入以内容：<br>DOSHashTableSize 3097<br>DOSPageCount 5<br>DOSSiteCount 100<br>DOSPageInterval 2<br>DOSSiteInterval 2<br>DOSBlockingPeriod 10<br>DOSBlockingPeriod 600<br>DOSHashTableSize — 这是占用内存的大小,如果服务器比较繁忙,这个数值要设定大一点。<br>DOSPageCount — 同一IP 在一个时段内可以存娶同一页面的次数,超过会被禁止。<br>DOSSiteCount — 同一IP 在一个网站内可以占用多少object,超过会禁止。<br>DOSPageInterval — DOSPageCount 内的时段设定。<br>DOSSiteInterval — DOSSiteCount 的时间设定,以秒为单位。<br>DOSBlockingPeriod — 当发现疑似攻击后,使用者会收到403 Forbidden,这是设定封锁的时间,以秒为单位。<br>E. 最后重新启动 Apache 即可。</p>
+
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/网络安全/">网络安全</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ddos/">ddos</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dos/">dos</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/攻击/">攻击</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+		
+<nav id="article-nav">
+  
+    <a href="/2015/04/16/DDoS攻击、CC攻击的攻击方式和防御方法/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          DDoS攻击、CC攻击的攻击方式和防御方法
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/03/19/文件同步工具rsync/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          文件同步工具rsync
+        
+      </div>
+    </a>
+  
+</nav>
+
+  	
+
+</article>
+
+
+
+
+
+
+</div>
+			<footer id="footer">
+				<h1 class="footer-blog-title">
+					<a href="/">Clear Sky</a>
+				</h1>
+				<span class="copyright">
+					&copy; 2018 CLEAR<br>
+					Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+					Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+				</span>
+			</footer>
+  		</div>
+  		
+
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bundle.js"></script>
+	</body>
+</html>

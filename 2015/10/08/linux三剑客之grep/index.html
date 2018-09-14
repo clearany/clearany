@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>linux三剑客之grep | Clear Sky</title>
+    <meta name="viewport" content="width=device-width">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Clear Sky" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4e55f04a49a285900817965cb4619021";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div class="mobile-nav-panel">
+        <i class="icon-reorder icon-large"></i>
+      </div>
+      <header id="header">
+        <h1 class="blog-title">
+          <a href="/">Clear Sky</a>
+        </h1>
+        <nav class="nav">
+          <ul>
+            <li><a href="/"><i class="fa fa-home fa-fw"></i>home</a></li>
+            <li><a href="/archives"><i class="fa fa-archive fa-fw"></i>archives</a></li>
+            <li><a href="/categories"><i class="fa fa-list fa-fw"></i>categories</a></li>
+            <li><a href="/tags"><i class="fa fa-tags fa-fw"></i>tags</a></li>
+            <li><a href="/search"><i class="fa fa-search fa-fw"></i>search</a></li>
+            <li><a href="/about"><i class="fa fa-user fa-fw"></i>about</a></li>
+            <li><a href="/atom.xml"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+          </ul>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.clearany.com"></form>
+        </div>
+      </header>
+<div id="main">
+	
+	<article id="post-linux三剑客之grep" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2015-10-08T13:10:17.000Z" itemprop="datePublished">2015-10-08</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2015/10/08/linux三剑客之grep/">linux三剑客之grep</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+    		<h4 id="grep常用参数"><a href="#grep常用参数" class="headerlink" title="grep常用参数"></a>grep常用参数</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">grep [OPTIONS] PATTERN [FILE...]</span><br><span class="line">grep [OPTIONS] [-e PATTERN]...  [-f FILE]...  [FILE...]</span><br><span class="line"></span><br><span class="line">OPTIONS:</span><br><span class="line">-e: 使用正则搜索</span><br><span class="line">-i: 不区分大小写</span><br><span class="line">-v: 查找不包含指定内容的行</span><br><span class="line">-w: 按单词搜索</span><br><span class="line">-c: 统计匹配到的次数</span><br><span class="line">-n: 显示行号</span><br><span class="line">-r: 逐层遍历目录查找</span><br><span class="line">-l:显示匹配的文件名</span><br><span class="line">-A: 显示匹配行及前面多少行, 如: -A3, 则表示显示匹配行及前3行</span><br><span class="line">-B: 显示匹配行及后面多少行, 如: -B3, 则表示显示匹配行及后3行</span><br><span class="line">-C: 显示匹配行前后多少行,   如: -C3, 则表示显示批量行前后3行</span><br><span class="line">--color: 匹配到的内容高亮显示</span><br><span class="line">--include: 指定匹配的文件类型</span><br><span class="line">--exclude: 过滤不需要匹配的文件类型</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h4 id="用例"><a href="#用例" class="headerlink" title="用例"></a>用例</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#多文件查询</span></span><br><span class="line">grep leo logs.log logs_back.log</span><br><span class="line"><span class="comment">#查找即包含leo又包含li的行</span></span><br><span class="line">grep leo logs.log | grep li</span><br><span class="line"><span class="comment">#查找匹配leo或者匹配li的行</span></span><br><span class="line">grep leo | li logs.log</span><br><span class="line"><span class="comment">#显示匹配行前2行</span></span><br><span class="line">grep leo logs.log -A2</span><br><span class="line"><span class="comment">#显示匹配行后2行</span></span><br><span class="line">grep leo logs.log -B2</span><br><span class="line"><span class="comment">#显示匹配行前后2行</span></span><br><span class="line">grep leo logs.log -C2</span><br><span class="line"><span class="comment">#不区分大小写</span></span><br><span class="line">grep -i leo logs.log</span><br><span class="line"><span class="comment">#使用正则表达式</span></span><br><span class="line">grep -e <span class="string">'[a-z]\&#123;5\&#125;'</span> logs.log</span><br><span class="line"><span class="comment">#查找不包含leo的行</span></span><br><span class="line">grep -v leo logs.log</span><br><span class="line"><span class="comment">#统计包含leo的行数</span></span><br><span class="line">grep -c leo logs.log</span><br><span class="line"><span class="comment">#遍历当前目录及所有子目录查找匹配leo的行</span></span><br><span class="line">grep -r leo .</span><br><span class="line"><span class="comment">#在当前目录及所有子目录查找所有java文件中查找leo</span></span><br><span class="line">grep -r leo . --include <span class="string">"*.java"</span></span><br><span class="line"><span class="comment">#查找并输出到指定文件</span></span><br><span class="line">grep leo logs.log &gt; result.log</span><br><span class="line"><span class="comment">#查找以leo开头的行</span></span><br><span class="line">grep ^leo logs.log</span><br><span class="line"><span class="comment">#查找以leo结尾的行</span></span><br><span class="line">grep leo$ logs.log</span><br><span class="line"><span class="comment">#查找空行</span></span><br><span class="line">grep ^$ logs.log</span><br><span class="line"><span class="comment">#包含变量内容的行, 注意必须用双引号, 单引号则无法引用变量</span></span><br><span class="line">grep <span class="string">"<span class="variable">$LOGNAME</span>"</span> file</span><br><span class="line"><span class="comment">#打印包含字符$name的行.</span></span><br><span class="line">grep <span class="string">'$name'</span> file</span><br><span class="line"></span><br><span class="line"><span class="comment">#包含以Tommy开头的行</span></span><br><span class="line">grep <span class="string">'^Tommy'</span> file </span><br><span class="line"><span class="comment">#包含以.bak结束的行</span></span><br><span class="line">grep <span class="string">'\.bak$'</span> file </span><br><span class="line"><span class="comment">#包含pyramid 或Pyramid的单词的行</span></span><br><span class="line">grep <span class="string">'[Pp]yramid'</span> file </span><br><span class="line"><span class="comment">#包含至少一个大写字母的行</span></span><br><span class="line">grep <span class="string">'[A-Z]'</span> file </span><br><span class="line">包含至少一个数字的行</span><br><span class="line">grep <span class="string">'[0-9]'</span> file </span><br><span class="line">包含五个字符,以大写开头, 和一个数字结尾的行.</span><br><span class="line">grep <span class="string">'[A-Z]...[0-9]'</span> file</span><br></pre></td></tr></table></figure>
+<h4 id="egrep-与-grep-E"><a href="#egrep-与-grep-E" class="headerlink" title="egrep 与 grep -E"></a>egrep 与 grep -E</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">egrep = grep -E 可以使用基本的正则表达外, 还可以用扩展表达式. 注意区别.</span><br><span class="line"><span class="comment">#扩展表达式:</span></span><br><span class="line">+ 匹配一个或者多个先前的字符, 至少一个先前字符.</span><br><span class="line">? 匹配0个或者多个先前字符.</span><br><span class="line">a|b|c 匹配a或b或c</span><br><span class="line">() 字符组, 如: love(able|ers) 匹配loveable或lovers.</span><br><span class="line">(..)(..)\1\2 模板匹配. \1代表前面第一个模板, \2代第二个括弧里面的模板.</span><br><span class="line">x&#123;m,n&#125; =x\&#123;m,n\&#125; x的字符数量在m到n个之间.</span><br></pre></td></tr></table></figure>
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/linux/">linux</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/grep/">grep</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/三剑客/">三剑客</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+		
+<nav id="article-nav">
+  
+    <a href="/2015/10/12/gitignore文件不生效问题/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          gitignore文件不生效问题
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/10/08/linux三剑客之sed/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          linux三剑客之sed
+        
+      </div>
+    </a>
+  
+</nav>
+
+  	
+
+</article>
+
+
+
+
+
+
+</div>
+			<footer id="footer">
+				<h1 class="footer-blog-title">
+					<a href="/">Clear Sky</a>
+				</h1>
+				<span class="copyright">
+					&copy; 2018 CLEAR<br>
+					Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+					Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+				</span>
+			</footer>
+  		</div>
+  		
+
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bundle.js"></script>
+	</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>mysql的常用操作 | Clear Sky</title>
+    <meta name="viewport" content="width=device-width">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Clear Sky" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4e55f04a49a285900817965cb4619021";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div class="mobile-nav-panel">
+        <i class="icon-reorder icon-large"></i>
+      </div>
+      <header id="header">
+        <h1 class="blog-title">
+          <a href="/">Clear Sky</a>
+        </h1>
+        <nav class="nav">
+          <ul>
+            <li><a href="/"><i class="fa fa-home fa-fw"></i>home</a></li>
+            <li><a href="/archives"><i class="fa fa-archive fa-fw"></i>archives</a></li>
+            <li><a href="/categories"><i class="fa fa-list fa-fw"></i>categories</a></li>
+            <li><a href="/tags"><i class="fa fa-tags fa-fw"></i>tags</a></li>
+            <li><a href="/search"><i class="fa fa-search fa-fw"></i>search</a></li>
+            <li><a href="/about"><i class="fa fa-user fa-fw"></i>about</a></li>
+            <li><a href="/atom.xml"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+          </ul>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.clearany.com"></form>
+        </div>
+      </header>
+<div id="main">
+	
+	<article id="post-mysql的常用操作" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2016-04-19T03:14:24.000Z" itemprop="datePublished">2016-04-19</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2016/04/19/mysql的常用操作/">mysql的常用操作</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+    		<h4 id="备份"><a href="#备份" class="headerlink" title="备份"></a>备份</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#备份整库</span></span><br><span class="line">mysqldump -h主机名 -u用户名 -p 库名 &gt; /data/backup/xxx.sql</span><br><span class="line"><span class="comment">#备份单张表</span></span><br><span class="line">mysqldump -h主机名 -u用户名 -p 库名  表名 &gt; /data/backup/xxx.sql</span><br></pre></td></tr></table></figure>
+<h4 id="恢复"><a href="#恢复" class="headerlink" title="恢复"></a>恢复</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -h主机名 -u用户名 -p 库名 &lt; /data/backup/xxx.sql</span><br></pre></td></tr></table></figure>
+<h4 id="执行sql脚本文件"><a href="#执行sql脚本文件" class="headerlink" title="执行sql脚本文件"></a>执行sql脚本文件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#在shell中执行</span></span><br><span class="line">mysql -h主机名 -u用户名 -p -D库名 &lt; /data/backup/xxx.sql</span><br><span class="line"><span class="comment">#在mysql 控制台执行</span></span><br><span class="line">mysql&gt;<span class="built_in">source</span> /data/backup/xxx.sql</span><br><span class="line"><span class="comment">#或者</span></span><br><span class="line">mysql&gt;\. /data/backup/xxx.sql</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h4 id="查看信息"><a href="#查看信息" class="headerlink" title="查看信息"></a>查看信息</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#查看字符集</span></span><br><span class="line">mysql&gt;show variables like <span class="string">'character%'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#如果是root帐号，你能看到所有用户的当前连接。如果是其它普通帐号，只能看到自己占用的连接。 </span></span><br><span class="line"><span class="comment">#show processlist;只列出前100条，如果想全列出请使用show full processlist; </span></span><br><span class="line">mysql&gt;show processlist; </span><br><span class="line"></span><br><span class="line"><span class="comment">#命令： show status; </span></span><br><span class="line"><span class="comment">#命令：show status like '%下面变量%'; </span></span><br><span class="line"><span class="comment">#Aborted_clients 由于客户没有正确关闭连接已经死掉，已经放弃的连接数量。 </span></span><br><span class="line"><span class="comment">#Aborted_connects 尝试已经失败的MySQL服务器的连接的次数。 </span></span><br><span class="line"><span class="comment">#Connections 试图连接MySQL服务器的次数。 </span></span><br><span class="line"><span class="comment">#Created_tmp_tables 当执行语句时，已经被创造了的隐含临时表的数量。 </span></span><br><span class="line"><span class="comment">#Delayed_insert_threads 正在使用的延迟插入处理器线程的数量。 </span></span><br><span class="line"><span class="comment">#Delayed_writes 用INSERT DELAYED写入的行数。 </span></span><br><span class="line"><span class="comment">#Delayed_errors 用INSERT DELAYED写入的发生某些错误(可能重复键值)的行数。 </span></span><br><span class="line"><span class="comment">#Flush_commands 执行FLUSH命令的次数。 </span></span><br><span class="line"><span class="comment">#Handler_delete 请求从一张表中删除行的次数。 </span></span><br><span class="line"><span class="comment">#Handler_read_first 请求读入表中第一行的次数。 </span></span><br><span class="line"><span class="comment">#Handler_read_key 请求数字基于键读行。 </span></span><br><span class="line"><span class="comment">#Handler_read_next 请求读入基于一个键的一行的次数。 </span></span><br><span class="line"><span class="comment">#Handler_read_rnd 请求读入基于一个固定位置的一行的次数。 </span></span><br><span class="line"><span class="comment">#Handler_update 请求更新表中一行的次数。 </span></span><br><span class="line"><span class="comment">#Handler_write 请求向表中插入一行的次数。 </span></span><br><span class="line"><span class="comment">#Key_blocks_used 用于关键字缓存的块的数量。 </span></span><br><span class="line"><span class="comment">#Key_read_requests 请求从缓存读入一个键值的次数。 </span></span><br><span class="line"><span class="comment">#Key_reads 从磁盘物理读入一个键值的次数。 </span></span><br><span class="line"><span class="comment">#Key_write_requests 请求将一个关键字块写入缓存次数。 </span></span><br><span class="line"><span class="comment">#Key_writes 将一个键值块物理写入磁盘的次数。 </span></span><br><span class="line"><span class="comment">#Max_used_connections 同时使用的连接的最大数目。 </span></span><br><span class="line"><span class="comment">#Not_flushed_key_blocks 在键缓存中已经改变但是还没被清空到磁盘上的键块。 </span></span><br><span class="line"><span class="comment">#Not_flushed_delayed_rows 在INSERT DELAY队列中等待写入的行的数量。 </span></span><br><span class="line"><span class="comment">#Open_tables 打开表的数量。 </span></span><br><span class="line"><span class="comment">#Open_files 打开文件的数量。 </span></span><br><span class="line"><span class="comment">#Open_streams 打开流的数量(主要用于日志记载） </span></span><br><span class="line"><span class="comment">#Opened_tables 已经打开的表的数量。 </span></span><br><span class="line"><span class="comment">#Questions 发往服务器的查询的数量。 </span></span><br><span class="line"><span class="comment">#Slow_queries 要花超过long_query_time时间的查询数量。 </span></span><br><span class="line"><span class="comment">#Threads_connected 当前打开的连接的数量。 </span></span><br><span class="line"><span class="comment">#Threads_running 不在睡眠的线程数量。 </span></span><br><span class="line"><span class="comment">#Uptime 服务器工作了多少秒。</span></span><br></pre></td></tr></table></figure>
+<h4 id="重置密码"><a href="#重置密码" class="headerlink" title="重置密码"></a>重置密码</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/my.cnf </span><br><span class="line"><span class="comment">#在[mysqld]的段中加上一句：skip-grant-tables </span></span><br><span class="line"><span class="comment">#保存并且退出，重新启动mysqld ，登录并修改MySQL的root密码 </span></span><br><span class="line"><span class="comment"># mysql </span></span><br><span class="line">mysql&gt; USE mysql ; </span><br><span class="line">mysql&gt; UPDATE user SET Password = password ( <span class="string">'worker'</span> ) WHERE User = <span class="string">'root'</span> ; </span><br><span class="line">mysql&gt; flush privileges ; </span><br><span class="line">mysql&gt; quit </span><br><span class="line"><span class="comment">#将MySQL的登录设置修改回来 </span></span><br><span class="line"><span class="comment"># vi /etc/my.cnf </span></span><br><span class="line"><span class="comment">#将刚才在[mysqld]的段中加上的skip-grant-tables删除，保存并且退出，重新启动mysqld</span></span><br></pre></td></tr></table></figure>
+<h4 id="导出数据到CSV"><a href="#导出数据到CSV" class="headerlink" title="导出数据到CSV"></a>导出数据到CSV</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql your_database -uroot -p -e <span class="string">"select * from test.table2 "</span> &gt; /data/test.xls</span><br></pre></td></tr></table></figure>
+<h4 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE DATABASE IF NOT EXISTS dbname DEFAULT CHARSET utf8 COLLATE utf8_general_ci;</span><br></pre></td></tr></table></figure>
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/数据库/">数据库</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/db/">db</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sql/">sql</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+		
+<nav id="article-nav">
+  
+    <a href="/2016/04/19/mysql的访问权限/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          mysql的访问权限
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/04/19/mysql的编译安装/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          Mysql的编译安装
+        
+      </div>
+    </a>
+  
+</nav>
+
+  	
+
+</article>
+
+
+
+
+
+
+</div>
+			<footer id="footer">
+				<h1 class="footer-blog-title">
+					<a href="/">Clear Sky</a>
+				</h1>
+				<span class="copyright">
+					&copy; 2018 CLEAR<br>
+					Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+					Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+				</span>
+			</footer>
+  		</div>
+  		
+
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bundle.js"></script>
+	</body>
+</html>

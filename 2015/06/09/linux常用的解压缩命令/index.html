@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>linux常用的解压缩命令 | Clear Sky</title>
+    <meta name="viewport" content="width=device-width">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Clear Sky" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4e55f04a49a285900817965cb4619021";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div class="mobile-nav-panel">
+        <i class="icon-reorder icon-large"></i>
+      </div>
+      <header id="header">
+        <h1 class="blog-title">
+          <a href="/">Clear Sky</a>
+        </h1>
+        <nav class="nav">
+          <ul>
+            <li><a href="/"><i class="fa fa-home fa-fw"></i>home</a></li>
+            <li><a href="/archives"><i class="fa fa-archive fa-fw"></i>archives</a></li>
+            <li><a href="/categories"><i class="fa fa-list fa-fw"></i>categories</a></li>
+            <li><a href="/tags"><i class="fa fa-tags fa-fw"></i>tags</a></li>
+            <li><a href="/search"><i class="fa fa-search fa-fw"></i>search</a></li>
+            <li><a href="/about"><i class="fa fa-user fa-fw"></i>about</a></li>
+            <li><a href="/atom.xml"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+          </ul>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.clearany.com"></form>
+        </div>
+      </header>
+<div id="main">
+	
+	<article id="post-linux常用的解压缩命令" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2015-06-09T07:16:10.000Z" itemprop="datePublished">2015-06-09</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2015/06/09/linux常用的解压缩命令/">linux常用的解压缩命令</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+    		<h4 id="tar"><a href="#tar" class="headerlink" title=".tar"></a>.tar</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#解包：</span></span><br><span class="line">tar xvf FileName.tar</span><br><span class="line"><span class="comment">#打包：</span></span><br><span class="line">tar cvf FileName.tar DirName</span><br><span class="line"><span class="comment">#（注：tar是打包，不是压缩！）</span></span><br></pre></td></tr></table></figure>
+<h4 id="gz"><a href="#gz" class="headerlink" title=".gz"></a>.gz</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#解压1：</span></span><br><span class="line">gunzip FileName.gz</span><br><span class="line"><span class="comment">#解压2：</span></span><br><span class="line">gzip -d FileName.gz</span><br><span class="line"><span class="comment">#压缩：gzip FileName</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h4 id="tar-gz-和-tgz"><a href="#tar-gz-和-tgz" class="headerlink" title=".tar.gz 和 .tgz"></a>.tar.gz 和 .tgz</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#解压：</span></span><br><span class="line">tar zxvf FileName.tar.gz</span><br><span class="line"><span class="comment">#压缩：</span></span><br><span class="line">tar zcvf FileName.tar.gz DirName</span><br></pre></td></tr></table></figure>
+<h4 id="bz2"><a href="#bz2" class="headerlink" title=".bz2"></a>.bz2</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#解压1：</span></span><br><span class="line">bzip2 -d FileName.bz2</span><br><span class="line"><span class="comment">#解压2：</span></span><br><span class="line">bunzip2 FileName.bz2</span><br><span class="line"><span class="comment">#压缩： </span></span><br><span class="line">bzip2 -z FileName</span><br></pre></td></tr></table></figure>
+<h4 id="tar-bz2"><a href="#tar-bz2" class="headerlink" title=".tar.bz2"></a>.tar.bz2</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#解压：</span></span><br><span class="line">tar jxvf FileName.tar.bz2        </span><br><span class="line"><span class="comment">#或</span></span><br><span class="line">tar --bzip xvf FileName.tar.bz2</span><br><span class="line"><span class="comment">#压缩：</span></span><br><span class="line">tar jcvf FileName.tar.bz2 DirName</span><br></pre></td></tr></table></figure>
+<h4 id="bz"><a href="#bz" class="headerlink" title=".bz"></a>.bz</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#解压1：</span></span><br><span class="line">bzip2 -d FileName.bz</span><br><span class="line"><span class="comment">#解压2：</span></span><br><span class="line">bunzip2 FileName.bz</span><br><span class="line"><span class="comment">#压缩：未知</span></span><br></pre></td></tr></table></figure>
+<h4 id="tar-bz"><a href="#tar-bz" class="headerlink" title=".tar.bz"></a>.tar.bz</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#解压：</span></span><br><span class="line">tar jxvf FileName.tar.bz</span><br><span class="line"><span class="comment">#压缩：未知</span></span><br></pre></td></tr></table></figure>
+<h4 id="Z"><a href="#Z" class="headerlink" title=".Z"></a>.Z</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#解压：</span></span><br><span class="line">uncompress FileName.Z</span><br><span class="line"><span class="comment">#压缩：</span></span><br><span class="line">compress FileName</span><br></pre></td></tr></table></figure>
+<h4 id="tar-Z"><a href="#tar-Z" class="headerlink" title=".tar.Z"></a>.tar.Z</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#解压：</span></span><br><span class="line">tar Zxvf FileName.tar.Z</span><br><span class="line"><span class="comment">#压缩：</span></span><br><span class="line">tar Zcvf FileName.tar.Z DirName</span><br></pre></td></tr></table></figure>
+<h4 id="zip"><a href="#zip" class="headerlink" title=".zip"></a>.zip</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#解压：</span></span><br><span class="line">unzip FileName.zip</span><br><span class="line"><span class="comment">#压缩：</span></span><br><span class="line">zip FileName.zip DirName</span><br><span class="line"><span class="comment">#压缩一个目录使用 -r 参数，-r 递归。</span></span><br><span class="line"><span class="comment">#例： $ zip -r FileName.zip DirName</span></span><br></pre></td></tr></table></figure>
+<h4 id="rar"><a href="#rar" class="headerlink" title=".rar"></a>.rar</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#解压：</span></span><br><span class="line">rar x FileName.rar</span><br><span class="line"><span class="comment">#压缩：</span></span><br><span class="line">rar a FileName.rar DirName</span><br><span class="line"></span><br><span class="line"><span class="comment">#rar请到：http://www.rarsoft.com/download.htm 下载！</span></span><br><span class="line"><span class="comment">#解压后请将rar_static拷贝到/usr/bin目录（其他由$PATH环境变量指定的目录也可以）：</span></span><br><span class="line">cp rar_static /usr/bin/rar</span><br></pre></td></tr></table></figure>
+<h4 id="lha"><a href="#lha" class="headerlink" title=".lha"></a>.lha</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#解压：</span></span><br><span class="line">lha -e FileName.lha</span><br><span class="line"><span class="comment">#压缩：</span></span><br><span class="line">lha -a FileName.lha FileName</span><br><span class="line"></span><br><span class="line"><span class="comment">#lha请到：http://www.infor.kanazawa-it.ac.jp/~ishii/lhaunix/下载！</span></span><br><span class="line"><span class="comment">#解压后请将lha拷贝到/usr/bin目录（其他由$PATH环境变量指定的目录也可以）：</span></span><br><span class="line">cp lha /usr/bin/</span><br></pre></td></tr></table></figure>
+<h4 id="rpm"><a href="#rpm" class="headerlink" title=".rpm"></a>.rpm</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#解包：</span></span><br><span class="line">rpm2cpio FileName.rpm | cpio -div</span><br></pre></td></tr></table></figure>
+<h4 id="deb"><a href="#deb" class="headerlink" title=".deb"></a>.deb</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#解包：</span></span><br><span class="line">ar p FileName.deb data.tar.gz | tar zxf -</span><br></pre></td></tr></table></figure>
+<h4 id="tar-tgz-tar-gz-tar-Z-tar-bz-tar-bz2-zip-cpio-rpm-deb-slp-arj-rar-ace-lha-lzh-lzx-lzs-arc-sda-sfx-lnx-zoo-cab-kar-cpt-pit-sit-sea"><a href="#tar-tgz-tar-gz-tar-Z-tar-bz-tar-bz2-zip-cpio-rpm-deb-slp-arj-rar-ace-lha-lzh-lzx-lzs-arc-sda-sfx-lnx-zoo-cab-kar-cpt-pit-sit-sea" class="headerlink" title=".tar .tgz .tar.gz .tar.Z .tar.bz .tar.bz2 .zip .cpio .rpm .deb .slp .arj .rar .ace .lha .lzh .lzx .lzs .arc .sda .sfx .lnx .zoo .cab .kar .cpt .pit .sit .sea"></a>.tar .tgz .tar.gz .tar.Z .tar.bz .tar.bz2 .zip .cpio .rpm .deb .slp .arj .rar .ace .lha .lzh .lzx .lzs .arc .sda .sfx .lnx .zoo .cab .kar .cpt .pit .sit .sea</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#解压：</span></span><br><span class="line">sEx x FileName.*</span><br><span class="line"><span class="comment">#压缩：</span></span><br><span class="line">sEx a FileName.* FileName</span><br><span class="line"></span><br><span class="line"><span class="comment">#sEx只是调用相关程序，本身并无压缩、解压功能，请注意！</span></span><br><span class="line"><span class="comment">#sEx请到： http://sourceforge.net/projects/sex 下载！</span></span><br><span class="line"><span class="comment">#解压后请将sEx拷贝到/usr/bin目录（其他由$PATH环境变量指定的目录也可以）：</span></span><br><span class="line">cp sEx /usr/bin/</span><br></pre></td></tr></table></figure>
+
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/linux/">linux</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/">shell</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/解压缩/">解压缩</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+		
+<nav id="article-nav">
+  
+    <a href="/2015/06/10/Linux更改系统时区是日期时间/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Linux更改系统时区是日期时间
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/05/09/VIM 快捷操作键盘图/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          VIM快捷操作键盘图
+        
+      </div>
+    </a>
+  
+</nav>
+
+  	
+
+</article>
+
+
+
+
+
+
+</div>
+			<footer id="footer">
+				<h1 class="footer-blog-title">
+					<a href="/">Clear Sky</a>
+				</h1>
+				<span class="copyright">
+					&copy; 2018 CLEAR<br>
+					Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+					Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+				</span>
+			</footer>
+  		</div>
+  		
+
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bundle.js"></script>
+	</body>
+</html>

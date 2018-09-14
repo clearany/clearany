@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>使用CacheCloud管理Redis实例 | Clear Sky</title>
+    <meta name="viewport" content="width=device-width">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Clear Sky" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4e55f04a49a285900817965cb4619021";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div class="mobile-nav-panel">
+        <i class="icon-reorder icon-large"></i>
+      </div>
+      <header id="header">
+        <h1 class="blog-title">
+          <a href="/">Clear Sky</a>
+        </h1>
+        <nav class="nav">
+          <ul>
+            <li><a href="/"><i class="fa fa-home fa-fw"></i>home</a></li>
+            <li><a href="/archives"><i class="fa fa-archive fa-fw"></i>archives</a></li>
+            <li><a href="/categories"><i class="fa fa-list fa-fw"></i>categories</a></li>
+            <li><a href="/tags"><i class="fa fa-tags fa-fw"></i>tags</a></li>
+            <li><a href="/search"><i class="fa fa-search fa-fw"></i>search</a></li>
+            <li><a href="/about"><i class="fa fa-user fa-fw"></i>about</a></li>
+            <li><a href="/atom.xml"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+          </ul>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.clearany.com"></form>
+        </div>
+      </header>
+<div id="main">
+	
+	<article id="post-使用CacheCloud管理Redis实例" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2016-10-13T05:16:20.000Z" itemprop="datePublished">2016-10-13</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2016/10/13/使用CacheCloud管理Redis实例/">使用CacheCloud管理Redis实例</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+    		<h4 id="CacheCloud是什么？"><a href="#CacheCloud是什么？" class="headerlink" title="CacheCloud是什么？"></a>CacheCloud是什么？</h4><pre><code>最近在使用CacheCloud管理Redis，所以简单说一下，这里主要说一下我碰到的问题。CacheCloud官网从安装到使用文档非常详细了。
+CacheCloud提供一个Redis云管理平台：实现多种类型(Redis Standalone、Redis Sentinel、Redis Cluster)自动部署、解决Redis实例碎片化现象、提供完善统计、监控、运维功能、减少运维成本和误操作，提高机器的利用率，提供灵活的伸缩性，提供方便的接入客户端。
+</code></pre><h4 id="下载CacheCloud二进制版本"><a href="#下载CacheCloud二进制版本" class="headerlink" title="下载CacheCloud二进制版本"></a>下载CacheCloud二进制版本</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#下载CacheCloud</span></span><br><span class="line"><span class="comment">#项目源码地址：https://github.com/sohutv/cachecloud，开发者主页：https://cachecloud.github.io</span></span><br><span class="line"><span class="comment">#二进制下载地址：https://pan.baidu.com/s/1nvTv90l</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h4 id="准备Mysql环境"><a href="#准备Mysql环境" class="headerlink" title="准备Mysql环境"></a>准备Mysql环境</h4><pre><code>略...
+</code></pre><h4 id="准备JDK环境"><a href="#准备JDK环境" class="headerlink" title="准备JDK环境"></a>准备JDK环境</h4><pre><code>不要使用openJdk，需要使用Oracle提供的JDK，确保jdk 1.7+，去Oracle官网下载二进制版本。
+环境安装 略...
+</code></pre><h4 id="初始化CacheCloud数据"><a href="#初始化CacheCloud数据" class="headerlink" title="初始化CacheCloud数据"></a>初始化CacheCloud数据</h4><pre><code>导入项目中cachecloud.sql初始化库表结构，默认插入admin超级管理员。
+由于MySQL 5.7使用了严格SQL模式，会导致cachecloud.sql导入报错的，所以直接取消SQL模式即可（最好也修改一下my.cnf配置文件）。
+</code></pre><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; <span class="built_in">set</span> global sql_mode=<span class="string">''</span>;</span><br><span class="line">mysql&gt; <span class="built_in">set</span> session sql_mode=<span class="string">''</span>;</span><br><span class="line"><span class="comment">#创建字符集为utf8的数据库并导入数据</span></span><br><span class="line">mysql&gt; create database cachecloud charset utf8;</span><br><span class="line">mysql&gt; use cachecloud;</span><br><span class="line">mysql&gt; <span class="built_in">source</span> /root/cachecloud/script/cachecloud.sql;</span><br><span class="line"></span><br><span class="line"><span class="comment">#创建CacheCloud连接用户</span></span><br><span class="line">mysql&gt; grant all on *.* to <span class="string">'admin'</span>@<span class="string">'localhost'</span> identified by <span class="string">'admin'</span>;</span><br><span class="line">mysql&gt; grant all on *.* to <span class="string">'admin'</span>@<span class="string">'127.0.0.1'</span> identified by <span class="string">'admin'</span>;</span><br><span class="line">mysql&gt; flush privileges;</span><br></pre></td></tr></table></figure>
+<h4 id="CacheCloud项目配置"><a href="#CacheCloud项目配置" class="headerlink" title="CacheCloud项目配置"></a>CacheCloud项目配置</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cat /opt/cachecloud-web/jdbc.properties </span><br><span class="line">cachecloud.db.url = jdbc:mysql://127.0.0.1:3306/cache_cloud?useUnicode=<span class="literal">true</span>&amp;characterEncoding=UTF-8</span><br><span class="line">cachecloud.db.user = admin</span><br><span class="line">cachecloud.db.password = admin</span><br><span class="line">cachecloud.maxPoolSize = 20</span><br><span class="line">jdbc.driver = com.mysql.jdbc.Driver</span><br><span class="line">jdbc.validationQuery = select 1 from dual</span><br></pre></td></tr></table></figure>
+<h4 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h4><pre><code>执行项目根目录下的start.sh即可启动。
+</code></pre>
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/数据库/">数据库</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CacheCloud/">CacheCloud</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis集群/">redis集群</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+		
+<nav id="article-nav">
+  
+    <a href="/2016/10/22/系统初始化常用的工具包/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          系统初始化常用的工具包
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/10/09/Docker的常用操作/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          Docker的常用操作
+        
+      </div>
+    </a>
+  
+</nav>
+
+  	
+
+</article>
+
+
+
+
+
+
+</div>
+			<footer id="footer">
+				<h1 class="footer-blog-title">
+					<a href="/">Clear Sky</a>
+				</h1>
+				<span class="copyright">
+					&copy; 2018 CLEAR<br>
+					Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+					Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+				</span>
+			</footer>
+  		</div>
+  		
+
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bundle.js"></script>
+	</body>
+</html>

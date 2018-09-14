@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>Redis主从配置故障切换 | Clear Sky</title>
+    <meta name="viewport" content="width=device-width">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Clear Sky" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4e55f04a49a285900817965cb4619021";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div class="mobile-nav-panel">
+        <i class="icon-reorder icon-large"></i>
+      </div>
+      <header id="header">
+        <h1 class="blog-title">
+          <a href="/">Clear Sky</a>
+        </h1>
+        <nav class="nav">
+          <ul>
+            <li><a href="/"><i class="fa fa-home fa-fw"></i>home</a></li>
+            <li><a href="/archives"><i class="fa fa-archive fa-fw"></i>archives</a></li>
+            <li><a href="/categories"><i class="fa fa-list fa-fw"></i>categories</a></li>
+            <li><a href="/tags"><i class="fa fa-tags fa-fw"></i>tags</a></li>
+            <li><a href="/search"><i class="fa fa-search fa-fw"></i>search</a></li>
+            <li><a href="/about"><i class="fa fa-user fa-fw"></i>about</a></li>
+            <li><a href="/atom.xml"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+          </ul>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.clearany.com"></form>
+        </div>
+      </header>
+<div id="main">
+	
+	<article id="post-Redis主从配置故障切换" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2016-05-16T03:15:17.000Z" itemprop="datePublished">2016-05-16</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2016/05/16/Redis主从配置故障切换/">Redis主从配置故障切换</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+    		<h4 id="节点准备"><a href="#节点准备" class="headerlink" title="节点准备"></a>节点准备</h4><table>
+<thead>
+<tr>
+<th>主机名</th>
+<th>IP</th>
+<th>角色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>master</td>
+<td>172.17.0.1</td>
+<td>主</td>
+</tr>
+<tr>
+<td>slave01</td>
+<td>172.16.0.2</td>
+<td>从</td>
+</tr>
+<tr>
+<td>slave02</td>
+<td>172.16.0.3</td>
+<td>从</td>
+</tr>
+<tr>
+<td>arbiter01</td>
+<td>172.16.0.4</td>
+<td>仲裁</td>
+</tr>
+<tr>
+<td>arbiter02</td>
+<td>172.16.0.5</td>
+<td>仲裁</td>
+</tr>
+<tr>
+<td>arbiter03</td>
+<td>172.16.0.6</td>
+<td>仲裁</td>
+</tr>
+</tbody>
+</table>
+<h4 id="安装redis实例，所有节点"><a href="#安装redis实例，所有节点" class="headerlink" title="安装redis实例，所有节点"></a>安装redis实例，所有节点</h4><pre><code>略...
+</code></pre><a id="more"></a>
+<h4 id="配置实例，所有节点"><a href="#配置实例，所有节点" class="headerlink" title="配置实例，所有节点"></a>配置实例，所有节点</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#主节点  配置如下：</span></span><br><span class="line">port 6379</span><br><span class="line">logfile <span class="string">"/data/program/redis/logs/6379.log"</span></span><br><span class="line">dir <span class="string">"/data/program/redis/data/6379"</span></span><br><span class="line">dbfilename <span class="string">"dump.rdb"</span></span><br><span class="line">appendonly yes</span><br><span class="line">appendfilename <span class="string">"appendonly.aof"</span></span><br><span class="line">requirepass <span class="string">"123456"</span></span><br><span class="line"></span><br><span class="line">masterauth <span class="string">"123455"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#从节点配置 </span></span><br><span class="line">port 6379</span><br><span class="line">logfile <span class="string">"/data/program/redis/logs/6379.log"</span></span><br><span class="line">dir <span class="string">"/data/program/redis/data/6379"</span></span><br><span class="line">dbfilename <span class="string">"dump.rdb"</span></span><br><span class="line">appendonly yes</span><br><span class="line">appendfilename <span class="string">"appendonly.aof"</span></span><br><span class="line">requirepass <span class="string">"123456"</span></span><br><span class="line">masterauth <span class="string">"123456"</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line">slaveof 172.16.10.4 6379</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#仲裁节点配置</span></span><br><span class="line">port 26379</span><br><span class="line"><span class="comment">#MyMaster</span></span><br><span class="line">sentinel monitor MyMaster 172.16.0.1 6379 1</span><br><span class="line">sentinel down-after-milliseconds MyMaster 5000</span><br><span class="line">sentinel failover-timeout MyMaster 900000</span><br><span class="line">sentinel auth-pass mymaster 123456</span><br><span class="line">sentinel parallel-syncs MyMaster 2</span><br></pre></td></tr></table></figure>
+<h4 id="启动所有节点"><a href="#启动所有节点" class="headerlink" title="启动所有节点"></a>启动所有节点</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#主从节点</span></span><br><span class="line">redis-server /data/program/redis/conf/redis.conf</span><br><span class="line"><span class="comment">#仲裁节点</span></span><br><span class="line">redis-sentinel /data/program/redis/conf/sentinel.conf</span><br></pre></td></tr></table></figure>
+<h4 id="检查主从状态"><a href="#检查主从状态" class="headerlink" title="检查主从状态"></a>检查主从状态</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">redis-cli</span><br><span class="line"><span class="comment">#查询状态信息</span></span><br><span class="line">&gt; ping</span><br><span class="line"><span class="comment">#返回的结果如果是PONG，则表示服务运行正常</span></span><br><span class="line"><span class="comment">#然后继续执行命令，检查主备是否正常</span></span><br><span class="line">&gt; info Replication</span><br><span class="line"><span class="comment">#查看返回结果（关键点）</span></span><br><span class="line"><span class="comment">#master应为（offset和lag无所谓）：</span></span><br><span class="line">role:master</span><br><span class="line">connected_slaves:2</span><br><span class="line">slave0:ip=172.16.0.2,port=6379,state=online,offset=1241704,lag=0</span><br><span class="line">slave1:ip=172.16.0.3,port=6379,state=online,offset=1241704,lag=0</span><br><span class="line"></span><br><span class="line"><span class="comment">#slave应为：</span></span><br><span class="line">role:slave</span><br><span class="line">master_host:172.16.0.4</span><br><span class="line">master_port:6379</span><br><span class="line">master_link_status:up</span><br></pre></td></tr></table></figure>
+<h4 id="检查sentinel状态"><a href="#检查sentinel状态" class="headerlink" title="检查sentinel状态"></a>检查sentinel状态</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">redis-cli -p 26379</span><br><span class="line"><span class="comment">#查询状态信息</span></span><br><span class="line">&gt; info</span><br><span class="line"><span class="comment">#查看结果如果有如下所示，即表示正常集群配置正常运行</span></span><br><span class="line"><span class="comment"># Sentinel</span></span><br><span class="line">sentinel_masters:1</span><br><span class="line">sentinel_tilt:0</span><br><span class="line">sentinel_running_scripts:0</span><br><span class="line">sentinel_scripts_queue_length:0</span><br><span class="line">master0:name=MyMaster,status=ok,address=172.16.0.1:6379,slaves=2,sentinels=3</span><br></pre></td></tr></table></figure>
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/数据库/">数据库</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/db/">db</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nosql/">nosql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/主从切换/">主从切换</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+		
+<nav id="article-nav">
+  
+    <a href="/2016/05/19/系统任务调度-Rundeck/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          系统任务调度-Rundeck
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/05/16/Redis哨兵sentinel配置文件详解/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          Redis哨兵sentinel配置文件详解
+        
+      </div>
+    </a>
+  
+</nav>
+
+  	
+
+</article>
+
+
+
+
+
+
+</div>
+			<footer id="footer">
+				<h1 class="footer-blog-title">
+					<a href="/">Clear Sky</a>
+				</h1>
+				<span class="copyright">
+					&copy; 2018 CLEAR<br>
+					Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+					Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+				</span>
+			</footer>
+  		</div>
+  		
+
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bundle.js"></script>
+	</body>
+</html>

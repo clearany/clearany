@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>mongo的用户和授权 | Clear Sky</title>
+    <meta name="viewport" content="width=device-width">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Clear Sky" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4e55f04a49a285900817965cb4619021";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div class="mobile-nav-panel">
+        <i class="icon-reorder icon-large"></i>
+      </div>
+      <header id="header">
+        <h1 class="blog-title">
+          <a href="/">Clear Sky</a>
+        </h1>
+        <nav class="nav">
+          <ul>
+            <li><a href="/"><i class="fa fa-home fa-fw"></i>home</a></li>
+            <li><a href="/archives"><i class="fa fa-archive fa-fw"></i>archives</a></li>
+            <li><a href="/categories"><i class="fa fa-list fa-fw"></i>categories</a></li>
+            <li><a href="/tags"><i class="fa fa-tags fa-fw"></i>tags</a></li>
+            <li><a href="/search"><i class="fa fa-search fa-fw"></i>search</a></li>
+            <li><a href="/about"><i class="fa fa-user fa-fw"></i>about</a></li>
+            <li><a href="/atom.xml"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+          </ul>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.clearany.com"></form>
+        </div>
+      </header>
+<div id="main">
+	
+	<article id="post-mongo的用户和授权" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2016-04-18T14:51:14.000Z" itemprop="datePublished">2016-04-18</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2016/04/18/mongo的用户和授权/">mongo的用户和授权</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+    		<h4 id="进入mongo控制台"><a href="#进入mongo控制台" class="headerlink" title="进入mongo控制台"></a>进入mongo控制台</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#mongodb安装好后第一次进入是不需要密码的，也没有任何用户，通过shell命令可直接进入，cd到mongodb目录下的bin文件夹，执行命令./mongo即可。运行如下：</span></span><br><span class="line">[root@namenode mongodb]<span class="comment"># ./bin/mongo</span></span><br><span class="line">MongoDB shell version: 1.8.2</span><br><span class="line">connecting to: <span class="built_in">test</span></span><br><span class="line">&gt; use <span class="built_in">test</span>;</span><br><span class="line">switched to db <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+<h4 id="添加管理用户"><a href="#添加管理用户" class="headerlink" title="添加管理用户"></a>添加管理用户</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#mongoDB 没有无敌用户root，只有能管理用户的用户 userAdminAnyDatabase</span></span><br><span class="line">&gt;use admin</span><br><span class="line">&gt;db.createUser( &#123;user: <span class="string">"admin"</span>,<span class="built_in">pwd</span>: <span class="string">"123456"</span>,roles: [ &#123; role: <span class="string">"userAdminAnyDatabase"</span>, db: <span class="string">"admin"</span> &#125; ]&#125;)</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h4 id="以认证模式重启数据库"><a href="#以认证模式重启数据库" class="headerlink" title="以认证模式重启数据库"></a>以认证模式重启数据库</h4><ul>
+<li>创建库并授权用户</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#因为admin只有用户管理权限，下面创建用户，用户都跟着库走，所以在指定库里授权，必须也在指定库里验证</span></span><br><span class="line">&gt; use admin</span><br><span class="line">&gt; db.auth(<span class="string">"admin"</span>,<span class="string">"123456"</span>)   <span class="comment">#认证，返回1表示成功</span></span><br><span class="line">&gt; use mydb</span><br><span class="line">&gt; db.createUser(&#123;user: <span class="string">"root"</span>,<span class="built_in">pwd</span>: <span class="string">"123456"</span>,roles: [&#123; role: <span class="string">"readWrite"</span>, db: <span class="string">"mydb"</span> &#125;]&#125;)</span><br></pre></td></tr></table></figure>
+<h4 id="用创建的用户root登录进行数据库操作"><a href="#用创建的用户root登录进行数据库操作" class="headerlink" title="用创建的用户root登录进行数据库操作"></a>用创建的用户root登录进行数据库操作</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost mongodb]<span class="comment"># mongo 127.0.0.1/mydb -uroot -p</span></span><br><span class="line">MongoDB shell version: 3.2.9</span><br><span class="line">Enter password:</span><br><span class="line">connecting to: 127.0.0.1/mydb</span><br><span class="line">&gt; db</span><br><span class="line">mydb</span><br><span class="line">&gt; use mydb</span><br><span class="line">switched to db mydb</span><br><span class="line">&gt; show collections</span><br></pre></td></tr></table></figure>
+<h4 id="mongo-的内置角色"><a href="#mongo-的内置角色" class="headerlink" title="mongo 的内置角色"></a>mongo 的内置角色</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#数据库用户角色：read、readWrite;</span></span><br><span class="line"><span class="comment">#数据库管理角色：dbAdmin、dbOwner、userAdmin；</span></span><br><span class="line"><span class="comment">#集群管理角色：clusterAdmin、clusterManager、clusterMonitor、hostManager；</span></span><br><span class="line"><span class="comment">#备份恢复角色：backup、restore；</span></span><br><span class="line"><span class="comment">#所有数据库角色：readAnyDatabase、readWriteAnyDatabase、userAdminAnyDatabase、dbAdminAnyDatabase</span></span><br><span class="line"><span class="comment">#超级用户角色：root  </span></span><br><span class="line"><span class="comment">#这里还有几个角色间接或直接提供了系统超级用户的访问（dbOwner 、userAdmin、userAdminAnyDatabase）</span></span><br><span class="line"> <span class="comment">#内部角色：__system</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">#Read：允许用户读取指定数据库</span></span><br><span class="line"><span class="comment">#readWrite：允许用户读写指定数据库</span></span><br><span class="line"><span class="comment">#dbAdmin：允许用户在指定数据库中执行管理函数，如索引创建、删除，查看统计或访问system.profile</span></span><br><span class="line"><span class="comment">#userAdmin：允许用户向system.users集合写入，可以找指定数据库里创建、删除和管理用户</span></span><br><span class="line"><span class="comment">#clusterAdmin：只在admin数据库中可用，赋予用户所有分片和复制集相关函数的管理权限。</span></span><br><span class="line"><span class="comment">#readAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的读权限</span></span><br><span class="line"><span class="comment">#readWriteAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的读写权限</span></span><br><span class="line"><span class="comment">#userAdminAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的userAdmin权限</span></span><br><span class="line"><span class="comment">#dbAdminAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的dbAdmin权限。</span></span><br><span class="line"><span class="comment">#root：只在admin数据库中可用。超级账号，超级权限</span></span><br></pre></td></tr></table></figure>
+<h4 id="创建超级用户"><a href="#创建超级用户" class="headerlink" title="创建超级用户"></a>创建超级用户</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#有没有一个超级权限？不仅可以授权，而且也可以对集合进行任意操作？答案是肯定的，只是不建议使用。那就是role角色设置成root</span></span><br><span class="line">mongo&gt;use admin</span><br><span class="line">mongo&gt;db.auth(<span class="string">"dba"</span>,<span class="string">"dba"</span>)</span><br><span class="line">mongo&gt;db.createUser( &#123;user: <span class="string">"admin"</span>,<span class="built_in">pwd</span>: <span class="string">"admin"</span>,roles: [&#123; role: <span class="string">"root"</span>, db: <span class="string">"admin"</span> &#125;]&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">#因为帐号都是在当前需要授权的数据库下授权的，那要是不在当前数据库下会怎么样？</span></span><br><span class="line"><span class="comment">#在admin下创建的帐号，不能直接在其他库验证，</span></span><br><span class="line"><span class="comment">#只能在帐号创建库下认证，再去其他库进行操作。</span></span><br></pre></td></tr></table></figure>
+<h4 id="查看全部账户"><a href="#查看全部账户" class="headerlink" title="查看全部账户"></a>查看全部账户</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt;  use admin</span><br><span class="line">switched to db admin</span><br><span class="line">&gt; db.auth(<span class="string">'dba'</span>,<span class="string">'dba'</span>)</span><br><span class="line">1</span><br><span class="line">&gt; db.system.users.find().pretty()</span><br><span class="line"></span><br><span class="line"><span class="comment">#查看用户总数</span></span><br><span class="line">&gt;db.system.users.find().count()</span><br></pre></td></tr></table></figure>
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/数据库/">数据库</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/db/">db</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mongo/">mongo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nosql/">nosql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库授权/">数据库授权</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+		
+<nav id="article-nav">
+  
+    <a href="/2016/04/19/mongo集群模式_Sharding/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          mongo集群模式_Sharding
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/04/18/mongo的集群模式_Replica Set/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          mongo的集群模式_Replica Set
+        
+      </div>
+    </a>
+  
+</nav>
+
+  	
+
+</article>
+
+
+
+
+
+
+</div>
+			<footer id="footer">
+				<h1 class="footer-blog-title">
+					<a href="/">Clear Sky</a>
+				</h1>
+				<span class="copyright">
+					&copy; 2018 CLEAR<br>
+					Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+					Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+				</span>
+			</footer>
+  		</div>
+  		
+
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bundle.js"></script>
+	</body>
+</html>

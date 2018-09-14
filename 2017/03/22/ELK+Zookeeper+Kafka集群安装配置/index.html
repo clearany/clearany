@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>ELK+Zookeeper+Kafka集群安装配置 | Clear Sky</title>
+    <meta name="viewport" content="width=device-width">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Clear Sky" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4e55f04a49a285900817965cb4619021";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div class="mobile-nav-panel">
+        <i class="icon-reorder icon-large"></i>
+      </div>
+      <header id="header">
+        <h1 class="blog-title">
+          <a href="/">Clear Sky</a>
+        </h1>
+        <nav class="nav">
+          <ul>
+            <li><a href="/"><i class="fa fa-home fa-fw"></i>home</a></li>
+            <li><a href="/archives"><i class="fa fa-archive fa-fw"></i>archives</a></li>
+            <li><a href="/categories"><i class="fa fa-list fa-fw"></i>categories</a></li>
+            <li><a href="/tags"><i class="fa fa-tags fa-fw"></i>tags</a></li>
+            <li><a href="/search"><i class="fa fa-search fa-fw"></i>search</a></li>
+            <li><a href="/about"><i class="fa fa-user fa-fw"></i>about</a></li>
+            <li><a href="/atom.xml"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+          </ul>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.clearany.com"></form>
+        </div>
+      </header>
+<div id="main">
+	
+	<article id="post-ELK+Zookeeper+Kafka集群安装配置" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2017-03-22T11:16:12.000Z" itemprop="datePublished">2017-03-22</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2017/03/22/ELK+Zookeeper+Kafka集群安装配置/">ELK+Zookeeper+Kafka集群安装配置</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+    		<h3 id="集群部署结构示例"><a href="#集群部署结构示例" class="headerlink" title="集群部署结构示例"></a>集群部署结构示例</h3><table>
+<thead>
+<tr>
+<th>结构层级</th>
+<th>服务器</th>
+<th>应用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>日志采集</td>
+<td></td>
+<td>filebeat</td>
+</tr>
+<tr>
+<td>数据处理，日志缓存</td>
+<td>192.168.20.110  192.168.20.111 192.168.20.112</td>
+<td>jdk+logstash+kafka+zookeeper</td>
+</tr>
+<tr>
+<td>转发</td>
+<td>192.168.20.113</td>
+<td>jdk+Logstash</td>
+</tr>
+<tr>
+<td>持久、检索</td>
+<td>192.168.9.114  192.168.9.115</td>
+<td>jdk+elasticsearch</td>
+</tr>
+<tr>
+<td>展示层</td>
+<td>92.168.9.116</td>
+<td>jdk+kibana+elasticsearch(master)</td>
+</tr>
+</tbody>
+</table>
+<a id="more"></a>
+<h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><pre><code>1、注意防火墙
+
+2、安装JDK环境
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cat &gt;&gt; /etc/profile &lt;&lt;EOF</span><br><span class="line">JAVA_HOME=/data/program/jdk1.8</span><br><span class="line">PATH=\<span class="variable">$PATH</span>:\<span class="variable">$JAVA_HOME</span>/bin</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+3、内核优化
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">cat &gt;&gt;/etc/sysctl &lt;&lt;EOF</span><br><span class="line">fs.file-max=65535</span><br><span class="line">vm.max_map_count = 655360</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">sysctl -p</span><br><span class="line"></span><br><span class="line">cat &gt;&gt;/etc/security/limits.conf &lt;&lt;EOF</span><br><span class="line">* soft nofile 65536</span><br><span class="line">* hard nofile 131072</span><br><span class="line">* soft nproc 2048</span><br><span class="line">* hard nproc 4096</span><br><span class="line">EOF</span><br><span class="line"><span class="comment">###此文件修改后需要重新登录用户，才会生效</span></span><br></pre></td></tr></table></figure>
+</code></pre><h3 id="Elasticsearch集群安装配置（四、五）"><a href="#Elasticsearch集群安装配置（四、五）" class="headerlink" title="Elasticsearch集群安装配置（四、五）"></a>Elasticsearch集群安装配置（四、五）</h3><pre><code><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#ES下载安装</span></span><br><span class="line">wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.3.0.tar.gz</span><br><span class="line">tar zxvf elasticsearch-6.3.0.tar.gz</span><br><span class="line">mv elasticsearch-6.3.0.tar.gz /data/program/elasticsearch</span><br><span class="line"></span><br><span class="line"><span class="comment">#创建数据和日志目录</span></span><br><span class="line">mkdir /data/program/elasticsearch/data</span><br><span class="line">mkdir /data/program/elasticsearch/logs</span><br><span class="line"></span><br><span class="line"><span class="comment">#添加ES启动用户</span></span><br><span class="line">useradd elk</span><br><span class="line">chown -R elk:elk /data/program/elasticsearch</span><br><span class="line"></span><br><span class="line"><span class="comment">#创建如下配置文件(config/elasticsearch.yml)(集群其它节点只修改node.name即可)</span></span><br><span class="line"><span class="built_in">cd</span> /data/program/elasticsearch</span><br><span class="line"><span class="built_in">echo</span> <span class="string">""</span> &gt; config/elasticsearch.yml </span><br><span class="line"></span><br><span class="line">cat &gt; config/elasticsearch.yml &lt;&lt;EOF</span><br><span class="line">cluster.name: TT-LOGS</span><br><span class="line">node.name: t6</span><br><span class="line">path.data: /data/program/elasticsearch/data</span><br><span class="line">path.logs: /data/program/elasticsearch/logs</span><br><span class="line"></span><br><span class="line">bootstrap.memory_lock: <span class="literal">false</span></span><br><span class="line">bootstrap.system_call_filter: <span class="literal">false</span></span><br><span class="line">network.host: 0.0.0.0</span><br><span class="line">http.port: 9200</span><br><span class="line">transport.tcp.port: 9300</span><br><span class="line">discovery.zen.ping.unicast.hosts: [<span class="string">"192.168.9.116:9300"</span>, <span class="string">"192.168.9.115:9300"</span>, <span class="string">"192.168.9.114:9300"</span>]</span><br><span class="line">discovery.zen.minimum_master_nodes: 2m</span><br><span class="line"></span><br><span class="line">http.cors.enabled: <span class="literal">true</span></span><br><span class="line">http.cors.allow-origin: <span class="string">"*"</span></span><br><span class="line">http.cors.allow-credentials: <span class="literal">true</span></span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="comment">#修改JVM内存（config/jvm.options）</span></span><br><span class="line">-Xms2g</span><br><span class="line">-Xmx2g</span><br><span class="line"></span><br><span class="line"><span class="comment">#启动集群</span></span><br><span class="line">su elk &amp;&amp; <span class="built_in">cd</span> /data/program/elasticsearch</span><br><span class="line">./bin/elasticsearch -d</span><br><span class="line"></span><br><span class="line"><span class="comment">#安装elasticsearch-head插件</span></span><br><span class="line">wget https://npm.taobao.org/mirrors/node/latest-v4.x/node-v4.5.0-linux-x64.tar.gz</span><br><span class="line"><span class="comment">#配置下环境变量,编辑/etc/profile添加</span></span><br><span class="line"><span class="built_in">export</span> NODE_HOME=/usr/<span class="built_in">local</span>/node-v4.5.0-linux-x64</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$NODE_HOME</span>/bin/</span><br><span class="line"><span class="built_in">export</span> NODE_PATH=<span class="variable">$NODE_HOME</span>/lib/node_modules</span><br><span class="line"><span class="comment">#执行 source /etc/profile</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#安装npm</span></span><br><span class="line">npm install -g cnpm --registry=https://registry.npm.taobao.org</span><br><span class="line">npm install -g grunt</span><br><span class="line">npm install -g grunt-cli --registry=https://registry.npm.taobao.org --no-proxy</span><br><span class="line">wget https://github.com/mobz/elasticsearch-head/archive/master.zip</span><br><span class="line">unzip master.zip</span><br><span class="line"></span><br><span class="line"><span class="comment">#进入elasticsearch-head-master目录，执行下面命令</span></span><br><span class="line">npm install</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#安装完成之后，修改服务器监听地址,目录：elasticsearch-head/Gruntfile.js,增加hostname属性，设置为*</span></span><br><span class="line">connect: &#123;</span><br><span class="line">    server: &#123;</span><br><span class="line">        options: &#123;</span><br><span class="line">            port: 9100,</span><br><span class="line">            hostname: <span class="string">'0.0.0.0'</span>,</span><br><span class="line">            base: <span class="string">'.'</span>,</span><br><span class="line">            keepalive: <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">#通过命令grunt server启动head</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">cat &gt; restart.sh &lt;&lt;EOF</span><br><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">p_num=`jps|grep Elasticsearch|wc -l`</span><br><span class="line"><span class="keyword">if</span> [[ \<span class="variable">$p_num</span> &gt; 0 ]];<span class="keyword">then</span></span><br><span class="line">        jps|grep Elasticsearch|awk <span class="string">'&#123;print $1&#125;'</span>|xargs <span class="built_in">kill</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"ES成功关闭"</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"ES进程已经关闭"</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="built_in">cd</span> /data/program/elasticsearch</span><br><span class="line"></span><br><span class="line">runuser -l elk -c <span class="string">"/data/program/elasticsearch/bin/elasticsearch -d"</span></span><br><span class="line"><span class="keyword">if</span> [[ $? == 0 ]];<span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"ES成功启动"</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"ES启动失败"</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+</code></pre><h3 id="安装配置kibana（四、五）"><a href="#安装配置kibana（四、五）" class="headerlink" title="安装配置kibana（四、五）"></a>安装配置kibana（四、五）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">wget https://artifacts.elastic.co/downloads/kibana/kibana-6.3.0-linux-x86_64.tar.gz</span><br><span class="line">tar zxvf kibana-6.3.0-linux-x86_64.tar.gz</span><br><span class="line">mv kibana-6.3.0-linux-x86_64 /data/program/kibana</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> /data/program/kibana</span><br><span class="line"><span class="comment">#配置文件在config的kibana.yml中，此处我仅修改了</span></span><br><span class="line">server.port: 5601</span><br><span class="line">server.host: <span class="string">"10.112.101.90"</span></span><br><span class="line">elasticsearch.url: <span class="string">"http://10.112.101.90:9200"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#运行</span></span><br><span class="line">bin/kibana</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动脚本</span></span><br><span class="line">cat &gt; restart &lt;&lt;EOF</span><br><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">p_num=`ps -ef|grep node|wc -l`</span><br><span class="line"><span class="keyword">if</span> [[ <span class="variable">$p_num</span> &gt; 0 ]];<span class="keyword">then</span></span><br><span class="line">        ps -ef|grep node|awk <span class="string">'&#123;print $2&#125;'</span>|xargs <span class="built_in">kill</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"kibana成功关闭"</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"kibana进程已经关闭"</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="built_in">cd</span> /data/program/kibana</span><br><span class="line"></span><br><span class="line">runuser -l elk -c <span class="string">"nohup /data/program/kibana/bin/kibana &amp;"</span></span><br><span class="line"><span class="keyword">if</span> [[ $? == 0 ]];<span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"kibana成功启动"</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"kibana启动失败"</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+<h3 id="logstash安装配置（三）"><a href="#logstash安装配置（三）" class="headerlink" title="logstash安装配置（三）"></a>logstash安装配置（三）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">wget https://artifacts.elastic.co/downloads/logstash/logstash-6.3.0.tar.gz</span><br><span class="line">tar zxvf logstash-6.3.0.tar.gz</span><br><span class="line">mv logstash-6.3.0 /data/program/logstash</span><br><span class="line"></span><br><span class="line"><span class="comment">#编辑配置文件，这里写一个测试的（把一下内容写进一个配置文件）</span></span><br><span class="line">input &#123;</span><br><span class="line">        file &#123;</span><br><span class="line">                path =&gt; [<span class="string">"/tmp/test_data"</span>]</span><br><span class="line">                codec =&gt; json &#123;</span><br><span class="line">                        charset =&gt; <span class="string">"UTF-8"</span></span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">output &#123;</span><br><span class="line">        elasticsearch &#123;</span><br><span class="line">                hosts =&gt; [<span class="string">"172.168.254.26:9200"</span>]</span><br><span class="line">                index =&gt; <span class="string">"lalala-%&#123;+YYYY.MM.dd&#125;"</span></span><br><span class="line">                document_type =&gt; <span class="string">"test"</span></span><br><span class="line">                <span class="comment">#user =&gt; "elastic"</span></span><br><span class="line">                <span class="comment">#password =&gt; "changeme"</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#启动logstash</span></span><br><span class="line"><span class="built_in">cd</span> /data/program/logstash</span><br><span class="line">nohup ./bin/logstash -f config/test.conf &amp;&gt; run.log &amp;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#启动脚本</span></span><br><span class="line"><span class="comment">#cat &gt; restart.sh &lt;&lt;EOF</span></span><br><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">p_num=`jps|grep Logstash|wc -l`</span><br><span class="line"><span class="keyword">if</span> [[ \<span class="variable">$p_num</span> &gt; 0 ]];<span class="keyword">then</span></span><br><span class="line">        jps|grep Logstash|awk <span class="string">'&#123;print $1&#125;'</span>|xargs <span class="built_in">kill</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"Logstash成功关闭"</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"Logstash进程已经关闭"</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="built_in">cd</span> /data/program/logstash</span><br><span class="line"></span><br><span class="line">runuser -l elk -c <span class="string">"nohup /data/program/logstash/bin/logstash -f /data/program/logstash/config/file_to_es.conf &amp;&gt; run.log &amp;"</span></span><br><span class="line"><span class="keyword">if</span> [[ $? == 0 ]];<span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"Logstash成功启动"</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"Logstash启动失败"</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#制造些假数据进行测试</span></span><br><span class="line">cat &gt; /tmp/test_data &lt;&lt;EOF</span><br><span class="line">&#123;<span class="string">"user"</span>: <span class="string">"test"</span>, <span class="string">"age"</span>: <span class="string">"11"</span>&#125;</span><br><span class="line">&#123;<span class="string">"user"</span>: <span class="string">"test1"</span>, <span class="string">"age"</span>: <span class="string">"12"</span>&#125;</span><br><span class="line">&#123;<span class="string">"user"</span>: <span class="string">"test2"</span>, <span class="string">"age"</span>: <span class="string">"13"</span>&#125;</span><br><span class="line">&#123;<span class="string">"user"</span>: <span class="string">"test3"</span>, <span class="string">"age"</span>: <span class="string">"14"</span>&#125;</span><br><span class="line">&#123;<span class="string">"user"</span>: <span class="string">"test4"</span>, <span class="string">"age"</span>: <span class="string">"15"</span>&#125;</span><br><span class="line">&#123;<span class="string">"user"</span>: <span class="string">"test5"</span>, <span class="string">"age"</span>: <span class="string">"16"</span>&#125;</span><br><span class="line">&#123;<span class="string">"user"</span>: <span class="string">"test6"</span>, <span class="string">"age"</span>: <span class="string">"17"</span>&#125;</span><br><span class="line">&#123;<span class="string">"user"</span>: <span class="string">"test7"</span>, <span class="string">"age"</span>: <span class="string">"18"</span>&#125;</span><br><span class="line">&#123;<span class="string">"user"</span>: <span class="string">"test8"</span>, <span class="string">"age"</span>: <span class="string">"19"</span>&#125;</span><br><span class="line">&#123;<span class="string">"user"</span>: <span class="string">"test9"</span>, <span class="string">"age"</span>: <span class="string">"20"</span>&#125;</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="comment">#访问kibana，创建索引(management--&gt;index patterns--&gt;create index patterns)</span></span><br><span class="line"><span class="comment">#如果logstatsh已经开始往elasticsearch中推送数据，则在创建index下会有显示。</span></span><br></pre></td></tr></table></figure>
+<h3 id="安装配置zookeeper集群-二"><a href="#安装配置zookeeper集群-二" class="headerlink" title="安装配置zookeeper集群(二)"></a>安装配置zookeeper集群(二)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">wget http://apache.01link.hk/zookeeper/stable/zookeeper-3.4.12.tar.gz</span><br><span class="line">tar zxvf zookeeper-3.4.12.tar.gz</span><br><span class="line">mv zookeeper-3.4.12.tar.gz /data/program/zookeeper</span><br><span class="line"><span class="built_in">cd</span> /data/program/zookeeper/conf</span><br><span class="line">cp zoo_sample.cfg zoo.cfg</span><br><span class="line">cat &gt; zoo.cfg &lt;&lt;EOF</span><br><span class="line">tickTime=2000</span><br><span class="line">initLimit=10</span><br><span class="line">syncLimit=5</span><br><span class="line">dataDir=/data/program/zookeeper/data</span><br><span class="line">clientPort=2181</span><br><span class="line">server.1=192.168.20.110:12888:13888</span><br><span class="line">server.2=192.168.20.111:12888:13888</span><br><span class="line">server.3=192.168.20.112:12888:13888</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="comment">#创建数据目录,写入id</span></span><br><span class="line"><span class="built_in">cd</span> /data/program/zookeeper</span><br><span class="line">mkdir -p data</span><br><span class="line"><span class="built_in">echo</span> 1 &gt; ./data/myid</span><br><span class="line"></span><br><span class="line"><span class="comment">#启动服务</span></span><br><span class="line"><span class="built_in">cd</span> data/program/zookeeper</span><br><span class="line">./bin/zkServer.sh start</span><br><span class="line"></span><br><span class="line"><span class="comment">#查看集群状态</span></span><br><span class="line">./bin/zkServer.sh status</span><br><span class="line"></span><br><span class="line"><span class="comment">#以上所有节点配置相同，myid的值不同。</span></span><br></pre></td></tr></table></figure>
+<h3 id="安装配置kafka集群-二"><a href="#安装配置kafka集群-二" class="headerlink" title="安装配置kafka集群(二)"></a>安装配置kafka集群(二)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">wget http://apache.01link.hk/kafka/1.1.0/kafka_2.11-1.1.0.tgz</span><br><span class="line">tar zxvf kafka_2.11-1.1.0.tgz</span><br><span class="line">mv kafka_2.11-1.1.0 /data/program/kafka</span><br><span class="line"></span><br><span class="line"><span class="comment">#修改配置文件如下</span></span><br><span class="line"><span class="built_in">cd</span> /data/program/kafka/config</span><br><span class="line">mv server.properties  server.properties.bak</span><br><span class="line">cat &gt;  server.properties  &lt;&lt;EOF</span><br><span class="line">broker.id=1</span><br><span class="line">port = 9092</span><br><span class="line">host.name = 192.168.20.110</span><br><span class="line">log.dirs=/data/program/kafka/logs</span><br><span class="line">log.retention.hours=1</span><br><span class="line">zookeeper.connect=192.168.20.110:2181,192.168.20.111:2181,192.168.20.112:2181</span><br><span class="line">default.replication.factor=2</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="comment">#创建日志目录</span></span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line">mkdir -p logs</span><br><span class="line"><span class="comment">#以上配置使用其它所有节点，修改broker.id和host.name即可。</span></span><br><span class="line"><span class="comment">#配置好后，启动集群</span></span><br><span class="line">./bin/kafka-server-start.sh -daemon config/server.properties</span><br><span class="line"></span><br><span class="line"><span class="comment">#创建topic，消费者和生产者进行测试。</span></span><br><span class="line"><span class="comment">#创建topic</span></span><br><span class="line">./bin/kafka-topics.sh --create --zookeeper 192.168.20.110:2181 --replication-factor 1 --partitions 2 --topic logview</span><br><span class="line"><span class="comment">#创建消费者</span></span><br><span class="line">./bin/kafka-console-consumer.sh --zookeeper 192.168.20.110:2181 --topic logview --from-beginning</span><br><span class="line"><span class="comment">#另一个节点创建一个生产者</span></span><br><span class="line">./bin/kafka-console-producer.sh --broker-list 192.168.20.110:9092 --topic logview</span><br><span class="line"></span><br><span class="line"><span class="comment">#生产者创建完毕后，输入任何字符，都会在消费者节点看到，说明集群简历成功。</span></span><br></pre></td></tr></table></figure>
+<h3 id="安装配置logstatsh-二"><a href="#安装配置logstatsh-二" class="headerlink" title="安装配置logstatsh(二)"></a>安装配置logstatsh(二)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">wget https://artifacts.elastic.co/downloads/logstash/logstash-6.3.0.tar.gz</span><br><span class="line">tar zxvf logstash-6.3.0.tar.gz</span><br><span class="line">mv logstash-6.3.0 /data/program/logstash</span><br><span class="line"></span><br><span class="line"><span class="comment">#创建配置文件，从filebeat获取日志，输出到kafka集群</span></span><br><span class="line"><span class="built_in">cd</span> /data/program/logstash/config</span><br><span class="line"></span><br><span class="line">cat &gt; filebeat_to_kafka.conf &lt;&lt;EOF</span><br><span class="line">input &#123;</span><br><span class="line">    beats &#123;</span><br><span class="line">        port =&gt; 5044</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">output &#123;</span><br><span class="line">    kafka &#123;</span><br><span class="line">        bootstrap_servers =&gt; <span class="string">"192.168.20.110:9092,192.168.20.111:9092,192.168.20.112:9092"</span></span><br><span class="line">        topic_id =&gt; <span class="string">"logview"</span></span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="comment">#启动logstash</span></span><br><span class="line"><span class="built_in">cd</span> /data/program/logstash</span><br><span class="line">nohup ./bin/logstash -f config/filebeat_to_kafka.conf &amp;&gt; run.log &amp;</span><br></pre></td></tr></table></figure>
+<h3 id="在应用主机安装filebeat-一"><a href="#在应用主机安装filebeat-一" class="headerlink" title="在应用主机安装filebeat(一)"></a>在应用主机安装filebeat(一)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">wget https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-6.3.0-linux-x86_64.tar.gz</span><br><span class="line">tar zxvf filebeat-6.3.0-linux-x86_64.tar.gz</span><br><span class="line">mv filebeat-6.3.0-linux-x86_64 /data/programe/filebeat</span><br><span class="line"></span><br><span class="line"><span class="comment">#修改配置文件</span></span><br><span class="line"><span class="built_in">cd</span> /data/programe/filebeat</span><br><span class="line">cat &gt; filebeat.yml &lt;&lt;EOF</span><br><span class="line">filebeat.inputs:</span><br><span class="line">- <span class="built_in">type</span>: <span class="built_in">log</span></span><br><span class="line">  enabled: <span class="literal">true</span></span><br><span class="line">  paths:</span><br><span class="line">    - /data/test.log</span><br><span class="line">filebeat.config.modules:</span><br><span class="line">  path: \<span class="variable">$&#123;path.config&#125;</span>/modules.d/*.yml</span><br><span class="line">  reload.enabled: <span class="literal">false</span></span><br><span class="line">setup.template.settings:</span><br><span class="line">  index.number_of_shards: 3</span><br><span class="line">output.logstash:</span><br><span class="line">  hosts: [<span class="string">"192.168.20.110:5044"</span></span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="comment">#启动filebeat</span></span><br><span class="line">nohup ./filebeat -c filebeat.yml &gt; /dev/null &amp;</span><br></pre></td></tr></table></figure>
+
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/数据库/">数据库</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ELK/">ELK</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+		
+<nav id="article-nav">
+  
+    <a href="/2017/05/19/virtualenv介绍及基本使用/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          virtualenv介绍及基本使用
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/12/22/网站被cc攻击了该如何应对/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          网站被cc攻击了该如何应对
+        
+      </div>
+    </a>
+  
+</nav>
+
+  	
+
+</article>
+
+
+
+
+
+
+</div>
+			<footer id="footer">
+				<h1 class="footer-blog-title">
+					<a href="/">Clear Sky</a>
+				</h1>
+				<span class="copyright">
+					&copy; 2018 CLEAR<br>
+					Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+					Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+				</span>
+			</footer>
+  		</div>
+  		
+
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bundle.js"></script>
+	</body>
+</html>

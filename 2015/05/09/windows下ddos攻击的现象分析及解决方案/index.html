@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>windows下ddos攻击的现象分析及解决方案 | Clear Sky</title>
+    <meta name="viewport" content="width=device-width">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Clear Sky" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4e55f04a49a285900817965cb4619021";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div class="mobile-nav-panel">
+        <i class="icon-reorder icon-large"></i>
+      </div>
+      <header id="header">
+        <h1 class="blog-title">
+          <a href="/">Clear Sky</a>
+        </h1>
+        <nav class="nav">
+          <ul>
+            <li><a href="/"><i class="fa fa-home fa-fw"></i>home</a></li>
+            <li><a href="/archives"><i class="fa fa-archive fa-fw"></i>archives</a></li>
+            <li><a href="/categories"><i class="fa fa-list fa-fw"></i>categories</a></li>
+            <li><a href="/tags"><i class="fa fa-tags fa-fw"></i>tags</a></li>
+            <li><a href="/search"><i class="fa fa-search fa-fw"></i>search</a></li>
+            <li><a href="/about"><i class="fa fa-user fa-fw"></i>about</a></li>
+            <li><a href="/atom.xml"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+          </ul>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.clearany.com"></form>
+        </div>
+      </header>
+<div id="main">
+	
+	<article id="post-windows下ddos攻击的现象分析及解决方案" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2015-05-09T03:18:27.000Z" itemprop="datePublished">2015-05-09</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2015/05/09/windows下ddos攻击的现象分析及解决方案/">windows下ddos攻击的现象分析及解决方案</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+    		<h4 id="现象分析"><a href="#现象分析" class="headerlink" title="现象分析"></a>现象分析</h4><pre><code>网站服务器运营商的互联网接入形式主要有两种： 一种是主机托管，另外一种是自拉网络专线，但基于接入费用的考虑，绝大多数采用前者，但也有不少网吧主会采用后者。无论是前者还是后者接入，在正常情况下，用户都可以正常访问网站，浏览网页、在线听音乐看电影或者是参与论坛发帖，假定可排除线路和硬件故障的情况下，突然发现网页打不开或打开连接服务器困难，正在游戏的用户掉线等现象，则说明很有可能是遭受了DDOS攻击，具体判定方法如下：
+</code></pre><a id="more"></a>
+<pre><code>1、服务器端分析方法
+
+（1）SYNFlood攻击判定
+ A：网上邻居-&gt;右键选“属性”-&gt;双击网卡，每秒收到的包数量大于500。
+ B：开始-&gt;程序-&gt;附件-&gt;命令提示符-&gt;C:\&gt;netstat –na，观察到大量的SYN_RECEIVED的连接状态。
+ C：网线插上后，服务器立即凝固无法操作，拔出后有时可以恢复，有时候需要重新启动机器才可恢复。
+
+（2）TCP多连接攻击判定
+ 开始-&gt;程序-&gt;附件-&gt;命令提示符-&gt;C:\&gt;netstat –na，若观察到多个IP地址与本机的服务端口建立了几十个以上的ESTABLISHED状态的连接。
+
+2、客户端现象
+（1）用户无法访问网站页面或打开过程非常缓慢。
+（2）正在访问的用户突然变得非常缓慢甚至中断。
+</code></pre><h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><pre><code>多年的统计数据表明，想彻底解决DDOS是几乎不可能的，就好比治疗感冒一样，我们可以治疗，也可以预防，但却无法根治，但我们若采取积极有效的防御方法，则可在很大程度上降低或减缓生病的机率，防治DDOS攻击也是如此，拥有充足的带宽和配置足够高的主机硬件是必需的，那么什么算是充足的带宽呢？一般来说至少应该是100M共享，那么什么算配置足够高的主机硬件呢？一般来说至少应该是P4 2.4G的CPU、512M内存和Intel等品牌网卡。拥有此配置的带宽和主机理论上可应对每秒20万以上的SYN攻击，但这需要借助于专业配置和专用软件才可实现，默认情况下，绝大多数服务器难以抵御每秒1000个以上SYN的攻击。
+
+ 1、免费DDOS解决方案
+
+通过优化Windows 2000或2003系统的注册表，可有效对抗每秒约1万个左右的SYN攻击，方法是把以下文本内容存盘为antiddos.reg然后导入注册表并重新启动即可，当然也可从地址 http://www.bingdun.com/tools/antiddos.reg 直接下载antiddos.reg文件。
+
+Windows Registry Editor Version 5.00
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters]
+
+&quot;SynAttackProtect&quot;=dword:00000002
+
+&quot;TcpMaxHalfOpen&quot;=dword:000001f4
+
+&quot;TcpMaxHalfOpenRetried&quot;=dword:00000190
+
+ 此方案的优点是，采用系统自身的能力来解决问题，而无需任何花费，缺点是只能抵御每秒少于10000的SYN攻击，并且无法解决TCP多连接攻击。
+
+ 2、商用DDOS解决方案
+
+在面对每秒多于10000的SYN攻击或是TCP多连接攻击的情况下，就必需采用商用解决方案了，
+商业解决方案一般是寻求第三方的产品如各种防护盾或者请专业的公司来解决。
+</code></pre>
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/网络安全/">网络安全</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ddos/">ddos</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dos/">dos</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/攻击/">攻击</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+		
+<nav id="article-nav">
+  
+    <a href="/2015/05/09/VIM 快捷操作键盘图/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          VIM快捷操作键盘图
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/05/09/shell的时间获取与格式化输出/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          Shell的时间的获取与格式化输出
+        
+      </div>
+    </a>
+  
+</nav>
+
+  	
+
+</article>
+
+
+
+
+
+
+</div>
+			<footer id="footer">
+				<h1 class="footer-blog-title">
+					<a href="/">Clear Sky</a>
+				</h1>
+				<span class="copyright">
+					&copy; 2018 CLEAR<br>
+					Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+					Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+				</span>
+			</footer>
+  		</div>
+  		
+
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bundle.js"></script>
+	</body>
+</html>

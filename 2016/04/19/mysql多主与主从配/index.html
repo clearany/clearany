@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>mysql多主与主从配置 | Clear Sky</title>
+    <meta name="viewport" content="width=device-width">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Clear Sky" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4e55f04a49a285900817965cb4619021";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div class="mobile-nav-panel">
+        <i class="icon-reorder icon-large"></i>
+      </div>
+      <header id="header">
+        <h1 class="blog-title">
+          <a href="/">Clear Sky</a>
+        </h1>
+        <nav class="nav">
+          <ul>
+            <li><a href="/"><i class="fa fa-home fa-fw"></i>home</a></li>
+            <li><a href="/archives"><i class="fa fa-archive fa-fw"></i>archives</a></li>
+            <li><a href="/categories"><i class="fa fa-list fa-fw"></i>categories</a></li>
+            <li><a href="/tags"><i class="fa fa-tags fa-fw"></i>tags</a></li>
+            <li><a href="/search"><i class="fa fa-search fa-fw"></i>search</a></li>
+            <li><a href="/about"><i class="fa fa-user fa-fw"></i>about</a></li>
+            <li><a href="/atom.xml"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+          </ul>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.clearany.com"></form>
+        </div>
+      </header>
+<div id="main">
+	
+	<article id="post-mysql多主与主从配" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2016-04-19T03:40:17.000Z" itemprop="datePublished">2016-04-19</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2016/04/19/mysql多主与主从配/">mysql多主与主从配置</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+    		<h4 id="节点准备"><a href="#节点准备" class="headerlink" title="节点准备"></a>节点准备</h4><p>本次配置用一主两从进行记录节点信息如下：</p>
+<table>
+<thead>
+<tr>
+<th>主机名</th>
+<th>IP</th>
+<th>角色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>master</td>
+<td>192.168.10.1</td>
+<td>主</td>
+</tr>
+<tr>
+<td>node01</td>
+<td>192.168.10.2</td>
+<td>从</td>
+</tr>
+<tr>
+<td>node02</td>
+<td>192.168.10.3</td>
+<td>从</td>
+</tr>
+</tbody>
+</table>
+<h4 id="所有节点安装Mysql服务实例"><a href="#所有节点安装Mysql服务实例" class="headerlink" title="所有节点安装Mysql服务实例"></a>所有节点安装Mysql服务实例</h4><pre><code>略...
+</code></pre><a id="more"></a>
+<h4 id="修改所有实例配置文件"><a href="#修改所有实例配置文件" class="headerlink" title="修改所有实例配置文件"></a>修改所有实例配置文件</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#配置文件中添加如下行</span></span><br><span class="line"><span class="comment">#不同节点server-id不同</span></span><br><span class="line"><span class="string">server-id</span> <span class="string">=</span> <span class="number">1</span></span><br><span class="line"><span class="comment">#binlog位置</span></span><br><span class="line"><span class="string">log-bin</span> <span class="string">=</span> <span class="string">/data/program/mysql/bin_log/master-bin</span></span><br><span class="line"><span class="comment">#需要同步的书库，如果全部同步可以不写</span></span><br><span class="line"><span class="string">binlog-do-db</span> <span class="string">=</span> <span class="string">vdevops</span> </span><br><span class="line"><span class="comment">#不需要记录进制日志的数据库,多个可逗号隔开(主库配置，从库不写)</span></span><br><span class="line"><span class="string">binlog-ignore-db</span> <span class="string">=</span> <span class="string">mysql,information_schema,performance_schema</span></span><br><span class="line"><span class="comment">#不需要同步的数据库,多个可逗号隔开(从库配置，主库不写)</span></span><br><span class="line"><span class="string">replicate-ignore-db</span> <span class="string">=</span> <span class="string">mysql,information_schema,performance_schema</span></span><br><span class="line"><span class="comment">#将复制事件写入binlog,一台服务器既做主库又做从库此选项必须要开启(主从模式不开启)</span></span><br><span class="line"><span class="string">log-slave-updates</span></span><br><span class="line"><span class="comment">#当每进行1次事务提交之后，MySQL将进行一次fsync之类的磁盘同步指令来将binlog_cache中的数据强制写入磁盘</span></span><br><span class="line"><span class="string">sync_binlog</span> <span class="string">=</span> <span class="number">1</span></span><br><span class="line"><span class="comment">#过滤掉一些没啥大问题的错误</span></span><br><span class="line"><span class="string">slave-skip-errors</span> <span class="string">=</span> <span class="string">all</span></span><br><span class="line"><span class="comment">#binlog日志格式，mysql默认采用</span></span><br><span class="line"><span class="string">binlog_format</span> <span class="string">=</span> <span class="string">mixed</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="string">read-only=0</span></span><br><span class="line"><span class="comment">#该服务器自增列增量</span></span><br><span class="line"><span class="string">auto_increment_increment</span> <span class="string">=</span> <span class="number">2</span></span><br><span class="line"><span class="comment">#该服务器自增列的初始值</span></span><br><span class="line"><span class="string">auto_increment_offset</span> <span class="string">=</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#如果为多主的话注意设置 auto-increment-offset 和 auto-increment-increment</span></span><br><span class="line"><span class="comment">#如上面为双主的设置：</span></span><br><span class="line"><span class="comment">#服务器 A 自增列显示为：1,3,5,7,……（offset=1，increment=2）</span></span><br><span class="line"><span class="comment">#服务器 B 自增列显示为：2,4,6,8,……（offset=2，increment=2）</span></span><br></pre></td></tr></table></figure>
+<h4 id="启动所有实例"><a href="#启动所有实例" class="headerlink" title="启动所有实例"></a>启动所有实例</h4><h4 id="主节点授权"><a href="#主节点授权" class="headerlink" title="主节点授权"></a>主节点授权</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#创建用户</span></span><br><span class="line">mysql -uroot -proot</span><br><span class="line">mysql&gt;create user mysync;</span><br><span class="line"><span class="comment">#授权</span></span><br><span class="line">mysql&gt;GRANT REPLICATION SLAVE ON *.* TO <span class="string">'mysync'</span>@<span class="string">'192.168.10.%'</span> IDENTIFIED BY <span class="string">'123456'</span></span><br><span class="line"><span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<h4 id="从节点设置"><a href="#从节点设置" class="headerlink" title="从节点设置"></a>从节点设置</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt;change master to master_host=<span class="string">'172.16.10.1'</span>,master_user=<span class="string">'slave'</span>,master_password=<span class="string">'123456'</span>;</span><br><span class="line">mysql&gt;start slave;</span><br><span class="line"><span class="comment">#验证从库</span></span><br><span class="line">mysql&gt;show slave status \G;</span><br><span class="line"><span class="comment">#Slave_IO_Running 和 Slave_SQL_Running都为 Yes则成功</span></span><br></pre></td></tr></table></figure>
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/数据库/">数据库</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/db/">db</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql主从/">mysql主从</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql集群/">mysql集群</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+		
+<nav id="article-nav">
+  
+    <a href="/2016/04/19/mysql的性能优化/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          mysql的性能优化
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/04/19/mysql的访问权限/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          mysql的访问权限
+        
+      </div>
+    </a>
+  
+</nav>
+
+  	
+
+</article>
+
+
+
+
+
+
+</div>
+			<footer id="footer">
+				<h1 class="footer-blog-title">
+					<a href="/">Clear Sky</a>
+				</h1>
+				<span class="copyright">
+					&copy; 2018 CLEAR<br>
+					Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+					Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+				</span>
+			</footer>
+  		</div>
+  		
+
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bundle.js"></script>
+	</body>
+</html>

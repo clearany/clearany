@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>网络管理工具之netstat | Clear Sky</title>
+    <meta name="viewport" content="width=device-width">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Clear Sky" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4e55f04a49a285900817965cb4619021";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div class="mobile-nav-panel">
+        <i class="icon-reorder icon-large"></i>
+      </div>
+      <header id="header">
+        <h1 class="blog-title">
+          <a href="/">Clear Sky</a>
+        </h1>
+        <nav class="nav">
+          <ul>
+            <li><a href="/"><i class="fa fa-home fa-fw"></i>home</a></li>
+            <li><a href="/archives"><i class="fa fa-archive fa-fw"></i>archives</a></li>
+            <li><a href="/categories"><i class="fa fa-list fa-fw"></i>categories</a></li>
+            <li><a href="/tags"><i class="fa fa-tags fa-fw"></i>tags</a></li>
+            <li><a href="/search"><i class="fa fa-search fa-fw"></i>search</a></li>
+            <li><a href="/about"><i class="fa fa-user fa-fw"></i>about</a></li>
+            <li><a href="/atom.xml"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+          </ul>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.clearany.com"></form>
+        </div>
+      </header>
+<div id="main">
+	
+	<article id="post-网络管理工具之netstat" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2015-07-13T04:21:50.000Z" itemprop="datePublished">2015-07-13</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2015/07/13/网络管理工具之netstat/">网络管理工具之netstat</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+    		<h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><pre><code>Linux netstat命令用于显示网络状态。利用netstat指令可让你得知整个Linux系统的网络情况
+</code></pre><h4 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat [-acCeFghilMnNoprstuvVwx][-A&lt;网络类型&gt;][--ip]</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h4 id="参数说明"><a href="#参数说明" class="headerlink" title="参数说明"></a>参数说明</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">-a或--all 显示所有连线中的Socket。</span><br><span class="line">-A&lt;网络类型&gt;或--&lt;网络类型&gt; 列出该网络类型连线中的相关地址。</span><br><span class="line">-c或--continuous 持续列出网络状态。</span><br><span class="line">-C或--cache 显示路由器配置的快取信息。</span><br><span class="line">-e或--extend 显示网络其他相关信息。</span><br><span class="line">-F或--fib 显示FIB。</span><br><span class="line">-g或--groups 显示多重广播功能群组组员名单。</span><br><span class="line">-h或--<span class="built_in">help</span> 在线帮助。</span><br><span class="line">-i或--interfaces 显示网络界面信息表单。</span><br><span class="line">-l或--listening 显示监控中的服务器的Socket。</span><br><span class="line">-M或--masquerade 显示伪装的网络连线。</span><br><span class="line">-n或--numeric 直接使用IP地址，而不通过域名服务器。</span><br><span class="line">-N或--netlink或--symbolic 显示网络硬件外围设备的符号连接名称。</span><br><span class="line">-o或--timers 显示计时器。</span><br><span class="line">-p或--programs 显示正在使用Socket的程序识别码和程序名称。</span><br><span class="line">-r或--route 显示Routing Table。</span><br><span class="line">-s或--statistice 显示网络工作信息统计表。</span><br><span class="line">-t或--tcp 显示TCP传输协议的连线状况。</span><br><span class="line">-u或--udp 显示UDP传输协议的连线状况。</span><br><span class="line">-v或--verbose 显示指令执行过程。</span><br><span class="line">-V或--version 显示版本信息。</span><br><span class="line">-w或--raw 显示RAW传输协议的连线状况。</span><br><span class="line">-x或--unix 此参数的效果和指定<span class="string">"-A unix"</span>参数相同。</span><br><span class="line">--ip或--inet 此参数的效果和指定<span class="string">"-A inet"</span>参数相同。</span><br></pre></td></tr></table></figure>
+<h4 id="用例"><a href="#用例" class="headerlink" title="用例"></a>用例</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#显示详细的网络状况</span></span><br><span class="line">netstat -a</span><br><span class="line"><span class="comment">#显示当前户籍UDP连接状况</span></span><br><span class="line">netstat -nu</span><br><span class="line"><span class="comment">#显示UDP端口号的使用情况</span></span><br><span class="line">netstat -apu</span><br><span class="line">Active Internet connections (servers and established)</span><br><span class="line">Proto Recv-Q Send-Q Local Address        Foreign Address       State    PID/Program name  </span><br><span class="line">udp    0   0 *:32768           *:*                   -          </span><br><span class="line">udp    0   0 *:nfs            *:*                   -          </span><br><span class="line">udp    0   0 *:641            *:*                   3006/rpc.statd   </span><br><span class="line">udp    0   0 192.168.0.3:netbios-ns   *:*                   3537/nmbd      </span><br><span class="line">udp    0   0 *:netbios-ns        *:*                   3537/nmbd      </span><br><span class="line">udp    0   0 192.168.0.3:netbios-dgm   *:*                   3537/nmbd      </span><br><span class="line">udp    0   0 *:netbios-dgm        *:*                   3537/nmbd      </span><br><span class="line">udp    0   0 *:tftp           *:*                   3346/xinetd     </span><br><span class="line">udp    0   0 *:999            *:*                   3366/rpc.rquotad  </span><br><span class="line">udp    0   0 *:sunrpc       *:*                   2986/portmap    </span><br><span class="line">udp    0   0 *:ipp            *:*                   6938/cupsd     </span><br><span class="line">udp    0   0 *:1022           *:*                   3392/rpc.mountd   </span><br><span class="line">udp    0   0 *:638            *:*                   3006/rpc.statd</span><br><span class="line"><span class="comment">#显示网卡列表</span></span><br><span class="line">netstat -i</span><br><span class="line">Kernel Interface table</span><br><span class="line">Iface    MTU Met  RX-OK RX-ERR RX-DRP RX-OVR  TX-OK TX-ERR TX-DRP TX-OVR Flg</span><br><span class="line">eth0    1500  0  181864   0   0   0  141278   0   0   0 BMRU</span><br><span class="line">lo    16436  0   3362   0   0   0   3362   0   0   0 LRU</span><br><span class="line"></span><br><span class="line"><span class="comment">#显示组播组的关系</span></span><br><span class="line">netstat -g</span><br><span class="line">IPv6/IPv4 Group Memberships</span><br><span class="line">Interface    RefCnt Group</span><br><span class="line">--------------- ------ ---------------------</span><br><span class="line">lo       1   ALL-SYSTEMS.MCAST.NET</span><br><span class="line">eth0      1   ALL-SYSTEMS.MCAST.NET</span><br><span class="line">lo       1   ff02::1</span><br><span class="line">eth0      1   ff02::1:ff0a:b0c</span><br><span class="line">eth0      1   ff02::1</span><br><span class="line"></span><br><span class="line"><span class="comment">#显示网络统计信息</span></span><br><span class="line">netstat -s</span><br><span class="line">Ip:</span><br><span class="line">  184695 total packets received</span><br><span class="line">  0 forwarded</span><br><span class="line">  0 incoming packets discarded</span><br><span class="line">  184687 incoming packets delivered</span><br><span class="line">  143917 requests sent out</span><br><span class="line">  32 outgoing packets dropped</span><br><span class="line">  30 dropped because of missing route</span><br><span class="line">Icmp:</span><br><span class="line">  676 ICMP messages received</span><br><span class="line">  5 input ICMP message failed.</span><br><span class="line">  ICMP input histogram:</span><br><span class="line">    destination unreachable: 44</span><br><span class="line">    <span class="built_in">echo</span> requests: 287</span><br><span class="line">    <span class="built_in">echo</span> replies: 345</span><br><span class="line">  304 ICMP messages sent</span><br><span class="line">  0 ICMP messages failed</span><br><span class="line">  ICMP output histogram:</span><br><span class="line">    destination unreachable: 17</span><br><span class="line">    <span class="built_in">echo</span> replies: 287</span><br><span class="line">Tcp:</span><br><span class="line">  473 active connections openings</span><br><span class="line">  28 passive connection openings</span><br><span class="line">  4 failed connection attempts</span><br><span class="line">  11 connection resets received</span><br><span class="line">  1 connections established</span><br><span class="line">  178253 segments received</span><br><span class="line">  137936 segments send out</span><br><span class="line">  29 segments retransmited</span><br><span class="line">  0 bad segments received.</span><br><span class="line">  336 resets sent</span><br><span class="line">Udp:</span><br><span class="line">  5714 packets received</span><br><span class="line">  8 packets to unknown port received.</span><br><span class="line">  0 packet receive errors</span><br><span class="line">  5419 packets sent</span><br><span class="line">TcpExt:</span><br><span class="line">  1 resets received <span class="keyword">for</span> embryonic SYN_RECV sockets</span><br><span class="line">  ArpFilter: 0</span><br><span class="line">  12 TCP sockets finished time <span class="built_in">wait</span> <span class="keyword">in</span> fast timer</span><br><span class="line">  572 delayed acks sent</span><br><span class="line">  3 delayed acks further delayed because of locked socket</span><br><span class="line">  13766 packets directly queued to recvmsg prequeue.</span><br><span class="line">  1101482 packets directly received from backlog</span><br><span class="line">  19599861 packets directly received from prequeue</span><br><span class="line">  46860 packets header predicted</span><br><span class="line">  14541 packets header predicted and directly queued to user</span><br><span class="line">  TCPPureAcks: 12259</span><br><span class="line">  TCPHPAcks: 9119</span><br><span class="line">  TCPRenoRecovery: 0</span><br><span class="line">  TCPSackRecovery: 0</span><br><span class="line">  TCPSACKReneging: 0</span><br><span class="line">  TCPFACKReorder: 0</span><br><span class="line">  TCPSACKReorder: 0</span><br><span class="line">  TCPRenoReorder: 0</span><br><span class="line">  TCPTSReorder: 0</span><br><span class="line">  TCPFullUndo: 0</span><br><span class="line">  TCPPartialUndo: 0</span><br><span class="line">  TCPDSACKUndo: 0</span><br><span class="line">  TCPLossUndo: 0</span><br><span class="line">  TCPLoss: 0</span><br><span class="line">  TCPLostRetransmit: 0</span><br><span class="line">  TCPRenoFailures: 0</span><br><span class="line">  TCPSackFailures: 0</span><br><span class="line">  TCPLossFailures: 0</span><br><span class="line">  TCPFastRetrans: 0</span><br><span class="line">  TCPForwardRetrans: 0</span><br><span class="line">  TCPSlowStartRetrans: 0</span><br><span class="line">  TCPTimeouts: 29</span><br><span class="line">  TCPRenoRecoveryFail: 0</span><br><span class="line">  TCPSackRecoveryFail: 0</span><br><span class="line">  TCPSchedulerFailed: 0</span><br><span class="line">  TCPRcvCollapsed: 0</span><br><span class="line">  TCPDSACKOldSent: 0</span><br><span class="line">  TCPDSACKOfoSent: 0</span><br><span class="line">  TCPDSACKRecv: 0</span><br><span class="line">  TCPDSACKOfoRecv: 0</span><br><span class="line">  TCPAbortOnSyn: 0</span><br><span class="line">  TCPAbortOnData: 1</span><br><span class="line">  TCPAbortOnClose: 0</span><br><span class="line">  TCPAbortOnMemory: 0</span><br><span class="line">  TCPAbortOnTimeout: 3</span><br><span class="line">  TCPAbortOnLinger: 0</span><br><span class="line">  TCPAbortFailed: 3</span><br><span class="line">  TCPMemoryPressures: 0</span><br><span class="line"></span><br><span class="line"><span class="comment">#显示监听的套接口</span></span><br><span class="line">netstat -l</span><br><span class="line">Active Internet connections (only servers)</span><br><span class="line">Proto Recv-Q Send-Q Local Address        Foreign Address       State   </span><br><span class="line">tcp    0   0 *:32769           *:*             LISTEN   </span><br><span class="line">tcp    0   0 *:nfs            *:*             LISTEN   </span><br><span class="line">tcp    0   0 *:644            *:*             LISTEN   </span><br><span class="line">tcp    0   0 *:1002           *:*             LISTEN   </span><br><span class="line">tcp    0   0 *:netbios-ssn        *:*             LISTEN   </span><br><span class="line">tcp    0   0 *:sunrpc          *:*             LISTEN   </span><br><span class="line">tcp    0   0 vm-dev:ipp         *:*             LISTEN   </span><br><span class="line">tcp    0   0 *:telnet          *:*             LISTEN   </span><br><span class="line">tcp    0   0 *:601            *:*             LISTEN   </span><br><span class="line">tcp    0   0 *:microsoft-ds       *:*             LISTEN   </span><br><span class="line">tcp    0   0 *:http           *:*             LISTEN   </span><br><span class="line">tcp    0   0 *:ssh            *:*             LISTEN   </span><br><span class="line">tcp    0   0 *:https           *:*             LISTEN   </span><br><span class="line">udp    0   0 *:32768           *:*                   </span><br><span class="line">udp    0   0 *:nfs            *:*                   </span><br><span class="line">udp    0   0 *:641            *:*                   </span><br><span class="line">udp    0   0 192.168.0.3:netbios-ns   *:*                   </span><br><span class="line">udp    0   0 *:netbios-ns        *:*                   </span><br><span class="line">udp    0   0 192.168.0.3:netbios-dgm   *:*                   </span><br><span class="line">udp    0   0 *:netbios-dgm        *:*                   </span><br><span class="line">udp    0   0 *:tftp           *:*                   </span><br><span class="line">udp    0   0 *:999            *:*                   </span><br><span class="line">udp    0   0 *:sunrpc          *:*                   </span><br><span class="line">udp    0   0 *:ipp            *:*                   </span><br><span class="line">udp    0   0 *:1022           *:*                   </span><br><span class="line">udp    0   0 *:638            *:*                   </span><br><span class="line">Active UNIX domain sockets (only servers)</span><br><span class="line">Proto RefCnt Flags    Type    State     I-Node Path</span><br><span class="line">unix 2   [ ACC ]   STREAM   LISTENING   10621 @/tmp/fam-root-</span><br><span class="line">unix 2   [ ACC ]   STREAM   LISTENING   7096  /var/run/acpid.socket</span><br><span class="line">unix 2   [ ACC ]   STREAM   LISTENING   9792  /tmp/.gdm_socket</span><br><span class="line">unix 2   [ ACC ]   STREAM   LISTENING   9927  /tmp/.X11-unix/X0</span><br><span class="line">unix 2   [ ACC ]   STREAM   LISTENING   10489 /tmp/ssh-lbUnUf4552/agent.4552</span><br><span class="line">unix 2   [ ACC ]   STREAM   LISTENING   10558 /tmp/ksocket-root/kdeinit__0</span><br><span class="line">unix 2   [ ACC ]   STREAM   LISTENING   10560 /tmp/ksocket-root/kdeinit-:0</span><br><span class="line">unix 2   [ ACC ]   STREAM   LISTENING   10570 /tmp/.ICE-unix/dcop4664-1270815442</span><br><span class="line">unix 2   [ ACC ]   STREAM   LISTENING   10843 /tmp/.ICE-unix/4735</span><br><span class="line">unix 2   [ ACC ]   STREAM   LISTENING   10591 /tmp/ksocket-root/klauncherah3arc.slave-socket</span><br><span class="line">unix 2   [ ACC ]   STREAM   LISTENING   7763  /var/run/iiim/.iiimp-unix/9010</span><br><span class="line">unix 2   [ ACC ]   STREAM   LISTENING   11047 /tmp/orbit-root/linc-1291-0-1e92c8082411</span><br><span class="line">unix 2   [ ACC ]   STREAM   LISTENING   11053 /tmp/orbit-root/linc-128e-0-dc070659cbb3</span><br><span class="line">unix 2   [ ACC ]   STREAM   LISTENING   8020  /var/run/dbus/system_bus_socket</span><br><span class="line">unix 2   [ ACC ]   STREAM   LISTENING   58927 /tmp/mcop-root/vm-dev-2c28-4beba75f</span><br><span class="line">unix 2   [ ACC ]   STREAM   LISTENING   7860  /tmp/.font-unix/fs7100</span><br><span class="line">unix 2   [ ACC ]   STREAM   LISTENING   7658  /dev/gpmctl</span><br><span class="line">unix 2   [ ACC ]   STREAM   LISTENING   10498 @/tmp/dbus-s2MLJGO5Ci</span><br></pre></td></tr></table></figure>
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/linux/">linux</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/netstat/">netstat</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络工具/">网络工具</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络管理/">网络管理</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+		
+<nav id="article-nav">
+  
+    <a href="/2015/07/19/TCP三次握手与Tcpdump抓包分析过程/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          TCP三次握手与Tcpdump抓包分析过程
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/07/13/Shell脚本及编程/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          Shell脚本及编程
+        
+      </div>
+    </a>
+  
+</nav>
+
+  	
+
+</article>
+
+
+
+
+
+
+</div>
+			<footer id="footer">
+				<h1 class="footer-blog-title">
+					<a href="/">Clear Sky</a>
+				</h1>
+				<span class="copyright">
+					&copy; 2018 CLEAR<br>
+					Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+					Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+				</span>
+			</footer>
+  		</div>
+  		
+
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bundle.js"></script>
+	</body>
+</html>

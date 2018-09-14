@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>http服务日志的统计分析 | Clear Sky</title>
+    <meta name="viewport" content="width=device-width">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Clear Sky" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4e55f04a49a285900817965cb4619021";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div class="mobile-nav-panel">
+        <i class="icon-reorder icon-large"></i>
+      </div>
+      <header id="header">
+        <h1 class="blog-title">
+          <a href="/">Clear Sky</a>
+        </h1>
+        <nav class="nav">
+          <ul>
+            <li><a href="/"><i class="fa fa-home fa-fw"></i>home</a></li>
+            <li><a href="/archives"><i class="fa fa-archive fa-fw"></i>archives</a></li>
+            <li><a href="/categories"><i class="fa fa-list fa-fw"></i>categories</a></li>
+            <li><a href="/tags"><i class="fa fa-tags fa-fw"></i>tags</a></li>
+            <li><a href="/search"><i class="fa fa-search fa-fw"></i>search</a></li>
+            <li><a href="/about"><i class="fa fa-user fa-fw"></i>about</a></li>
+            <li><a href="/atom.xml"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+          </ul>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.clearany.com"></form>
+        </div>
+      </header>
+<div id="main">
+	
+	<article id="post-http服务日志的统计分析" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2015-07-10T02:30:22.000Z" itemprop="datePublished">2015-07-10</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2015/07/10/http服务日志的统计分析/">http服务日志的统计分析</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+    		<h4 id="获得访问前10位的ip地址"><a href="#获得访问前10位的ip地址" class="headerlink" title="获得访问前10位的ip地址"></a>获得访问前10位的ip地址</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat access.log|awk <span class="string">'&#123;print $1&#125;'</span>|sort|uniq -c|sort -nr|head -10</span><br><span class="line">cat access.log|awk <span class="string">'&#123;counts[$(11)]+=1&#125;; END &#123;for(url in counts) print counts[url], url&#125;'</span></span><br></pre></td></tr></table></figure>
+<h4 id="访问次数最多的文件或页面-取前20"><a href="#访问次数最多的文件或页面-取前20" class="headerlink" title="访问次数最多的文件或页面,取前20"></a>访问次数最多的文件或页面,取前20</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat access.log|awk <span class="string">'&#123;print $11&#125;'</span>|sort|uniq -c|sort -nr|head -20</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h4 id="列出传输最大的几个exe文件-分析下载站的时候常用"><a href="#列出传输最大的几个exe文件-分析下载站的时候常用" class="headerlink" title="列出传输最大的几个exe文件(分析下载站的时候常用)"></a>列出传输最大的几个exe文件(分析下载站的时候常用)</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat access.log |awk <span class="string">'($7~/.exe/)&#123;print $10 " " $1 " " $4 " " $7&#125;'</span>|sort -nr|head -20</span><br></pre></td></tr></table></figure>
+<h4 id="列出输出大于200000byte-约200kb-的exe文件以及对应文件发生次数"><a href="#列出输出大于200000byte-约200kb-的exe文件以及对应文件发生次数" class="headerlink" title="列出输出大于200000byte(约200kb)的exe文件以及对应文件发生次数"></a>列出输出大于200000byte(约200kb)的exe文件以及对应文件发生次数</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat access.log |awk <span class="string">'($10 &gt; 200000 &amp;&amp; $7~/.exe/)&#123;print $7&#125;'</span>|sort -n|uniq -c|sort -nr|head -100</span><br></pre></td></tr></table></figure>
+<h4 id="如果日志最后一列记录的是页面文件传输时间，则有列出到客户端最耗时的页面"><a href="#如果日志最后一列记录的是页面文件传输时间，则有列出到客户端最耗时的页面" class="headerlink" title="如果日志最后一列记录的是页面文件传输时间，则有列出到客户端最耗时的页面"></a>如果日志最后一列记录的是页面文件传输时间，则有列出到客户端最耗时的页面</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat access.log |awk <span class="string">'($7~/.php/)&#123;print $NF " " $1 " " $4 " " $7&#125;'</span>|sort -nr|head -100</span><br></pre></td></tr></table></figure>
+<h4 id="列出最最耗时的页面-超过60秒的-的以及对应页面发生次数"><a href="#列出最最耗时的页面-超过60秒的-的以及对应页面发生次数" class="headerlink" title="列出最最耗时的页面(超过60秒的)的以及对应页面发生次数"></a>列出最最耗时的页面(超过60秒的)的以及对应页面发生次数</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat access.log |awk <span class="string">'($NF &gt; 60 &amp;&amp; $7~/.php/)&#123;print $7&#125;'</span>|sort -n|uniq -c|sort -nr|head -100</span><br></pre></td></tr></table></figure>
+<h4 id="列出传输时间超过30秒的文件"><a href="#列出传输时间超过30秒的文件" class="headerlink" title="列出传输时间超过30秒的文件"></a>列出传输时间超过30秒的文件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat access.log |awk <span class="string">'($NF &gt; 30)&#123;print $7&#125;'</span>|sort -n|uniq -c|sort -nr|head -20</span><br></pre></td></tr></table></figure>
+<h4 id="统计网站流量-G）"><a href="#统计网站流量-G）" class="headerlink" title="统计网站流量(G）"></a>统计网站流量(G）</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat access.log |awk <span class="string">'&#123;sum+=$10&#125; END &#123;print sum/1024/1024/1024&#125;'</span></span><br></pre></td></tr></table></figure>
+<h4 id="统计404的连接"><a href="#统计404的连接" class="headerlink" title="统计404的连接"></a>统计404的连接</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">'($9 ~/404/)'</span> access.log | awk <span class="string">'&#123;print $9,$7&#125;'</span> | sort</span><br></pre></td></tr></table></figure>
+<h4 id="统计http-status"><a href="#统计http-status" class="headerlink" title="统计http status"></a>统计http status</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat access.log |awk <span class="string">'&#123;counts[$(9)]+=1&#125;; END &#123;for(code in counts) print code, counts[code]&#125;'</span></span><br><span class="line">cat access.log |awk <span class="string">'&#123;print $9&#125;'</span>|sort|uniq -c|sort -rn</span><br></pre></td></tr></table></figure>
+<h4 id="蜘蛛分析，查看是哪些蜘蛛在抓取内容"><a href="#蜘蛛分析，查看是哪些蜘蛛在抓取内容" class="headerlink" title="蜘蛛分析，查看是哪些蜘蛛在抓取内容"></a>蜘蛛分析，查看是哪些蜘蛛在抓取内容</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/sbin/tcpdump -i eth0 -l -s 0 -w - dst port 80 | strings | grep -i user-agent | grep -i -E <span class="string">'bot|crawler|slurp|spider'</span></span><br></pre></td></tr></table></figure>
+<h4 id="网站日分析2-Squid篇-按域统计流量"><a href="#网站日分析2-Squid篇-按域统计流量" class="headerlink" title="网站日分析2(Squid篇)按域统计流量"></a>网站日分析2(Squid篇)按域统计流量</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zcat squid_access.log.tar.gz| awk <span class="string">'&#123;print $10,$7&#125;'</span> |awk <span class="string">'BEGIN&#123;FS="[ /]"&#125;&#123;trfc[$4]+=$1&#125;END&#123;for(domain in trfc)&#123;printf "%st%dn",domain,trfc[domain]&#125;&#125;'</span></span><br></pre></td></tr></table></figure>
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/linux/">linux</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/http/">http</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/日志分析/">日志分析</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/统计分析/">统计分析</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+		
+<nav id="article-nav">
+  
+    <a href="/2015/07/11/网络统计分析脚本/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          网络统计分析脚本
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/07/09/网络管理工具之route/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          网络管理工具之route
+        
+      </div>
+    </a>
+  
+</nav>
+
+  	
+
+</article>
+
+
+
+
+
+
+</div>
+			<footer id="footer">
+				<h1 class="footer-blog-title">
+					<a href="/">Clear Sky</a>
+				</h1>
+				<span class="copyright">
+					&copy; 2018 CLEAR<br>
+					Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+					Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+				</span>
+			</footer>
+  		</div>
+  		
+
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bundle.js"></script>
+	</body>
+</html>

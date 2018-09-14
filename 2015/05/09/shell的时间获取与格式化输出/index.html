@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>Shell的时间的获取与格式化输出 | Clear Sky</title>
+    <meta name="viewport" content="width=device-width">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Clear Sky" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4e55f04a49a285900817965cb4619021";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div class="mobile-nav-panel">
+        <i class="icon-reorder icon-large"></i>
+      </div>
+      <header id="header">
+        <h1 class="blog-title">
+          <a href="/">Clear Sky</a>
+        </h1>
+        <nav class="nav">
+          <ul>
+            <li><a href="/"><i class="fa fa-home fa-fw"></i>home</a></li>
+            <li><a href="/archives"><i class="fa fa-archive fa-fw"></i>archives</a></li>
+            <li><a href="/categories"><i class="fa fa-list fa-fw"></i>categories</a></li>
+            <li><a href="/tags"><i class="fa fa-tags fa-fw"></i>tags</a></li>
+            <li><a href="/search"><i class="fa fa-search fa-fw"></i>search</a></li>
+            <li><a href="/about"><i class="fa fa-user fa-fw"></i>about</a></li>
+            <li><a href="/atom.xml"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+          </ul>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.clearany.com"></form>
+        </div>
+      </header>
+<div id="main">
+	
+	<article id="post-shell的时间获取与格式化输出" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2015-05-09T03:18:27.000Z" itemprop="datePublished">2015-05-09</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2015/05/09/shell的时间获取与格式化输出/">Shell的时间的获取与格式化输出</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+    		<h4 id="获取当天日期"><a href="#获取当天日期" class="headerlink" title="获取当天日期"></a>获取当天日期</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">date +%Y-%m-%d</span><br><span class="line"><span class="comment">#输出： 2011-07-28</span></span><br></pre></td></tr></table></figure>
+<h4 id="将当前日期赋值给DATE变量"><a href="#将当前日期赋值给DATE变量" class="headerlink" title="将当前日期赋值给DATE变量"></a>将当前日期赋值给DATE变量</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DATE=$(date +%Y%m%d)</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h4 id="使用今天之前或者往后的日期"><a href="#使用今天之前或者往后的日期" class="headerlink" title="使用今天之前或者往后的日期"></a>使用今天之前或者往后的日期</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#获取明天的日期</span></span><br><span class="line">date -d next-day +%Y%m%d</span><br><span class="line"><span class="comment">#获取昨天的日期</span></span><br><span class="line">date -d last-day +%Y%m%d</span><br><span class="line"><span class="comment">#获取上个月的年和月</span></span><br><span class="line">date -d last-month +%Y%m</span><br><span class="line"><span class="comment">#获取下个月的年和月</span></span><br><span class="line">date -d next-month +%Y%m</span><br><span class="line"><span class="comment">#获取明年的年份</span></span><br><span class="line">date -d next-year +%Y</span><br><span class="line"><span class="comment">#获取7天前</span></span><br><span class="line">data -d <span class="string">"7 days ago"</span> +%Y%m%d</span><br></pre></td></tr></table></figure>
+<h4 id="格式化详细说明"><a href="#格式化详细说明" class="headerlink" title="格式化详细说明"></a>格式化详细说明</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#date 能用来显示或设定系统的日期和时间，在显示方面，使用者能设定欲显示的格式，格式设定为一个加号后接数个标记，其中可用的标记列表如下 : </span></span><br><span class="line"></span><br><span class="line"><span class="comment">#时间方面 : </span></span><br><span class="line">% : 印出 </span><br><span class="line">% %n : 下一行 </span><br><span class="line">%t : 跳格 </span><br><span class="line">%H : 小时(00..23) </span><br><span class="line">%I : 小时(01..12) </span><br><span class="line">%k : 小时(0..23) </span><br><span class="line">%l : 小时(1..12) </span><br><span class="line">%M : 分钟(00..59) </span><br><span class="line">%p : 显示本地 AM 或 PM </span><br><span class="line">%r : 直接显示时间 (12 小时制，格式为 hh:mm:ss [AP]M) </span><br><span class="line">%s : 从 1970 年 1 月 1 日 00:00:00 UTC 到目前为止的秒数 %S : 秒(00..61) </span><br><span class="line">%T : 直接显示时间 (24 小时制) </span><br><span class="line">%X : 相当于 %H:%M:%S </span><br><span class="line">%Z : 显示时区 </span><br><span class="line"></span><br><span class="line"><span class="comment">#日期方面 : </span></span><br><span class="line">%a : 星期几 (Sun..Sat) </span><br><span class="line">%A : 星期几 (Sunday..Saturday) </span><br><span class="line">%b : 月份 (Jan..Dec) </span><br><span class="line">%B : 月份 (January..December) </span><br><span class="line">%c : 直接显示日期和时间 </span><br><span class="line">%d : 日 (01..31) </span><br><span class="line">%D : 直接显示日期 (mm/dd/yy) </span><br><span class="line">%h : 同 %b </span><br><span class="line">%j : 一年中的第几天 (001..366) </span><br><span class="line">%m : 月份 (01..12) </span><br><span class="line">%U : 一年中的第几周 (00..53) (以 Sunday 为一周的第一天的情形) </span><br><span class="line">%w : 一周中的第几天 (0..6) </span><br><span class="line">%W : 一年中的第几周 (00..53) (以 Monday 为一周的第一天的情形) </span><br><span class="line">%x : 直接显示日期 (mm/dd/yy) </span><br><span class="line">%y : 年份的最后两位数字 (00.99) </span><br><span class="line">%Y : 完整年份 (0000..9999) </span><br><span class="line"></span><br><span class="line"><span class="comment">#若是不以加号作为开头，则表示要设定时间，而时间格式为 MMDDhhmm[[CC]YY][.ss]， </span></span><br><span class="line"><span class="comment">#其中 MM 为月份， </span></span><br><span class="line">DD 为日， </span><br><span class="line">hh 为小时， </span><br><span class="line">mm 为分钟， </span><br><span class="line">CC 为年份前两位数字， </span><br><span class="line">YY 为年份后两位数字， </span><br><span class="line">ss 为秒数 </span><br><span class="line"></span><br><span class="line"><span class="comment">#把计 : </span></span><br><span class="line">-d datestr : 显示 datestr 中所设定的时间 (非系统时间) </span><br><span class="line">--<span class="built_in">help</span> : 显示辅助讯息 </span><br><span class="line">-s datestr : 将系统时间设为 datestr 中所设定的时间 </span><br><span class="line">-u : 显示目前的格林威治时间 </span><br><span class="line">--version : 显示版本编号 </span><br><span class="line"></span><br><span class="line"><span class="comment">#例子 : </span></span><br><span class="line"><span class="comment">#显示时间后跳行，再显示目前日期 : </span></span><br><span class="line">date +%T%n%D </span><br><span class="line"><span class="comment">#显示月份和日数 : </span></span><br><span class="line">date +%B %d </span><br><span class="line"><span class="comment">#显示日期和设定时间(12:34:56) : </span></span><br><span class="line">date --date 12:34:56 </span><br><span class="line"><span class="comment">#设置系统当前时间（12:34:56）：</span></span><br><span class="line">date --s 12:34:56 </span><br><span class="line"><span class="comment">#注意 : 当你不希望出现无意义的 0 时(比如说 1999/03/07)，则能在标记中插入 - 符号，比如说 date +%-H:%-M:%-S 会把时分秒中无意义的 0 给去掉，像是原本的 08:09:04 会变为 8:9:4。另外，只有取得权限者(比如说 root)才能设定系统时间。 当你以 root 身分更改了系统时间之后，请记得以 clock -w 来将系统时间写入 CMOS 中，这样下次重新开机时系统时间才会持续抱持最新的正确值。 </span></span><br><span class="line"></span><br><span class="line"><span class="comment">#ntp时间同步 </span></span><br><span class="line"><span class="comment">#linux系统下默认安装了ntp服务，手动进行ntp同步如下 </span></span><br><span class="line">ntpdate ntp1.nl.net </span><br><span class="line"><span class="comment">#当然，也能指定其他的ntp服务器</span></span><br></pre></td></tr></table></figure>
+
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/linux/">linux</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/">shell</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+		
+<nav id="article-nav">
+  
+    <a href="/2015/05/09/windows下ddos攻击的现象分析及解决方案/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          windows下ddos攻击的现象分析及解决方案
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/05/09/shell 常用的操作技巧/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          shell 常用的操作技巧
+        
+      </div>
+    </a>
+  
+</nav>
+
+  	
+
+</article>
+
+
+
+
+
+
+</div>
+			<footer id="footer">
+				<h1 class="footer-blog-title">
+					<a href="/">Clear Sky</a>
+				</h1>
+				<span class="copyright">
+					&copy; 2018 CLEAR<br>
+					Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+					Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+				</span>
+			</footer>
+  		</div>
+  		
+
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bundle.js"></script>
+	</body>
+</html>

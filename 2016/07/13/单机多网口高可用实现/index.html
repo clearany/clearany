@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>单机多网口高可用实现 | Clear Sky</title>
+    <meta name="viewport" content="width=device-width">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Clear Sky" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4e55f04a49a285900817965cb4619021";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div class="mobile-nav-panel">
+        <i class="icon-reorder icon-large"></i>
+      </div>
+      <header id="header">
+        <h1 class="blog-title">
+          <a href="/">Clear Sky</a>
+        </h1>
+        <nav class="nav">
+          <ul>
+            <li><a href="/"><i class="fa fa-home fa-fw"></i>home</a></li>
+            <li><a href="/archives"><i class="fa fa-archive fa-fw"></i>archives</a></li>
+            <li><a href="/categories"><i class="fa fa-list fa-fw"></i>categories</a></li>
+            <li><a href="/tags"><i class="fa fa-tags fa-fw"></i>tags</a></li>
+            <li><a href="/search"><i class="fa fa-search fa-fw"></i>search</a></li>
+            <li><a href="/about"><i class="fa fa-user fa-fw"></i>about</a></li>
+            <li><a href="/atom.xml"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+          </ul>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.clearany.com"></form>
+        </div>
+      </header>
+<div id="main">
+	
+	<article id="post-单机多网口高可用实现" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2016-07-13T05:16:20.000Z" itemprop="datePublished">2016-07-13</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2016/07/13/单机多网口高可用实现/">单机多网口高可用实现</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+    		<h4 id="查看内核是否支持bonding模块"><a href="#查看内核是否支持bonding模块" class="headerlink" title="查看内核是否支持bonding模块"></a>查看内核是否支持bonding模块</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@mfsmaster ~]<span class="comment"># cat /boot/config-2.6.32-358.el6.x86_64 |grep -i bonding</span></span><br><span class="line">CONFIG_BONDING=m</span><br></pre></td></tr></table></figure>
+<h4 id="创建虚拟网口定义文件"><a href="#创建虚拟网口定义文件" class="headerlink" title="创建虚拟网口定义文件"></a>创建虚拟网口定义文件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/sysconfig/network-scripts/ifcfg-bond0</span><br><span class="line">DEVICE=<span class="string">"bond0"</span></span><br><span class="line">BOOTPROTO=<span class="string">"static"</span></span><br><span class="line">IPV6INIT=<span class="string">"no"</span></span><br><span class="line">IPADDR=172.26.1.1</span><br><span class="line">NETMASK=255.255.255.0</span><br><span class="line">GATEWAY=172.26.1.254</span><br><span class="line">DNS1=114.114.114.114</span><br><span class="line">DNS2=211.136.20.203</span><br><span class="line">MTU=<span class="string">"1500"</span></span><br><span class="line">NM_CONTROLLED=<span class="string">"yes"</span></span><br><span class="line">ONBOOT=<span class="string">"yes"</span></span><br><span class="line">TYPE=<span class="string">"Ethernet"</span></span><br><span class="line">USERCTL=<span class="string">"no"</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h4 id="修改要绑定的物理网口定义文件"><a href="#修改要绑定的物理网口定义文件" class="headerlink" title="修改要绑定的物理网口定义文件"></a>修改要绑定的物理网口定义文件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/sysconfig/network-scripts/ifcfg-eth0</span><br><span class="line">DEVICE=eth0</span><br><span class="line">BOOTPROTO=none</span><br><span class="line">ONBOOT=yes</span><br><span class="line">USERCTL=no</span><br><span class="line">MASTER=bond0</span><br><span class="line">SLAVE=yes</span><br><span class="line"></span><br><span class="line">cat /etc/sysconfig/network-scripts/ifcfg-eth1</span><br><span class="line">DEVICE=eth1</span><br><span class="line">BOOTPROTO=none</span><br><span class="line">ONBOOT=yes</span><br><span class="line">USERCTL=no</span><br><span class="line">MASTER=bond0</span><br><span class="line">SLAVE=yes</span><br></pre></td></tr></table></figure>
+<h4 id="创建bonding-conf文件"><a href="#创建bonding-conf文件" class="headerlink" title="创建bonding.conf文件"></a>创建bonding.conf文件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cat　/etc/modprobe.d／bonding.conf</span><br><span class="line"><span class="built_in">alias</span> bond0 bonding</span><br><span class="line">options bond0 miimon=100 mode=1</span><br><span class="line"></span><br><span class="line">＃重启网络服务，完成</span><br><span class="line">service network restart</span><br></pre></td></tr></table></figure>
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/linux/">linux</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网卡绑定/">网卡绑定</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/高可用/">高可用</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+		
+<nav id="article-nav">
+  
+    <a href="/2016/10/09/Docker简介/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Docker简介
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/07/12/Firewalld的应用/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          Firewalld的应用
+        
+      </div>
+    </a>
+  
+</nav>
+
+  	
+
+</article>
+
+
+
+
+
+
+</div>
+			<footer id="footer">
+				<h1 class="footer-blog-title">
+					<a href="/">Clear Sky</a>
+				</h1>
+				<span class="copyright">
+					&copy; 2018 CLEAR<br>
+					Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+					Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+				</span>
+			</footer>
+  		</div>
+  		
+
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bundle.js"></script>
+	</body>
+</html>

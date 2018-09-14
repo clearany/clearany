@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>DDOS原理概述及其防御 | Clear Sky</title>
+    <meta name="viewport" content="width=device-width">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Clear Sky" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4e55f04a49a285900817965cb4619021";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div class="mobile-nav-panel">
+        <i class="icon-reorder icon-large"></i>
+      </div>
+      <header id="header">
+        <h1 class="blog-title">
+          <a href="/">Clear Sky</a>
+        </h1>
+        <nav class="nav">
+          <ul>
+            <li><a href="/"><i class="fa fa-home fa-fw"></i>home</a></li>
+            <li><a href="/archives"><i class="fa fa-archive fa-fw"></i>archives</a></li>
+            <li><a href="/categories"><i class="fa fa-list fa-fw"></i>categories</a></li>
+            <li><a href="/tags"><i class="fa fa-tags fa-fw"></i>tags</a></li>
+            <li><a href="/search"><i class="fa fa-search fa-fw"></i>search</a></li>
+            <li><a href="/about"><i class="fa fa-user fa-fw"></i>about</a></li>
+            <li><a href="/atom.xml"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+          </ul>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.clearany.com"></form>
+        </div>
+      </header>
+<div id="main">
+	
+	<article id="post-DDOS原理概述及其防御" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2015-04-16T05:42:27.000Z" itemprop="datePublished">2015-04-16</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2015/04/16/DDOS原理概述及其防御/">DDOS原理概述及其防御</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+    		<h4 id="拒绝服务攻击概述"><a href="#拒绝服务攻击概述" class="headerlink" title="拒绝服务攻击概述"></a>拒绝服务攻击概述</h4><p>DoS（Denial of Service,拒绝服务）攻击<br>广义而言，凡是利用网络安全防护措施不足导致用户不能或不敢继续使用正常服务的攻击手段，都称之为拒绝服务攻击。其目的是通过消耗网络带宽或系统资源，使网络或计算机不能提供正常的服务。<br>DDoS（Distributed Denial of Service, DDoS）<br>指攻击者通过控制在网络各处的数百甚至数千傀儡主机（又称为肉鸡），发动它们同时向目标进行拒绝服务攻击。</p>
+<h4 id="拒绝服务攻击原理"><a href="#拒绝服务攻击原理" class="headerlink" title="拒绝服务攻击原理"></a>拒绝服务攻击原理</h4><p>DDoS攻击原理<br>借助客户/服务器技术，将多个计算机联合起来作为攻击平台，对一个或多个目标发动DoS攻击。<br><a id="more"></a><br><img src="http://111.230.96.161/server/../Public/Uploads/2018-05-24/5b062804bac3e.png" alt=""></p>
+<h4 id="拒绝服务攻击手段"><a href="#拒绝服务攻击手段" class="headerlink" title="拒绝服务攻击手段"></a>拒绝服务攻击手段</h4><pre><code>死亡之ping(ping of death)
+如ping –l65535 192.168.1.1
+  系统会提示Badvalue for option –l, valid range is from 0 to 65500
+现在绝大多数操作系统进行了漏洞修补。
+中美黑客大战用过，8万人对美国白宫官方网站使用ping
+</code></pre><h4 id="SYN泛洪-SYNflood"><a href="#SYN泛洪-SYNflood" class="headerlink" title="SYN泛洪(SYNflood)"></a>SYN泛洪(SYNflood)</h4><pre><code>专门针对TCP的3次握手过程中两台主机间初始化连接握手进行攻击。
+攻击方利用虚假源地址向服务器发送TCP连接请求，服务器回复SYN+ACK数据包。由于发送请求的源地址是假地址，服务器不会得到确认，服务器一般会重试发送SYN+ACK，并等待一段时间（大约30秒-2分钟）后丢弃这个连接，在等待的时间内服务器处于半连接状态，会消耗调资源。当大量的虚假SYN请求到来，会占用服务器的大量资源从而使得目标主机不能向正常请求提供服务。
+</code></pre><h4 id="UDP泛洪"><a href="#UDP泛洪" class="headerlink" title="UDP泛洪"></a>UDP泛洪</h4><pre><code>攻击者发送大量伪造源IP地址的小UDP数据包。只要用户开一个UDP端口提供相关服务，就可以针对该服务进行攻击。
+</code></pre><h4 id="Land攻击"><a href="#Land攻击" class="headerlink" title="Land攻击"></a>Land攻击</h4><pre><code>由黑客组织Rootshell发现的，攻击目标是TCP三次握手。
+利用一个特别打造的SYN包--它的原地址和目标地址（相同）都被设置成某一个服务器地址进行攻击。这将导致接受服务器向它自己的地址发送SYN+ACK消息，结果这个地址又发回ACK消息并创建一个空连接，每一个这样的连接都将保留直到超时，在Land攻击下，许多UNIX将崩溃，NT变得极其缓慢（大约持续五分钟）。
+</code></pre><h4 id="Smurf攻击"><a href="#Smurf攻击" class="headerlink" title="Smurf攻击"></a>Smurf攻击</h4><pre><code>攻击者向一个子网的广播地址发送一个带有特定请求（如ping ）的包，并且将源地址伪装成要攻击的主机地址。子网上所有主机都回应广播包的请求，向被攻击主机发送应答，使得网络的带宽下降，严重情况会导致受害主机崩溃。
+</code></pre><p>实施：ping请求 源地址：受害方，目的地址：广播地址</p>
+<h4 id="SYN变种攻击"><a href="#SYN变种攻击" class="headerlink" title="SYN变种攻击"></a>SYN变种攻击</h4><pre><code>发送伪造源IP的SYN数据包，但数据报不是64字节而是上千字节，这种攻击造成防火墙错误锁死，消耗服务器资源，阻塞网络。
+</code></pre><h4 id="TCP混乱数据包攻击"><a href="#TCP混乱数据包攻击" class="headerlink" title="TCP混乱数据包攻击"></a>TCP混乱数据包攻击</h4><pre><code>发送伪造源IP的TCP数据包，TCP头部的TCPFlags部分混乱（如syn,ack,syn+ack,syn+rst），会造成防火墙错误锁死，消耗服务器资源，阻塞网络
+</code></pre><h4 id="泪滴攻击（分片攻击）"><a href="#泪滴攻击（分片攻击）" class="headerlink" title="泪滴攻击（分片攻击）"></a>泪滴攻击（分片攻击）</h4><pre><code>泪滴（Teardrop）攻击是利用TCP/IP协议的漏洞进行DoS攻击的方式。
+攻击者向目的主机发送有重叠偏移量的伪造IP分片数据包，目的主机在重组含有偏移量重叠的数据包时会引起协议栈崩溃。
+</code></pre><h4 id="IP欺骗DoS"><a href="#IP欺骗DoS" class="headerlink" title="IP欺骗DoS"></a>IP欺骗DoS</h4><pre><code>攻击者向目的主机发送大量伪造源IP地址（合法用户，已经建立连接）、RST置位的数据包，致使目的主机清空已经建好的连接，从而实现DoS。
+</code></pre><h4 id="针对Web-Server的多连接攻击"><a href="#针对Web-Server的多连接攻击" class="headerlink" title="针对Web Server的多连接攻击"></a>针对Web Server的多连接攻击</h4><pre><code>通过控制大量“肉鸡”同时访问某网站，造成网站无法正常处理请求而瘫痪。
+</code></pre><h4 id="针对Web-Server的变种攻击"><a href="#针对Web-Server的变种攻击" class="headerlink" title="针对Web Server的变种攻击"></a>针对Web Server的变种攻击</h4><pre><code>通过控制大量“肉鸡”同时连接网站，不发送GET请求而是发送乱七八糟的字符，绕过防火墙的检测，造成服务器瘫痪。
+</code></pre><h4 id="拒绝服务攻击的防范"><a href="#拒绝服务攻击的防范" class="headerlink" title="拒绝服务攻击的防范"></a>拒绝服务攻击的防范</h4><pre><code>DoS特征：
+攻击流量的目的地过于集中，且无拥塞控制特性。
+DoS攻击流量不会考虑网络拥塞，攻击流量持续不断，出现网络拥塞仍然大量发包，大量无用的数据包加剧网络拥塞，数据包中的源地址一般为伪造。
+TCP/UDP流量流向目的端口太多或者目的端口过于集中。
+用随机端口攻击目标机，会出现同时向目标机的数千端口发送数据包；用固定端口攻击目标机，会出现同时向目标机的单一端口发送大量数据包。
+
+DoS检测：
+基于流量大小的检测
+在被保护网络边界（如边界路由器）上部署流量检测算法，根据流量的突发变化检测DoS/DDoS攻击的发生。
+基于源IP地址的检测
+在被保护网络的边界路由器上部署源IP检测算法，根据源IP个数的变化来判断DoS/DDoS攻击的发生。正常情况下，一个新的时间段的心IP地址基本呈均匀分布。
+基于包属性的检测
+在DoS攻击时，攻击数据包破坏了正常网络状况下进出数据包在IP数据包头字段的统计学稳定性，因此可以采用一定的算法在正常情况下进行包属性字段的学习，从而有效地判断进出数据包的危险度，进而检测DoS/DDoS攻击。
+
+
+DoS防范：
+增强系统自身的防御能力，防止僵死程序的植入
+关闭不必要的服务和端口
+及时更新系统补丁
+安装查杀病毒的软硬件产品，及时更新病毒库
+设置复杂口令，降低系统被控制的可能性
+经常检测网络和主机的脆弱性，查看网上漏洞数据库，以减少或避免主机成为“肉鸡”的可能性
+重要Web服务器，为一个域建立多个镜像实现负载均衡，在一定程度上减轻DDoS攻击的危害
+</code></pre>
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/网络安全/">网络安全</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ddos/">ddos</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dos/">dos</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/攻击/">攻击</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+		
+<nav id="article-nav">
+  
+    <a href="/2015/04/16/DOS与DDOS攻击的原理/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          DOS与DDOS攻击的原理
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/04/16/DDoS攻击、CC攻击的攻击方式和防御方法/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          DDoS攻击、CC攻击的攻击方式和防御方法
+        
+      </div>
+    </a>
+  
+</nav>
+
+  	
+
+</article>
+
+
+
+
+
+
+</div>
+			<footer id="footer">
+				<h1 class="footer-blog-title">
+					<a href="/">Clear Sky</a>
+				</h1>
+				<span class="copyright">
+					&copy; 2018 CLEAR<br>
+					Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+					Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+				</span>
+			</footer>
+  		</div>
+  		
+
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bundle.js"></script>
+	</body>
+</html>

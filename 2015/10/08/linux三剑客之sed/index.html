@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>linux三剑客之sed | Clear Sky</title>
+    <meta name="viewport" content="width=device-width">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Clear Sky" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4e55f04a49a285900817965cb4619021";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div class="mobile-nav-panel">
+        <i class="icon-reorder icon-large"></i>
+      </div>
+      <header id="header">
+        <h1 class="blog-title">
+          <a href="/">Clear Sky</a>
+        </h1>
+        <nav class="nav">
+          <ul>
+            <li><a href="/"><i class="fa fa-home fa-fw"></i>home</a></li>
+            <li><a href="/archives"><i class="fa fa-archive fa-fw"></i>archives</a></li>
+            <li><a href="/categories"><i class="fa fa-list fa-fw"></i>categories</a></li>
+            <li><a href="/tags"><i class="fa fa-tags fa-fw"></i>tags</a></li>
+            <li><a href="/search"><i class="fa fa-search fa-fw"></i>search</a></li>
+            <li><a href="/about"><i class="fa fa-user fa-fw"></i>about</a></li>
+            <li><a href="/atom.xml"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+          </ul>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.clearany.com"></form>
+        </div>
+      </header>
+<div id="main">
+	
+	<article id="post-linux三剑客之sed" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2015-10-08T12:50:17.000Z" itemprop="datePublished">2015-10-08</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2015/10/08/linux三剑客之sed/">linux三剑客之sed</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+    		<h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><pre><code>sed是一个很好的文件处理工具，本身是一个管道命令，主要是以行为单位进行处理，可以将数据行进行替换、删除、新增、选取等特定工作，下面先了解一下sed的用法
+</code></pre><h4 id="sed命令行格式为："><a href="#sed命令行格式为：" class="headerlink" title="sed命令行格式为："></a>sed命令行格式为：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sed [ 选项 ] ‘editing <span class="built_in">command</span>’ [file ...] </span><br><span class="line">sed [ -f ] filename ... [file ...]</span><br></pre></td></tr></table></figure>
+<h4 id="常用选项："><a href="#常用选项：" class="headerlink" title="常用选项："></a>常用选项：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-n∶使用安静(silent)模式。在一般 sed 的用法中，所有来自 STDIN的资料一般都会被列出到萤幕上。但如果加上 -n 参数后，则只有经过sed 特殊处理的那一行(或者动作)才会被列出来。</span><br><span class="line">-e∶直接在指令列模式上进行 sed 的动作编辑；</span><br><span class="line">-f∶直接将 sed 的动作写在一个档案内， -f filename 则可以执行 filename 内的sed 动作；</span><br><span class="line">-r∶sed 的动作支援的是延伸型正规表示法的语法。(预设是基础正规表示法语法)</span><br><span class="line">-i∶直接修改读取的档案内容，而不是由萤幕输出。</span><br></pre></td></tr></table></figure>
+ <a id="more"></a>
+<h4 id="常用命令："><a href="#常用命令：" class="headerlink" title="常用命令："></a>常用命令：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">a ∶新增， a 的后面可以接字符串，而这些字符串会在目前的下一行出现。 </span><br><span class="line">c ∶取代， c 的后面可以接字符串，这些字符串可以取代 n1,n2 之间的行。 </span><br><span class="line">d ∶删除，后面不接任何东西； </span><br><span class="line">i ∶插入， 与a只有一点不同，增加的字符串会在目前的上一行出现； </span><br><span class="line">p ∶列印，亦即将某个选择的资料印出。在使用p的时候一般会加上-n参数。 </span><br><span class="line">s ∶取代，可以直接进行取代的工作。</span><br></pre></td></tr></table></figure>
+<h4 id="用例"><a href="#用例" class="headerlink" title="用例"></a>用例</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#a∶新增， a 的后面可以接字符串，而这些字符串会在目前的下一行出现。</span></span><br><span class="line"><span class="comment">#增加一行或多行字符串</span></span><br><span class="line">cat filename</span><br><span class="line">Hello!</span><br><span class="line">world!</span><br><span class="line"> end</span><br><span class="line"><span class="comment">#第一行后增加字符串"people"</span></span><br><span class="line">sed <span class="string">'1a people'</span> filename  </span><br><span class="line">Hello!</span><br><span class="line">people</span><br><span class="line">world! </span><br><span class="line">end</span><br><span class="line"><span class="comment">#第一行到第三行后增加字符串"people"</span></span><br><span class="line">sed <span class="string">'1,3a people'</span> filename </span><br><span class="line">Hello!</span><br><span class="line">people</span><br><span class="line">world!</span><br><span class="line">people</span><br><span class="line">end</span><br><span class="line">people</span><br><span class="line"><span class="comment">#插入</span></span><br><span class="line"><span class="comment">#在文件filename中最后一行直接输入"bye"</span></span><br><span class="line">sed -i <span class="string">'$a bye'</span> filename         </span><br><span class="line">cat filename</span><br><span class="line">Hello!</span><br><span class="line">world!</span><br><span class="line">end</span><br><span class="line"><span class="built_in">bye</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#i ∶插入， 与a只有一点不同，增加的字符串会在目前的上一行出现；</span></span><br><span class="line">sed <span class="string">'1i people\nperson'</span> filename   第一行前增加多行，使用换行符\n</span><br><span class="line">people</span><br><span class="line">person</span><br><span class="line">Hello!</span><br><span class="line">world!</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#c∶取代， c 的后面可以接字符串，这些字符串可以取代 n1,n2 之间的行。</span></span><br><span class="line"><span class="comment">#代替一行或多行</span></span><br><span class="line"><span class="comment">#第一行代替为Hi</span></span><br><span class="line"> sed <span class="string">'1c Hi'</span> filename</span><br><span class="line">Hi</span><br><span class="line">world!</span><br><span class="line">end</span><br><span class="line"><span class="comment">#第一行到第二行代替为Hi</span></span><br><span class="line">sed <span class="string">'1,2c Hi'</span> filename</span><br><span class="line">Hi</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#d∶删除，后面不接任何东西；</span></span><br><span class="line"><span class="comment">#删除某行</span></span><br><span class="line"><span class="comment">#删除第一行</span></span><br><span class="line">sed <span class="string">'1d'</span> filename</span><br><span class="line"><span class="comment">#删除最后一行</span></span><br><span class="line">sed <span class="string">'$ d'</span> filename</span><br><span class="line"><span class="comment">#删除第一行到第二行</span></span><br><span class="line">sed <span class="string">'1,2d'</span> filename</span><br><span class="line"><span class="comment">#删除第二行到最后一行</span></span><br><span class="line">sed <span class="string">'2,$ d'</span> filename</span><br><span class="line"><span class="comment">#若匹配字符串是变量，则需要""</span></span><br><span class="line">sed -i <span class="string">'/匹配字符串/d'</span>  filename</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#p∶列印，亦即将某个选择的资料印出。在使用p的时候一般会加上-n参数。</span></span><br><span class="line"><span class="comment">#显示某行</span></span><br><span class="line"><span class="comment">#显示第一行</span></span><br><span class="line">sed -n <span class="string">'1p'</span> filename</span><br><span class="line"><span class="comment">#显示最后一行</span></span><br><span class="line">sed -n <span class="string">'$ p'</span> filename</span><br><span class="line"><span class="comment">#显示第一行到第二行</span></span><br><span class="line">sed -n <span class="string">'1,2p'</span> filename</span><br><span class="line"><span class="comment">#显示第二行到最后一行</span></span><br><span class="line">sed -n <span class="string">'2,$ p'</span> filename</span><br><span class="line"><span class="comment">#使用模式进行查询</span></span><br><span class="line"><span class="comment">#查询包括关键字world所在所有行</span></span><br><span class="line">sed -n <span class="string">'/world/p'</span> filename</span><br><span class="line"><span class="comment">#查询包括关键字$ 所在所有行，使用反斜线\屏蔽特殊含义</span></span><br><span class="line">sed -n <span class="string">'/\$ /p'</span> filename</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#s ∶取代，可以直接进行取代的工作。</span></span><br><span class="line"><span class="comment">#替换一行中的某部分</span></span><br><span class="line"><span class="comment">#格式：sed 's/要替换的字符串/新的字符串/g'   （要替换的字符串可以用正则表达式）</span></span><br><span class="line">sed -n <span class="string">'/world/p'</span> filename | sed <span class="string">'s/world/me/g'</span>    替换world为me</span><br><span class="line">sed -n <span class="string">'/world/p'</span> filename | sed <span class="string">'s/world//g'</span>        删除world</span><br><span class="line"><span class="comment">#替换匹配行中的某个字符串</span></span><br><span class="line">sed -i <span class="string">'/匹配字符串/s/替换源字符串/替换目标字符串/g'</span> filename</span><br></pre></td></tr></table></figure>
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/linux/">linux</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sed/">sed</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/三剑客/">三剑客</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+		
+<nav id="article-nav">
+  
+    <a href="/2015/10/08/linux三剑客之grep/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          linux三剑客之grep
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/10/08/linux三剑客之awk/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          linux三剑客之awk
+        
+      </div>
+    </a>
+  
+</nav>
+
+  	
+
+</article>
+
+
+
+
+
+
+</div>
+			<footer id="footer">
+				<h1 class="footer-blog-title">
+					<a href="/">Clear Sky</a>
+				</h1>
+				<span class="copyright">
+					&copy; 2018 CLEAR<br>
+					Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+					Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+				</span>
+			</footer>
+  		</div>
+  		
+
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bundle.js"></script>
+	</body>
+</html>

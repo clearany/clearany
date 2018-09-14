@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>Redis集群模式(codis) | Clear Sky</title>
+    <meta name="viewport" content="width=device-width">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Clear Sky" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/favicon.png">
+    
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4e55f04a49a285900817965cb4619021";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div class="mobile-nav-panel">
+        <i class="icon-reorder icon-large"></i>
+      </div>
+      <header id="header">
+        <h1 class="blog-title">
+          <a href="/">Clear Sky</a>
+        </h1>
+        <nav class="nav">
+          <ul>
+            <li><a href="/"><i class="fa fa-home fa-fw"></i>home</a></li>
+            <li><a href="/archives"><i class="fa fa-archive fa-fw"></i>archives</a></li>
+            <li><a href="/categories"><i class="fa fa-list fa-fw"></i>categories</a></li>
+            <li><a href="/tags"><i class="fa fa-tags fa-fw"></i>tags</a></li>
+            <li><a href="/search"><i class="fa fa-search fa-fw"></i>search</a></li>
+            <li><a href="/about"><i class="fa fa-user fa-fw"></i>about</a></li>
+            <li><a href="/atom.xml"><i class="fa fa-rss fa-fw"></i>rss</a></li>
+          </ul>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.clearany.com"></form>
+        </div>
+      </header>
+<div id="main">
+	
+	<article id="post-Redis集群模式(codis)" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			Pubulished： <time datetime="2016-05-16T02:27:11.000Z" itemprop="datePublished">2016-05-16</time>
+		</span>
+
+		<span class="meta-elements author">
+			Author：CLEAR
+		</span>
+
+		<span class="meta-elements author">
+			Views：123
+		</span>
+
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+
+	
+	<header class="entry-header">
+		
+  <a class="post-title" href="/2016/05/16/Redis集群模式(codis)/">Redis集群模式(codis)</a>
+
+	</header>
+
+	<div class="entry-content">
+		
+    		<h4 id="总体架构"><a href="#总体架构" class="headerlink" title="总体架构"></a>总体架构</h4><p><img src="http://www.machunpeng.cn/server/../Public/Uploads/2018-04-14/5ad1ab9e988ff.png" alt=""><br><a id="more"></a></p>
+<h4 id="Codis-3-x-由以下组件组成"><a href="#Codis-3-x-由以下组件组成" class="headerlink" title="Codis 3.x 由以下组件组成"></a>Codis 3.x 由以下组件组成</h4><pre><code>1.Codis Server：基于 redis-3.2.8 分支开发。增加了额外的数据结构，以支持 slot 有关的操作以及数据迁移指令。具体的修改可以参考文档 redis 的修改。
+2.Codis Proxy：客户端连接的 Redis 代理服务, 实现了 Redis 协议。 除部分命令不支持以外(不支持的命令列表)，表现的和原生的 Redis 没有区别（就像 Twemproxy）。 对于同一个业务集群而言，可以同时部署多个 codis-proxy 实例；不同 codis-proxy 之间由 codis-dashboard 保证状态同步。
+3.Redis sentinel：Redis官方推荐的高可用性(HA)解决方案。它可以实现对Redis的监控、通知、自动故障转移。如果Master不能工作，则会自动启动故障转移进程，将其中的一个Slave提升为Master，其他的Slave重新设置新的Master服务。
+4.Codis Dashboard：集群管理工具，支持 codis-proxy、codis-server 的添加、删除，以及据迁移等操作。在集群状态发生改变时，codis-dashboard 维护集群下所有 codis-proxy 的状态的一致性。 对于同一个业务集群而言，同一个时刻 codis-dashboard 只能有 0个或者1个；所有对集群的修改都必须通过 codis-dashboard 完成。
+5.Codis Admin：集群管理的命令行工具。 可用于控制 codis-proxy、codis-dashboard 状态以及访问外部存储。
+6.Codis FE：集群管理界面。 多个集群实例共享可以共享同一个前端展示页面； 通过配置文件管理后端codis-dashboard列表，配置文件可自动更新。
+7.Storage：为集群状态提供外部存储。 提供namespace概念，不同集群的会按照不同product name进行组织； 目前仅提供了zookeeper、etcd、filesystem三种实现，但是提供了抽象的 interface 可自行扩展。
+</code></pre><h4 id="部署规划"><a href="#部署规划" class="headerlink" title="部署规划"></a>部署规划</h4><table>
+<thead>
+<tr>
+<th>序号</th>
+<th>IP</th>
+<th>主机名</th>
+<th>部署程序</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>192.168.1.11</td>
+<td>WebServer-11</td>
+<td>codis-server:(6379&amp;6380)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>192.168.1.12</td>
+<td>WebServer-12</td>
+<td>codis-server:(6379&amp;6380)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>192.168.1.13</td>
+<td>WebServer-13</td>
+<td>codis-server:(6379&amp;6380)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>192.168.1.14</td>
+<td>WebServer-14</td>
+<td>codis-server:(6379&amp;6380)</td>
+</tr>
+<tr>
+<td>5</td>
+<td>192.168.1.15</td>
+<td>WebServer-15</td>
+<td>codis-server:(6379&amp;6380)</td>
+</tr>
+<tr>
+<td>6</td>
+<td>192.168.1.21</td>
+<td>WebServer-21</td>
+<td>codis-proxy:19000</td>
+</tr>
+<tr>
+<td>7</td>
+<td>192.168.1.22</td>
+<td>WebServer-22</td>
+<td>codis-proxy:19000</td>
+</tr>
+<tr>
+<td>8</td>
+<td>192.168.1.31</td>
+<td>WebServer-31</td>
+<td>codis-dashborad:18080、codis-fe:18090</td>
+</tr>
+<tr>
+<td>9</td>
+<td>192.168.1.41</td>
+<td>WebServer-41</td>
+<td>redis-sentinel:26379</td>
+</tr>
+<tr>
+<td>10</td>
+<td>192.168.1.42</td>
+<td>WebServer-42</td>
+<td>redis-sentinel:26379</td>
+</tr>
+<tr>
+<td>11</td>
+<td>192.168.1.43</td>
+<td>WebServer-43</td>
+<td>redis-sentinel:26379</td>
+</tr>
+<tr>
+<td>12</td>
+<td>192.168.1.51</td>
+<td>WebServer-51</td>
+<td>zookeeper:2181</td>
+</tr>
+<tr>
+<td>13</td>
+<td>192.168.1.52</td>
+<td>WebServer-52</td>
+<td>zookeeper:2181</td>
+</tr>
+<tr>
+<td>14</td>
+<td>192.168.1.53</td>
+<td>WebServer-53</td>
+<td>zookeeper:2181</td>
+</tr>
+</tbody>
+</table>
+<h4 id="源码安装ZK，并配置-主机12-14"><a href="#源码安装ZK，并配置-主机12-14" class="headerlink" title="源码安装ZK，并配置[主机12-14]"></a>源码安装ZK，并配置[主机12-14]</h4><pre><code>用于存放数据路由表。ßzookeeper简称zk。在生产环境中，zk部署越多，其可靠性越高。由于zk集群是以宕机个数过半才会让整个集群宕机，因此，奇数个zk更佳。如下：zoo.cfg
+</code></pre><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">maxClientCnxns=50 <span class="comment">#最大连接数设置. 注：可不配置. </span></span><br><span class="line">tickTime=2000 <span class="comment">#一个周期(tick)的时长(单位：毫秒). 注：可用默认值 </span></span><br><span class="line">initLimit=10 <span class="comment">#初始化同步阶段最多耗费tick个数. 注：可用默认值 </span></span><br><span class="line">syncLimit=5 <span class="comment">#等待应答的最大间隔tick个数. 注：可用默认值 </span></span><br><span class="line">dataDir=/data/zookeeper/ <span class="comment">#数据存储目录. 注：勿放在/tmp目录 </span></span><br><span class="line">clientPort=2181 <span class="comment">#帧听端口. 注：可用默认值 </span></span><br><span class="line">server.1=zookeeper-node1:2888:3888 </span><br><span class="line">server.2=zookeeper-node2:2888:3888 </span><br><span class="line">server.3=zookeeper-node3:2888:3888</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#创建zk数据目录(datadir) </span></span><br><span class="line">mkdir -p /data/program/zookeeper/data</span><br><span class="line"><span class="comment">#生成ID，这里需要注意， myid对应的zoo.cfg的server.ID.比如zookeeper-node2对应的myid应该是2.</span></span><br><span class="line"><span class="built_in">echo</span> “1” &gt; /data/program/zookeeper/data/myid</span><br><span class="line"> <span class="comment">#服务启动</span></span><br><span class="line">./bin/Server.sh start</span><br></pre></td></tr></table></figure>
+<h4 id="安装JDK环境"><a href="#安装JDK环境" class="headerlink" title="安装JDK环境"></a>安装JDK环境</h4><pre><code>略...
+</code></pre><h4 id="添加域名（hosts）"><a href="#添加域名（hosts）" class="headerlink" title="添加域名（hosts）"></a>添加域名（hosts）</h4><pre><code>略...
+</code></pre><h4 id="编译Codis-配置环境-主机1-11"><a href="#编译Codis-配置环境-主机1-11" class="headerlink" title="编译Codis-配置环境[主机1-11]"></a>编译Codis-配置环境[主机1-11]</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#安装go环境，先从官网(https://golang.org/dl/)下载golang安装包，并将其解压，再拷贝至/usr/local/go/中，最后配置如下环境变量</span></span><br><span class="line"><span class="comment">#vim $HOME/.bashrc</span></span><br><span class="line"><span class="built_in">export</span> GOROOT=/usr/<span class="built_in">local</span>/go <span class="comment"># 安装路径 </span></span><br><span class="line"><span class="built_in">export</span> GOPATH=<span class="variable">$HOME</span>/godir <span class="comment"># 工作路径 </span></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$GOPATH</span>/bin:<span class="variable">$GOROOT</span>/bin <span class="comment"># 命令搜索路径</span></span><br></pre></td></tr></table></figure>
+<h4 id="编译Codis-下载codis源码"><a href="#编译Codis-下载codis源码" class="headerlink" title="编译Codis-下载codis源码"></a>编译Codis-下载codis源码</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get github.com/CodisLabs/codis.git -b release3.2</span><br></pre></td></tr></table></figure>
+<h4 id="编译Codis"><a href="#编译Codis" class="headerlink" title="编译Codis"></a>编译Codis</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 切换源码目录</span></span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$GOPATH</span>/src/github.com/CodisLabs/</span><br><span class="line"> <span class="comment"># 执行编译</span></span><br><span class="line">make</span><br><span class="line"><span class="comment"># 查看结果</span></span><br><span class="line">ls ./bin/</span><br><span class="line">codis-admin codis-dashboard codis-fe codis-ha codis-proxy codis-server redis-benchmark redis-cli</span><br><span class="line"><span class="comment">#完成编译后，将会在bin目录中看到codis-admin、codis-dashboard、codis-fe、codis-ha、codis-proxy、codis-server六个可执行文件。另外，bin/assert文件夹是codis-dashboard的http服务需要的前端资源，其需要和codis-dashboard放置在同一个文件夹中。 </span></span><br><span class="line"><span class="comment">#补充：在目录./extern/redis-3.2.8/src/中可以找到redis-sentinel可执行文件，其将会用于集群主从的切换。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#拷贝codis程序</span></span><br><span class="line">mkdir -p /usr/<span class="built_in">local</span>/codis/bin</span><br><span class="line">cp -fr <span class="variable">$GOPATH</span>/github.com/CodisLabs/codis/bin/* /usr/<span class="built_in">local</span>/codis/bin/ </span><br><span class="line">cp -fr <span class="variable">$GOPATH</span>/github.com/CodisLabs/codis/conf/* /usr/<span class="built_in">local</span>/codis/conf/</span><br></pre></td></tr></table></figure>
+<h4 id="配置Codis-server-主-1-5"><a href="#配置Codis-server-主-1-5" class="headerlink" title="配置Codis-server 主[1-5]"></a>配置Codis-server 主[1-5]</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/codis/conf/</span><br><span class="line"><span class="comment"># 主配置</span></span><br><span class="line">cp redis.conf redis-6379.conf </span><br><span class="line"><span class="comment"># 修改配置</span></span><br><span class="line">vim redis-6379.conf </span><br><span class="line"></span><br><span class="line">daemonize yes </span><br><span class="line"><span class="comment"># 进程ID文件路径 </span></span><br><span class="line">pidfile /usr/loca/codis/proc/redis-6379.pid </span><br><span class="line"><span class="comment"># 绑定端口 </span></span><br><span class="line">port 6379 </span><br><span class="line">timeout 86400 </span><br><span class="line">tcp-keepalive 60 </span><br><span class="line">loglevel notice </span><br><span class="line"><span class="comment"># 日志文件路径 </span></span><br><span class="line">logfile /usr/<span class="built_in">local</span>/codis/<span class="built_in">log</span>/redis-6379.log </span><br><span class="line">databases 16 </span><br><span class="line">save “” </span><br><span class="line">save 900 1 </span><br><span class="line">save 300 10 </span><br><span class="line">save 60 10000 </span><br><span class="line">stop-writes-on-bgsave-error no </span><br><span class="line">rdbcompression yes </span><br><span class="line"><span class="comment"># dump文件</span></span><br><span class="line">dbfilename dump-6379.rdb  </span><br><span class="line"><span class="comment"># dump路径 </span></span><br><span class="line">dir /usr/<span class="built_in">local</span>/codis/data/redis_data_6379 </span><br><span class="line"><span class="comment"># Master密码（从主同步密码） </span></span><br><span class="line">masterauth <span class="string">"123456"</span> </span><br><span class="line">slave-serve-stale-data yes </span><br><span class="line">repl-disable-tcp-nodelay no </span><br><span class="line">slave-priority 100 </span><br><span class="line"><span class="comment"># 鉴权密码（客户端连接密码） </span></span><br><span class="line">requirepass <span class="string">"123456"</span> </span><br><span class="line">maxmemory 10gb </span><br><span class="line">maxmemory-policy allkeys-lru </span><br><span class="line">appendonly no </span><br><span class="line">appendfsync everysec </span><br><span class="line">no-appendfsync-on-rewrite yes </span><br><span class="line">auto-aof-rewrite-percentage 100 </span><br><span class="line">auto-aof-rewrite-min-size 64mblua-time-limit 5000 </span><br><span class="line">slowlog-log-slower-than 10000 </span><br><span class="line">slowlog-max-len 128 </span><br><span class="line"><span class="built_in">hash</span>-max-ziplist-entries 512 </span><br><span class="line"><span class="built_in">hash</span>-max-ziplist-value 64 </span><br><span class="line">list-max-ziplist-entries 512 </span><br><span class="line">list-max-ziplist-value 64 </span><br><span class="line"><span class="built_in">set</span>-max-intset-entries 512 </span><br><span class="line">zset-max-ziplist-entries 128 </span><br><span class="line">zset-max-ziplist-value 64 </span><br><span class="line">client-output-buffer-limit normal 0 0 0 </span><br><span class="line">client-output-buffer-limit slave 0 0 0 </span><br><span class="line">client-output-buffer-limit pubsub 0 0 0 </span><br><span class="line">hz 10 </span><br><span class="line">aof-rewrite-incremental-fsync yes </span><br><span class="line">repl-backlog-size 33554432</span><br></pre></td></tr></table></figure>
+<h4 id="配置Codis-server-从-1-5"><a href="#配置Codis-server-从-1-5" class="headerlink" title="配置Codis-server 从[1-5]"></a>配置Codis-server 从[1-5]</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/codis/conf/</span><br><span class="line"><span class="comment"># 从配置</span></span><br><span class="line">cp redis.conf redis-6380.conf </span><br><span class="line"><span class="comment"># 修改配置</span></span><br><span class="line">vim redis-6380.conf </span><br><span class="line"></span><br><span class="line">daemonize yes </span><br><span class="line"><span class="comment"># 进程ID文件路径 </span></span><br><span class="line">pidfile /usr/loca/codis/proc/redis-6380.pid </span><br><span class="line"><span class="comment"># 绑定端口 </span></span><br><span class="line">port 6380 </span><br><span class="line">timeout 86400 </span><br><span class="line">tcp-keepalive 60 </span><br><span class="line">loglevel notice </span><br><span class="line"><span class="comment"># 日志文件路径 </span></span><br><span class="line">logfile /usr/<span class="built_in">local</span>/codis/<span class="built_in">log</span>/redis-6380.log </span><br><span class="line">databases 16 </span><br><span class="line"><span class="comment"># 如果不希望存储到磁盘，则可以使用井号注销save配置行 </span></span><br><span class="line">save “” </span><br><span class="line">save 900 1</span><br><span class="line">save 300 10</span><br><span class="line">save 60 10000</span><br><span class="line">stop-writes-on-bgsave-error no </span><br><span class="line">rdbcompression yes </span><br><span class="line"><span class="comment"># dump文件 </span></span><br><span class="line">dbfilename dump-6380.rdb </span><br><span class="line"><span class="comment"># dump路径 </span></span><br><span class="line">dir /usr/<span class="built_in">local</span>/codis/data/redis_data_6380</span><br><span class="line"><span class="comment"># Master密码（适合主从集群） </span></span><br><span class="line">masterauth <span class="string">"123456"</span>  </span><br><span class="line">slave-serve-stale-data yes </span><br><span class="line">repl-disable-tcp-nodelay no </span><br><span class="line">slave-priority 100 </span><br><span class="line"><span class="comment"># 鉴权密码（客户端连接密码） </span></span><br><span class="line">requirepass <span class="string">"123456"</span> </span><br><span class="line">maxmemory 10gb </span><br><span class="line">maxmemory-policy allkeys-lru </span><br><span class="line">appendonly no </span><br><span class="line">appendfsync everysec </span><br><span class="line">no-appendfsync-on-rewrite yes </span><br><span class="line">auto-aof-rewrite-percentage 100 </span><br><span class="line">auto-aof-rewrite-min-size 64mblua-time-limit 5000 </span><br><span class="line">slowlog-log-slower-than 10000 </span><br><span class="line">slowlog-max-len 128 </span><br><span class="line"><span class="built_in">hash</span>-max-ziplist-entries 512 </span><br><span class="line"><span class="built_in">hash</span>-max-ziplist-value 64 </span><br><span class="line">list-max-ziplist-entries 512 </span><br><span class="line">list-max-ziplist-value 64 </span><br><span class="line"><span class="built_in">set</span>-max-intset-entries 512 </span><br><span class="line">zset-max-ziplist-entries 128 </span><br><span class="line">zset-max-ziplist-value 64 </span><br><span class="line">client-output-buffer-limit normal 0 0 0 </span><br><span class="line">client-output-buffer-limit slave 0 0 0 </span><br><span class="line">client-output-buffer-limit pubsub 0 0 0 </span><br><span class="line">hz 10 </span><br><span class="line">aof-rewrite-incremental-fsync yes </span><br><span class="line">repl-backlog-size 33554432</span><br></pre></td></tr></table></figure>
+<h4 id="启动主从-1-5"><a href="#启动主从-1-5" class="headerlink" title="启动主从[1-5]"></a>启动主从[1-5]</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/codis/bin/</span><br><span class="line"> <span class="comment">#启动主程序</span></span><br><span class="line">./codis-server ../conf/redis-6379.conf &amp;</span><br><span class="line"><span class="comment">#启动从程序</span></span><br><span class="line">./codis-server ../conf/redis-6380.conf &amp;</span><br></pre></td></tr></table></figure>
+<h4 id="配置Codis-dashboard-8"><a href="#配置Codis-dashboard-8" class="headerlink" title="配置Codis-dashboard[8]"></a>配置Codis-dashboard[8]</h4><pre><code>作用：集群管理工具，支持 codis-proxy、codis-server 的添加、删除，以及据迁移等操作。在集群状态发生改变时，codis-dashboard 维护集群下所有 codis-proxy 的状态的一致性。
+1.对于同一个业务集群而言，同一个时刻 codis-dashboard 只能有 0个或者1个；
+2.所有对集群的修改都必须通过 codis-dashboard 完成。
+</code></pre><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/codis/bin/</span><br><span class="line"><span class="comment">#生成配置 </span></span><br><span class="line">./codis-dashboard - -default-conifg | tee ../conf/dashboard.conf</span><br><span class="line"> <span class="comment"># 修改配置</span></span><br><span class="line">vim ../conf/dashboard.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 外部存储类型</span></span><br><span class="line">coordinator_name = <span class="string">"zookeeper"</span></span><br><span class="line"> <span class="comment"># 外部存储IP列表</span></span><br><span class="line">coordinator_addr = <span class="string">"192.168.1.51:2181,192.168.1.52:2181,192.168.1.53:2181"</span></span><br><span class="line"><span class="comment"># 项目名称 </span></span><br><span class="line">product_name = <span class="string">"chatroom"</span></span><br><span class="line"><span class="comment"># 集群密码（注意:需要与redis配置中的requirepass保持一致）</span></span><br><span class="line">product_auth = “123456”</span><br><span class="line"><span class="comment"># RESTful API 端口</span></span><br><span class="line">admin_addr = <span class="string">"0.0.0.0:18080"</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#为了防止出现dashboard监控页面中OPS始终为0的现象，需要将各proxy的IP和主机名写到hosts文件中。</span></span><br><span class="line"> <span class="comment"># 添加域名</span></span><br><span class="line">vim /etc/hosts</span><br><span class="line">192.168.1.21 WebSocket-21 </span><br><span class="line">192.168.1.22 WebSocket22</span><br></pre></td></tr></table></figure>
+<h4 id="启动Codis-dashboard"><a href="#启动Codis-dashboard" class="headerlink" title="启动Codis-dashboard"></a>启动Codis-dashboard</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ./bin/ </span><br><span class="line"> <span class="comment">#启动程序(注意：使用绝对路径）</span></span><br><span class="line">nohup ./codis-dashboard --ncpu=24 --config=/usr/<span class="built_in">local</span>/codis/conf/dashboard.conf --<span class="built_in">log</span>=/usr/<span class="built_in">local</span>/codis/<span class="built_in">log</span>/dashboard.log --<span class="built_in">log</span>-level=WARN &amp;</span><br><span class="line"></span><br><span class="line"><span class="comment">#参数描述如下：</span></span><br><span class="line"><span class="comment">#--ncpu	最大使用CPU个数	</span></span><br><span class="line"><span class="comment">#--config	指定配置路径和文件	使用绝对路径</span></span><br><span class="line"><span class="comment">#--log	指定日志输出路径和文件	使用绝对路径</span></span><br><span class="line"><span class="comment">#--log-level	指定日志级别	取值：INFO、WARN、DEBUG、ERROR，推荐使用WRAN.</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#如果想关闭dashboard服务，可执行：</span></span><br><span class="line">./codis-admin - -dashboard=192.168.1.31:18080 –auth=123456 - -shutdown</span><br></pre></td></tr></table></figure>
+<h4 id="配置Codis-proxy-6-7"><a href="#配置Codis-proxy-6-7" class="headerlink" title="配置Codis-proxy[6-7]"></a>配置Codis-proxy[6-7]</h4><pre><code>作用：客户端连接的 Redis 代理服务, 实现了 Redis 协议。 除部分命令不支持以外(不支持的命令列表)，表现的和原生的 Redis 没有区别（就像 Twemproxy）。
+1.对于同一个业务集群而言，可以同时部署多个 codis-proxy 实例； 
+2.不同 codis-proxy 之间由 codis-dashboard 保证状态同步。
+</code></pre><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/codis/bin/</span><br><span class="line"> <span class="comment"># 生成配置</span></span><br><span class="line">./codis-proxy - -default-config | tee ../conf/proxy.conf</span><br><span class="line"><span class="comment">#修改配置</span></span><br><span class="line">vim ../proxy.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置项目名 </span></span><br><span class="line">product_name = <span class="string">"chatroom"</span></span><br><span class="line"><span class="comment"># 设置登录dashboard的密码（注意：与redis中requirepass一致）</span></span><br><span class="line">product_auth = <span class="string">"123456"</span> </span><br><span class="line"><span class="comment"># Redis客户端的登录密码（注意：与redis中requirepass不一致） </span></span><br><span class="line">session_auth = <span class="string">"56789"</span> </span><br><span class="line"><span class="comment"># Set bind address for admin(rpc), tcp only. </span></span><br><span class="line">admin_addr = <span class="string">"0.0.0.0:11080"</span> </span><br><span class="line"><span class="comment"># Set bind address for proxy, proto_type can be “tcp”,”tcp4”, “tcp6”, “unix” </span></span><br><span class="line">or “unixpacket”. </span><br><span class="line">proto_type = “tcp4” </span><br><span class="line"><span class="comment">#绑定端口（Redis客户端连接此端口） </span></span><br><span class="line">proxy_addr = <span class="string">"0.0.0.0:19000"</span> </span><br><span class="line"><span class="comment"># 外部存储 </span></span><br><span class="line"><span class="comment"># 外部存储类型 </span></span><br><span class="line">jodis_name = <span class="string">"zookeeper"</span> </span><br><span class="line"><span class="comment"># 外部存储列表 </span></span><br><span class="line">jodis_addr = “192.168.1.51:2181,192.168.1.52:2181,192.168.1.53:2181” </span><br><span class="line">jodis_timeout = “20s” </span><br><span class="line"><span class="comment">#会话设置 </span></span><br><span class="line"><span class="comment">#如果不为０可能导致应用程序出现”write: broken pipe”的问题</span></span><br><span class="line">session_recv_timeout = “0s”</span><br></pre></td></tr></table></figure>
+<h4 id="启动Codis-proxy-6-7"><a href="#启动Codis-proxy-6-7" class="headerlink" title="启动Codis-proxy[6-7]"></a>启动Codis-proxy[6-7]</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup ./codis-proxy - -ncpu=24 - -config=../conf/proxy.conf - -<span class="built_in">log</span>=../<span class="built_in">log</span>/proxy.log - -<span class="built_in">log</span>-level=WRAN &amp;</span><br></pre></td></tr></table></figure>
+<pre><code>程序codis-proxy启动后，仍然处于waiting状态，虽然侦听了proxy_addr端口，但是不会accept连接请求。只有将codis-proxy加入到集群并完成集群状态的同步，才能将状态改为online。最终才能accept连接请求。
+</code></pre><h4 id="配置Redis-sentinel-9-11"><a href="#配置Redis-sentinel-9-11" class="headerlink" title="配置Redis-sentinel[9-11]"></a>配置Redis-sentinel[9-11]</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#拷贝程序</span></span><br><span class="line">cp -fr <span class="variable">$GOPATH</span>/github.com/CodisLabs/codis/extern/redis-3.2.8/src/redis-sentinel /usr/<span class="built_in">local</span>/codis/bin/</span><br><span class="line"><span class="comment">#拷贝配置</span></span><br><span class="line">cp -fr <span class="variable">$GOPATH</span>/github.com/CodisLabs/codis/extern/redis-3.2.8/sentinel.conf /usr/<span class="built_in">local</span>/codis/conf/</span><br><span class="line"><span class="comment">#修改配置</span></span><br><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/codis/</span><br><span class="line">vim ./conf/sentinel.conf</span><br><span class="line"></span><br><span class="line"><span class="built_in">bind</span> 0.0.0.0 </span><br><span class="line">protected-mode no </span><br><span class="line">port 26379 </span><br><span class="line">dir “/usr/<span class="built_in">local</span>/codis/data/</span><br><span class="line"><span class="comment">#其他结点的配置与此一致。</span></span><br></pre></td></tr></table></figure>
+<h4 id="启动Redis-sentinel-9-11"><a href="#启动Redis-sentinel-9-11" class="headerlink" title="启动Redis-sentinel[9-11]"></a>启动Redis-sentinel[9-11]</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/codis/bin/ </span><br><span class="line">nohup ./redis-sentinel ../conf/sentinel.conf &amp;</span><br></pre></td></tr></table></figure>
+<h4 id="配置odis-fe-8"><a href="#配置odis-fe-8" class="headerlink" title="配置odis-fe[8]"></a>配置odis-fe[8]</h4><pre><code>作用：集群管理界面。
+1.多个集群实例共享可以共享同一个前端展示页面； 
+2.通过配置文件管理后端codis-dashboard列表，配置文件可自动更新。
+</code></pre><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#生成配置</span></span><br><span class="line">./codis-amdin - -dashboard-list - -zookeeper=192.168.1.51:2181 | tee ../conf/codis.json</span><br><span class="line">[ &#123; </span><br><span class="line">“name”:”chatroom”, </span><br><span class="line">“dashboard”:192.168.1.31:18087” </span><br><span class="line">&#125; ]</span><br></pre></td></tr></table></figure>
+<h4 id="启动odis-fe-8"><a href="#启动odis-fe-8" class="headerlink" title="启动odis-fe[8]"></a>启动odis-fe[8]</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#nohup ./codis-fe - -ncpu=4 - -log=../log/fe.log - -log-level=WARN - -dashboard-list=../conf/codis.josn –listen=0.0.0.0:18090 &amp;</span></span><br><span class="line"><span class="comment">#打开浏览器，输入192.168.1.31:18090便可看到codis集群的监控界面</span></span><br></pre></td></tr></table></figure>
+<h4 id="加入集群"><a href="#加入集群" class="headerlink" title="加入集群"></a>加入集群</h4>
+    	
+	</div>
+
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+  <div class="article-category">
+  	<span>categories:</span>
+    <a class="article-category-link" href="/categories/数据库/">数据库</a>
+  </div>
+
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/codis/">codis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis集群/">redis集群</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+
+	
+		
+<nav id="article-nav">
+  
+    <a href="/2016/05/16/Redis配置文件详解/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Redis配置文件详解
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/05/16/Redis集群模式(官方版)/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          Redis集群模式(官方版)
+        
+      </div>
+    </a>
+  
+</nav>
+
+  	
+
+</article>
+
+
+
+
+
+
+</div>
+			<footer id="footer">
+				<h1 class="footer-blog-title">
+					<a href="/">Clear Sky</a>
+				</h1>
+				<span class="copyright">
+					&copy; 2018 CLEAR<br>
+					Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+					Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+				</span>
+			</footer>
+  		</div>
+  		
+
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bundle.js"></script>
+	</body>
+</html>
